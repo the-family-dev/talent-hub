@@ -19,14 +19,12 @@ export class VacancyController extends BaseController {
         return this.error(res, validationResult.error);
       }
 
-      const { search, companyId, tags, isActive, status } =
-        validationResult.data;
+      const { search, companyId, tags, status } = validationResult.data;
 
       const vacancies = await prisma.vacancy.findMany({
         where: {
           AND: [
             status ? { status } : {},
-            isActive ? { isActive } : {},
             companyId ? { companyId } : {},
             search
               ? {
@@ -106,7 +104,6 @@ export class VacancyController extends BaseController {
           experienceLevel: validatedData.experienceLevel,
           location: validatedData.location,
           isRemote: validatedData.isRemote,
-          isActive: validatedData.isActive,
 
           // Связь с тегами через промежуточную таблицу
           tags: {
@@ -292,7 +289,6 @@ export class VacancyController extends BaseController {
           experienceLevel: validatedData.experienceLevel,
           location: validatedData.location,
           isRemote: validatedData.isRemote,
-          isActive: validatedData.isActive,
           status: validatedData.status,
           // Связь с тегами через промежуточную таблицу
           tags: {

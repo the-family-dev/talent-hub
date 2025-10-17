@@ -9,7 +9,6 @@ export interface IApplicantVacancy {
   requirements?: string;
   location?: string;
   isRemote: boolean;
-  isActive: boolean;
   employmentType: EmploymentType;
   experienceLevel: ExperienceLevel;
   tags: string[];

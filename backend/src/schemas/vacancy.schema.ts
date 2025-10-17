@@ -15,7 +15,6 @@ export const CreateUpdateVacancySchema = z.object({
   experienceLevel: z.enum(ExperienceLevel),
   location: z.string().optional(),
   isRemote: z.boolean().default(false),
-  isActive: z.boolean().default(true),
   companyId: z.uuid(),
   tags: z.array(z.string()).optional(),
   status: z.enum(VacancyStatus).optional(),
@@ -27,7 +26,6 @@ export const GetVacanciesBodySchema = z.object({
   tags: z.array(z.string()).optional(),
   status: z.enum(VacancyStatus).optional(),
   companyId: z.uuid("Некорректный формат companyId").optional(),
-  isActive: z.boolean().optional(),
 });
 
 export const SearchVacanciesBodySchema = z.object({

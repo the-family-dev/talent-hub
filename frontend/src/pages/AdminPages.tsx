@@ -31,13 +31,14 @@ const routes: TNavigationButton[] = [
 export const AdminPages = observer(() => {
   return (
     <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
+      <AdminHeader />
+
       <div
         className="flex flex-col gap-4 h-full self-center pt-[65px]"
         style={{
           width: 1200,
         }}
       >
-        <AdminHeader />
         <div className="flex flex-row gap-4 pb-6">
           <NavigationMenu buttons={routes} />
           <div className="w-full min-h-0">

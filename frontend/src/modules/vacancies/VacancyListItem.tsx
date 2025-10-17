@@ -1,32 +1,24 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Chip,
-} from "@heroui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import type { ICompanyVacancyBase } from "../../api/companyVacanciesApi";
 import { CalendarDaysIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
 import { Link } from "react-router";
 import SalaryRange from "../../components/SalaryRange";
+import { VacancyStatusLabel } from "../../components/VacancyStatusLablel";
 
 export const VacancyListItem = observer<{
   vacancy: ICompanyVacancyBase;
 }>((props) => {
   const { vacancy } = props;
-  const { location, salaryFrom, salaryTo, title, isActive, createdAt, id } =
+  const { location, salaryFrom, salaryTo, title, createdAt, id, status } =
     vacancy;
 
   return (
     <Card className="shrink-0 m-[1px]">
       <CardHeader className="flex flex-row justify-between">
         <div className="font-medium text-xl">{title}</div>
-        <Chip color={isActive ? "primary" : "default"}>
-          {isActive ? "Активна" : "Неактивна"}
-        </Chip>
+        <VacancyStatusLabel status={status} />
       </CardHeader>
       <CardBody className="flex flex-row gap-4">
         <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />

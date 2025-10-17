@@ -1,4 +1,5 @@
 import apiClient from ".";
+import { VacancyStatus } from "../types/rootTypes";
 import type {
   IApplicantVacancy,
   TApplicantVacancyFilters,
@@ -15,7 +16,7 @@ class ApplicantVacanciesApi {
   public async getAllVacanciesApplicant(filters: TApplicantVacancyFilters) {
     const response = await apiClient.post<IApplicantVacancy[]>(
       "/vacancies",
-      { ...filters, isActive: true } // Соискатель видит только активные вакансии
+      { ...filters, status: VacancyStatus.Active } // Соискатель видит только активные вакансии
     );
 
     return response.data;

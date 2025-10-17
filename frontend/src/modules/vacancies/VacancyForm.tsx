@@ -38,10 +38,6 @@ class VacancyFormStore {
     this.vacancyForm.isRemote = isRemote;
   }
 
-  public setVacancyIsActive(isActive: boolean) {
-    this.vacancyForm.isActive = isActive;
-  }
-
   public setVacancyEmploymentType(employmentType: EmploymentType) {
     this.vacancyForm.employmentType = employmentType;
   }
@@ -74,7 +70,6 @@ export const VacancyForm = observer<{
     description,
     title,
     isRemote,
-    isActive,
     salaryFrom,
     salaryTo,
     location,
@@ -111,14 +106,6 @@ export const VacancyForm = observer<{
             size="sm"
           >
             Удаленный формат
-          </Switch>
-          <Switch
-            isSelected={isActive}
-            onValueChange={(value) => store.setVacancyIsActive(value)}
-            color="primary"
-            size="sm"
-          >
-            Активность
           </Switch>
         </div>
 
