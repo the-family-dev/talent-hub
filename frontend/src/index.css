@@ -16,3 +16,22 @@ body {
   -webkit-overflow-scrolling: auto;
   overflow: hidden;
 }
+
+/* Минималистичный скроллбар для всех элементов */
+/* * {
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 2px;
+  height: 2px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 2px;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+} */

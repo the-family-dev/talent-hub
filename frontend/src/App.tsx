@@ -1,11 +1,19 @@
 import { observer } from "mobx-react-lite";
-import { Layout } from "./components/Layout";
+import { Route, Routes } from "react-router";
+import { CompanyHeader } from "./modules/company/CompanyHeader";
+import { StartPage } from "./pages/StartPage";
+import { CompanyPages } from "./pages/CompanyPages";
 
 const App = observer(() => {
   return (
-    <div className="flex flex-row gap-4 p-8">
-      <Layout />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="company/*" element={<CompanyPages />} />
+        {/* <Route path="jobseeker/*" element={<CompanyPages />} /> */}
+      </Routes>
+      <CompanyHeader />
+    </>
   );
 });
 

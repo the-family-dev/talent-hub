@@ -1,5 +1,5 @@
 {
-  "name": "talent-hub",
+  "name": "js-momorepo-template",
   "private": true,
   "workspaces": [
     "backend",

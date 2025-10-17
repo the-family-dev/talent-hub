@@ -9,10 +9,64 @@ datasource db {
 }
 
 
+model Company {
+  id String @id @default(uuid())
+  name String
+  login String @unique
+  vacancies Vacancy[]  // связь один ко многим
+}
+
+
 model Vacancy {
-  id    String    @id @unique @default(uuid())
-  title  String
-  description String?
-  salary String?
+  id           String        @id @default(uuid())
+  title        String
+  description  String?
+  requirements String?
+  salary       Int?
+  employmentType EmploymentType
+  experienceLevel ExperienceLevel
+  location     String?
+  isRemote     Boolean       @default(false)
+  isActive     Boolean       @default(true)
+  tags      VacancyTag[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  // Связь с Company
+  companyId   String?
+  company     Company?   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+}
+
+
+model Tag {
+  id      String       @id @default(uuid())
+  name    String       @unique
+  vacancies VacancyTag[]
+}
+
+
+model VacancyTag {
+  vacancyId String
+  tagId     String
+  vacancy   Vacancy @relation(fields: [vacancyId], references: [id])
+  tag       Tag     @relation(fields: [tagId], references: [id])
+
+  @@id([vacancyId, tagId])
+}
+
+
+enum EmploymentType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+}
+
+enum ExperienceLevel {
+  INTERN
+  JUNIOR
+  MIDDLE
+  SENIOR
+  LEAD
 }
 

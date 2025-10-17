@@ -1,19 +1,29 @@
-import { HomeIcon, WrenchIcon } from "@heroicons/react/24/outline";
+import {
+  BuildingOffice2Icon,
+  DocumentTextIcon,
+  HomeIcon,
+} from "@heroicons/react/24/outline";
 import { Button, Card, CardBody, CardHeader } from "@heroui/react";
 import { Link, useLocation } from "react-router";
 
 const routes = [
   {
     id: 1,
-    path: "/",
+    path: "/company",
     title: "Вакансии",
     icon: HomeIcon,
   },
   {
     id: 2,
-    path: "/settings",
-    title: "Настройки",
-    icon: WrenchIcon,
+    path: "/company/resume",
+    title: "Кандидаты",
+    icon: DocumentTextIcon,
+  },
+  {
+    id: 3,
+    path: "/company/proflie",
+    title: "Профиль",
+    icon: BuildingOffice2Icon,
   },
 ];
 
@@ -36,7 +46,8 @@ const NavigationButton = (props: TNavigationButtonProps) => {
       as={Link}
       variant="flat"
       color={isActive ? "primary" : undefined}
-      className="justify-start"
+      className="justify-start select-none"
+      draggable={false}
     >
       {title}
     </Button>
