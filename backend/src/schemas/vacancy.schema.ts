@@ -16,7 +16,7 @@ export const CreateUpdateVacancySchema = z.object({
   location: z.string().optional(),
   isRemote: z.boolean().default(false),
   isActive: z.boolean().default(true),
-  companyId: z.uuid().optional(),
+  companyId: z.uuid(),
   tags: z.array(z.string()).optional(),
 });
 

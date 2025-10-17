@@ -24,12 +24,14 @@ export interface IApplicantVacancy {
   updatedAt: string;
 }
 
+export type TApplicantVacancyFilters = {
+  tags?: string[];
+  search?: string;
+  companyId?: string;
+};
+
 class ApplicantVacanciesApi {
-  public async getAllVacancies(filters?: {
-    tags?: string[];
-    search?: string;
-    companyId?: string;
-  }) {
+  public async getAllVacanciesApplicant(filters: TApplicantVacancyFilters) {
     const response = await apiClient.post<IApplicantVacancy[]>(
       "/vacancies",
       { ...filters, isActive: true } // Соискатель видит только активные вакансии

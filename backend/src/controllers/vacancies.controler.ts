@@ -91,8 +91,6 @@ export class VacanciesController extends BaseController {
 
       const validatedData: TCreateUpdateVacancyInput = validationResult.data;
 
-      console.log(validatedData);
-
       const newVacancy = await prisma.vacancy.create({
         data: {
           // Основные данные вакансии

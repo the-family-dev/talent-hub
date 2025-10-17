@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 import { applicantStore } from "./applicantStore";
 import { Button, Skeleton } from "@heroui/react";
 import { routerStore } from "../router/routerStore";
@@ -10,10 +9,6 @@ import { FileInput } from "../../components/FileInput";
 
 export const ApplicantResumePage = observer(() => {
   const { resume, resumePdfUrl } = applicantStore;
-
-  useEffect(() => {
-    applicantStore.getResume();
-  }, []);
 
   return (
     <div className="flex flex-col gap-4">

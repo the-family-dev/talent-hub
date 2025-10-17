@@ -15,6 +15,8 @@ import {
   DocumentTextIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
+import { VacancyCreatePage } from "../modules/vacancies/VacancyCreatePage";
+import { VacancyEditPage } from "../modules/vacancies/VacancyEditPage";
 
 const routes: TNavigationButton[] = [
   {
@@ -42,7 +44,7 @@ export const CompanyPages = observer(() => {
   }
 
   return (
-    <div className="w-full flex justify-center items-center overflow-y-auto">
+    <div className="w-full flex flex-col justify-center items-center overflow-y-auto">
       <div
         className="flex flex-col gap-4 h-screen self-center"
         style={{
@@ -54,9 +56,11 @@ export const CompanyPages = observer(() => {
           <NavigationMenu buttons={routes} />
           <div className="w-full min-h-0">
             <Routes>
-              <Route path="/" element={<CompanyProfilePage />} />
-              <Route path="/vacancy" element={<VacanciesListPage />} />
-              <Route path="/vacancy/:id" element={<VacancyPage />} />
+              <Route path="" element={<CompanyProfilePage />} />
+              <Route path="vacancy" element={<VacanciesListPage />} />
+              <Route path="vacancy/:id" element={<VacancyPage />} />
+              <Route path="vacancy/create" element={<VacancyCreatePage />} />
+              <Route path="vacancy/:id/edit" element={<VacancyEditPage />} />
             </Routes>
           </div>
         </div>

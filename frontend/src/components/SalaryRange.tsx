@@ -23,7 +23,7 @@ const SalaryRange: React.FC<SalaryRangeProps> = ({ salaryFrom, salaryTo }) => {
     return <span>До {formatNumber(salaryTo)} ₽</span>;
   }
 
-  return <span>Зарплата не указана</span>;
+  return null;
 };
 
 export default SalaryRange;

@@ -146,7 +146,7 @@ class CompanyStore {
 
   public logOut() {
     this.company = undefined;
-    companyLocalStorage.set(undefined);
+    companyLocalStorage.remove();
   }
 
   private _setCompany(company: TCompany) {

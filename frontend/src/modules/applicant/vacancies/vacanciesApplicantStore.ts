@@ -4,29 +4,32 @@ import { debounce } from "../../../utils/debounce";
 import {
   applicantVacanciesApi,
   type IApplicantVacancy,
+  type TApplicantVacancyFilters,
 } from "../../../api/applicantVacanciesApi";
-import { clearEmptyFields } from "../../../utils/utils";
+import { applicantStore } from "../applicantStore";
 
-type TVacancyFilters = {
-  tags: string[];
-  search: string;
-  companyId: string;
+const defaultFilters: TApplicantVacancyFilters = {
+  search: "",
 };
 
-const defaultFilters: TVacancyFilters = {
-  tags: [],
-  search: "",
-  companyId: "",
+type TApplicantVacancyRespond = {
+  vacancy: IApplicantVacancy | undefined;
+  note: string;
 };
 
 class VacanciesApplicantStore {
   vacancies: IApplicantVacancy[] = [];
 
-  filters: TVacancyFilters = {
+  filters: TApplicantVacancyFilters = {
     ...defaultFilters,
   };
 
-  selectedVacancy: IApplicantVacancy | null = null;
+  selectedVacancy: IApplicantVacancy | undefined = undefined;
+
+  vacancyRespond: TApplicantVacancyRespond = {
+    vacancy: undefined,
+    note: "",
+  };
 
   private _debouncedFetchVacancies = debounce(
     () => this.fetchApplicantVacancies(),
@@ -37,14 +40,41 @@ class VacanciesApplicantStore {
     makeAutoObservable(this);
   }
 
+  public setVacancyRespond(vacancy: IApplicantVacancy | undefined) {
+    if (!applicantStore.resume) {
+      addToast({
+        title: "Чтобы откликнуться сначала загрузите резюме",
+        color: "warning",
+      });
+
+      return;
+    }
+
+    this.vacancyRespond.vacancy = vacancy;
+  }
+
+  public resetVacacnyRespond() {
+    this.vacancyRespond = {
+      vacancy: undefined,
+      note: "",
+    };
+  }
+
+  public setNote(note: string) {
+    this.vacancyRespond.note = note;
+  }
+
+  public async sendVacancyRespond() {
+    // TODO
+    console.log(this.vacancyRespond);
+
+    this.resetVacacnyRespond();
+  }
+
   public async fetchApplicantVacancies() {
     try {
-      const vacancies = await applicantVacanciesApi.getAllVacancies(
-        clearEmptyFields({
-          companyId: this.filters.companyId,
-          search: this.filters.search,
-          tags: this.filters.tags,
-        })
+      const vacancies = await applicantVacanciesApi.getAllVacanciesApplicant(
+        this.filters
       );
 
       runInAction(() => {
@@ -75,18 +105,11 @@ class VacanciesApplicantStore {
     }
   }
 
-  public setFilterSearch(search: string) {
-    this.filters.search = search;
-    this._debouncedFetchVacancies();
-  }
-
-  public setFilterCompanyId(companyId: string) {
-    this.filters.companyId = companyId;
-    this._debouncedFetchVacancies();
-  }
-
-  public setFilterTags(tags: string[]) {
-    this.filters.tags = tags;
+  public setFilterValue<K extends keyof TApplicantVacancyFilters>(
+    filter: K,
+    value: TApplicantVacancyFilters[K]
+  ) {
+    this.filters[filter] = value;
     this._debouncedFetchVacancies();
   }
 

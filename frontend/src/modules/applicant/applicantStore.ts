@@ -60,8 +60,8 @@ class ApplicantStore {
       title: "",
       description: resumeDescriptionTemplate,
       tags: [],
-      salaryFrom: 0,
-      salaryTo: 0,
+      salaryFrom: undefined,
+      salaryTo: undefined,
       location: "",
       userId: this.applicant?.id ?? "",
       experienceLevel: ExperienceLevel.Junior,
@@ -107,10 +107,7 @@ class ApplicantStore {
         this.newPhoto
       );
 
-      runInAction(() => {
-        this.applicant = applicant;
-        applicantLocalStorage.set(applicant);
-      });
+      this._setApplicant(applicant);
     } catch {
       addToast({
         title: "Ошибка",
@@ -124,10 +121,8 @@ class ApplicantStore {
     try {
       const applicant = await applicantApi.register(this.form);
 
-      runInAction(() => {
-        this.applicant = applicant;
-        applicantLocalStorage.set(applicant);
-      });
+      this._setApplicant(applicant);
+      this.getResume();
     } catch {
       addToast({
         title: "Ошибка",
@@ -141,10 +136,8 @@ class ApplicantStore {
     try {
       const applicant = await applicantApi.login(this.form.login);
 
-      runInAction(() => {
-        this.applicant = applicant;
-        applicantLocalStorage.set(applicant);
-      });
+      this._setApplicant(applicant);
+      this.getResume();
     } catch {
       addToast({
         title: "Ошибка",
@@ -169,10 +162,7 @@ class ApplicantStore {
           color: "success",
         });
 
-        this.applicant = applicant;
-        this.applicantName = applicant.name;
-
-        applicantLocalStorage.set(applicant);
+        this._setApplicant(applicant);
       });
     } catch {
       addToast({
@@ -207,7 +197,9 @@ class ApplicantStore {
     try {
       const newResume = await applicantResumeApi.addResume(resume);
 
-      console.log(newResume);
+      runInAction(() => {
+        this.resume = newResume;
+      });
 
       routerStore.navigate?.("/applicant/resume/");
     } catch {
@@ -281,7 +273,13 @@ class ApplicantStore {
 
   public logOut() {
     this.applicant = undefined;
-    applicantLocalStorage.set(undefined);
+    applicantLocalStorage.remove();
+  }
+
+  private _setApplicant(applcant: TApplicant) {
+    this.applicant = applcant;
+    this.applicantName = applcant.name;
+    applicantLocalStorage.set(applcant);
   }
 }
 

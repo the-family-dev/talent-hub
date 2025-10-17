@@ -17,6 +17,9 @@ import { ApplicantResumePage } from "../modules/applicant/ApplicantResumePage";
 import { ApplicantResumeCreatePage } from "../modules/applicant/ApplicantResumeCreatePage";
 import { ApplicantResumeEditPage } from "../modules/applicant/ApplicantResumeEditPage";
 import { VacanciesApplicantListPage } from "../modules/applicant/vacancies/VacanciesApplicantListPage";
+import { VacancyPageApplicant } from "../modules/applicant/vacancies/VacancyPageApplicant";
+import { CreateVacancyApplicationModal } from "../modules/applicant/vacancies/CreateVacancyApplicationModal";
+import { useEffect } from "react";
 
 const routes: TNavigationButton[] = [
   {
@@ -39,42 +42,53 @@ const routes: TNavigationButton[] = [
 export const ApplicantPages = observer(() => {
   const { applicant } = applicantStore;
 
+  useEffect(() => {
+    applicantStore.getResume();
+  }, []);
+
   if (applicant === undefined) {
     return <RegisterApplicantPage />;
   }
 
   return (
-    <div className="w-full flex justify-center items-center overflow-y-auto">
-      <div
-        className="flex flex-col gap-4 h-screen self-center"
-        style={{
-          width: 1200,
-        }}
-      >
-        <ApplicantHeader />
-        <div className="flex flex-row gap-4 w-full">
-          <NavigationMenu buttons={routes} />
-          <div className="w-full pb-6">
-            <Routes>
-              <Route path="/" element={<ApplicantProfilePage />} />
-              <Route path="/resume" element={<ApplicantResumePage />} />
-              <Route
-                path="/resume/create"
-                element={<ApplicantResumeCreatePage />}
-              />
-              <Route
-                path="/resume/edit"
-                element={<ApplicantResumeEditPage />}
-              />
-              <Route path="/vacancy" element={<VacanciesApplicantListPage />} />
-              {/* 
+    <>
+      <div className="w-full flex flex-col justify-center items-center overflow-y-auto">
+        <div
+          className="flex flex-col gap-4 h-screen self-center mt-4"
+          style={{
+            width: 1200,
+          }}
+        >
+          <ApplicantHeader />
+          <div className="flex flex-row gap-4 w-full">
+            <NavigationMenu buttons={routes} />
+            <div className="w-full pb-6">
+              <Routes>
+                <Route path="/" element={<ApplicantProfilePage />} />
+                <Route path="/resume" element={<ApplicantResumePage />} />
+                <Route
+                  path="/resume/create"
+                  element={<ApplicantResumeCreatePage />}
+                />
+                <Route
+                  path="/resume/edit"
+                  element={<ApplicantResumeEditPage />}
+                />
+                <Route
+                  path="/vacancy"
+                  element={<VacanciesApplicantListPage />}
+                />
+                <Route path="/vacancy/:id" element={<VacancyPageApplicant />} />
+                {/* 
             
             <Route path="/resume" element={<ResumesListPage />} />
             <Route path="/resume/:id" element={<ResumePage />} /> */}
-            </Routes>
+              </Routes>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <CreateVacancyApplicationModal />
+    </>
   );
 });

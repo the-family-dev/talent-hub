@@ -11,12 +11,24 @@ export class TypedStorage<T> {
 
   /**
    * Получает значение из хранилища
-   * @returns Значение или defaultValue, если не найдено
+   * @returns Значение или defaultValue, если не найдено или повреждено
    */
   get(): T {
     try {
       const item = localStorage.getItem(this.key);
-      return item ? (JSON.parse(item) as T) : this.defaultValue;
+
+      // Если ничего нет или значение "undefined" — возвращаем дефолт
+      if (!item || item === "undefined" || item === "null") {
+        return this.defaultValue;
+      }
+
+      const parsed = JSON.parse(item);
+      // Если парсинг вернул undefined — тоже подстрахуемся
+      if (parsed === undefined) {
+        return this.defaultValue;
+      }
+
+      return parsed as T;
     } catch (error) {
       console.error(`Error reading localStorage key "${this.key}":`, error);
       return this.defaultValue;
@@ -29,6 +41,12 @@ export class TypedStorage<T> {
    */
   set(value: T): void {
     try {
+      // Не сохраняем undefined — просто удаляем ключ
+      if (value === undefined || value === null) {
+        localStorage.removeItem(this.key);
+        return;
+      }
+
       const serializedValue = JSON.stringify(value);
       localStorage.setItem(this.key, serializedValue);
     } catch (error) {
@@ -48,7 +66,8 @@ export class TypedStorage<T> {
   /** Проверяет наличие значения в хранилище */
   has(): boolean {
     try {
-      return localStorage.getItem(this.key) !== null;
+      const item = localStorage.getItem(this.key);
+      return item !== null && item !== "undefined" && item !== "null";
     } catch (error) {
       console.error(`Error checking localStorage key "${this.key}":`, error);
       return false;

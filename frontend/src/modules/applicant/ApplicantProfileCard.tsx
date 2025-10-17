@@ -30,39 +30,40 @@ export const ApplicantProfileCard = observer<{
             allowedFileExts={[".png", ".jpg", ".svg"]}
           />
         </div>
-
-        <div className="flex flex-col w-full gap-2">
-          <Input
-            value={applicantName}
-            onChange={(e) => applicantStore.setApplicantName(e.target.value)}
-            label="ФИО"
-          />
-          <Snippet
-            tooltipProps={{
-              children: "Скопировать логин",
-            }}
-            symbol={""}
-            size="md"
-            className="w-min"
-          >
-            {login}
-          </Snippet>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            isDisabled={!hasChanges}
-            onPress={() => applicantStore.updateApplicantInfo()}
-            color="primary"
-          >
-            Сохранить
-          </Button>
-          <Button
-            isDisabled={!hasChanges}
-            onPress={() => applicantStore.resetChanges()}
-            color="secondary"
-          >
-            Отмена
-          </Button>
+        <div className="flex flex-col w-full gap-4">
+          <div className="flex flex-col w-full gap-2">
+            <Input
+              value={applicantName}
+              onChange={(e) => applicantStore.setApplicantName(e.target.value)}
+              label="ФИО"
+            />
+            <Snippet
+              tooltipProps={{
+                children: "Скопировать логин",
+              }}
+              symbol={""}
+              size="md"
+              className="w-min"
+            >
+              {login}
+            </Snippet>
+          </div>
+          <div className="flex flex-row gap-2">
+            <Button
+              isDisabled={!hasChanges}
+              onPress={() => applicantStore.updateApplicantInfo()}
+              color="primary"
+            >
+              Сохранить
+            </Button>
+            <Button
+              isDisabled={!hasChanges}
+              onPress={() => applicantStore.resetChanges()}
+              color="default"
+            >
+              Отмена
+            </Button>
+          </div>
         </div>
       </div>
     </div>

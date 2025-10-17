@@ -36,20 +36,21 @@ const defaultFilters: TVacancyFilters = {
 
 class VacanciesStore {
   vacancies: ICompanyVacancyBase[] = [];
-
   filters: TVacancyFilters = {
     ...defaultFilters,
   };
-
-  createVacancyForm: TCreateEditVacancy = defaultVacancyFormData;
   selectedVacancy?: ICompanyVacancy = undefined;
-  isCreateModalOpen = false;
-  isEditModalOpen = false;
-
   private _debouncedFetchVacancies = debounce(() => this.fetchVacancies(), 500);
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  get defaultVacancyData() {
+    return {
+      ...defaultVacancyFormData,
+      companyId: companyStore.company?.id,
+    };
   }
 
   public async fetchVacancies() {
@@ -72,18 +73,17 @@ class VacanciesStore {
 
   public async addVacancy(vacancy: TCreateEditVacancy) {
     try {
-      await companyVacanciesApi.addVacancy({
-        ...vacancy,
-        companyId: companyStore.company?.id,
-      });
+      await companyVacanciesApi.addVacancy(vacancy);
 
       runInAction(() => {
+        routerStore.navigate?.("/company/vacancy");
+
         this.fetchVacancies();
+
         addToast({
           title: "Вакансия добавлена",
           color: "success",
         });
-        this.setCreateModalOpen(false);
       });
     } catch {
       addToast({
@@ -93,7 +93,7 @@ class VacanciesStore {
     }
   }
 
-  public async fetchFacancyById(id?: string) {
+  public async fetchVacancyById(id?: string) {
     if (id === undefined) return;
 
     try {
@@ -110,20 +110,6 @@ class VacanciesStore {
     }
   }
 
-  public setCreateModalOpen(open: boolean) {
-    if (!open) {
-      this.createVacancyForm = {
-        ...defaultVacancyFormData,
-      };
-    }
-
-    this.isCreateModalOpen = open;
-  }
-
-  public setEditModalOpen(open: boolean) {
-    this.isEditModalOpen = open;
-  }
-
   public async updateVacancy(vacancy: TCreateEditVacancy) {
     if (this.selectedVacancy === undefined) return;
 
@@ -135,12 +121,13 @@ class VacanciesStore {
 
       runInAction(() => {
         this.selectedVacancy = updatedVacancy;
-        this.isEditModalOpen = false;
 
         addToast({
           title: "Вакансия изменена",
           color: "success",
         });
+
+        routerStore.navigate?.(`/company/vacancy/${updatedVacancy.id}`);
       });
     } catch {
       addToast({

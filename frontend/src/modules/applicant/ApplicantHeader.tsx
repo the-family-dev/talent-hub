@@ -15,7 +15,7 @@ export const ApplicantHeader = observer(() => {
   return (
     <Navbar
       classNames={{
-        wrapper: "px-0 mx-0",
+        wrapper: "px-0 mx-0 w-[1200px]",
       }}
       maxWidth={"full"}
       isBordered

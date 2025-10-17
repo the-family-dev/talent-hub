@@ -11,6 +11,9 @@ import {
   Form,
 } from "@heroui/react";
 import { LoginFormType } from "../../types/rootTypes";
+import { routerStore } from "../router/routerStore";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { useMemo } from "react";
 
 const options = [
   {
@@ -40,6 +43,14 @@ export const RegisterCompanyPage = observer(() => {
       return;
     }
   };
+
+  const submitButtonText = useMemo(() => {
+    if (logInType === LoginFormType.LogIn) {
+      return "Войти";
+    } else {
+      return "Зарегистрироваться";
+    }
+  }, [logInType]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -87,7 +98,16 @@ export const RegisterCompanyPage = observer(() => {
               className="w-full font-semibold"
               size="lg"
             >
-              Войти
+              {submitButtonText}
+            </Button>
+            <Button
+              color="default"
+              variant="ghost"
+              className="w-full font-semibold"
+              onPress={() => routerStore.navigate?.("/")}
+              size="lg"
+            >
+              <ArrowLeftIcon className="size-6" /> Назад
             </Button>
           </Form>
         </CardBody>
