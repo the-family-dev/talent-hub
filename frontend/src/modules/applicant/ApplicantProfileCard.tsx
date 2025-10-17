@@ -1,16 +1,17 @@
-import { Button, Input, Snippet } from "@heroui/react";
+import { Button, Snippet } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import { applicantStore } from "./applicantStore";
 import type { TApplicant } from "../../api/applicantApi";
 import { AvatarImage } from "../../components/AvatarImage";
 import { FileInput } from "../../components/FileInput";
+import { ApplicantInfoForm } from "../../components/ApplicantInfoForm";
 
 export const ApplicantProfileCard = observer<{
   applicant: TApplicant;
 }>((props) => {
   const { applicant } = props;
 
-  const { login, name, phone, email, telegram } = applicant;
+  const { login, name } = applicant;
 
   const { applicantAvatarSrc, hasChanges } = applicantStore;
 
@@ -37,43 +38,14 @@ export const ApplicantProfileCard = observer<{
                 children: "Скопировать логин",
               }}
               symbol={""}
-              size="md"
+              size="sm"
               className="w-min"
             >
               {login}
             </Snippet>
-            <Input
-              value={name}
-              onChange={(e) =>
-                applicantStore.setApplicantField("name", e.target.value)
-              }
-              label="ФИО"
-            />
-            <Input
-              errorMessage="Введите корректный номер телефона в формате +79991234567"
-              pattern="^\+?\d{10,15}$"
-              label="Номер телефона"
-              value={phone ?? ""}
-              onChange={(e) =>
-                applicantStore.setApplicantField("phone", e.target.value)
-              }
-            />
-            <Input
-              value={telegram ?? ""}
-              onChange={(e) =>
-                applicantStore.setApplicantField("telegram", e.target.value)
-              }
-              label="Telegram"
-            />
-            <Input
-              value={email ?? ""}
-              onChange={(e) =>
-                applicantStore.setApplicantField("email", e.target.value)
-              }
-              label="Эл. почта"
-            />
+            <ApplicantInfoForm applicant={applicant} />
           </div>
-          <div className="flex flex-row gap-2">
+          <div className="flex flex-row justify-end gap-2">
             <Button
               isDisabled={!hasChanges}
               onPress={() => applicantStore.updateApplicantInfo()}

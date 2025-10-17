@@ -4,6 +4,7 @@ import { StartPageHeader } from "../components/StartPageHeader";
 import { VacanciesNoauthListPage } from "../modules/noauth/vacancies/VacanciesNoauthListPage";
 import { VacancyPageNoauth } from "../modules/noauth/vacancies/VacancyPageNoauth";
 import { AuthPage } from "../modules/noauth/AuthPage";
+import { CreateVacancyRespondModal } from "../modules/applicant/vacancies/CreateVacancyRespondModal";
 
 export const NoAuthPages = observer(() => {
   return (
@@ -27,6 +28,7 @@ export const NoAuthPages = observer(() => {
           </div>
         </div>
       </div>
+      <CreateVacancyRespondModal />
     </div>
   );
 });

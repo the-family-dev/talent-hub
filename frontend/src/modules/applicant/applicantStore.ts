@@ -30,8 +30,19 @@ const defaultApplicantForm: TApplicantForm = {
   name: "",
 };
 
+const defaultApplicantInfo = {
+  id: "",
+  name: "",
+  login: "",
+  avatarUrl: undefined,
+  phone: undefined,
+  email: undefined,
+  telegram: undefined,
+};
+
 class ApplicantStore {
-  public applicant: TApplicant | undefined = applicantLocalStorage.get();
+  public applicant: TApplicant | undefined =
+    applicantLocalStorage.get() || defaultApplicantInfo;
   public _originalApplicant: TApplicant | undefined =
     applicantLocalStorage.get();
 
@@ -293,7 +304,8 @@ class ApplicantStore {
   }
 
   public logOut() {
-    this.applicant = undefined;
+    this.applicant = defaultApplicantInfo;
+    this.resume = undefined;
     applicantLocalStorage.remove();
   }
 

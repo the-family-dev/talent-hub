@@ -18,7 +18,7 @@ import { ApplicantResumeCreatePage } from "../modules/applicant/ApplicantResumeC
 import { ApplicantResumeEditPage } from "../modules/applicant/ApplicantResumeEditPage";
 import { VacanciesApplicantListPage } from "../modules/applicant/vacancies/VacanciesApplicantListPage";
 import { VacancyPageApplicant } from "../modules/applicant/vacancies/VacancyPageApplicant";
-import { CreateVacancyApplicationModal } from "../modules/applicant/vacancies/CreateVacancyApplicationModal";
+import { CreateVacancyRespondModal } from "../modules/applicant/vacancies/CreateVacancyRespondModal";
 import { useEffect } from "react";
 import { StartPageHeader } from "../components/StartPageHeader";
 
@@ -50,14 +50,14 @@ export const ApplicantPages = observer(() => {
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
-        {applicant === undefined ? <StartPageHeader /> : <ApplicantHeader />}
+        {!applicant?.id ? <StartPageHeader /> : <ApplicantHeader />}
         <div
           className="flex flex-col gap-4 self-center h-full pt-6"
           style={{
             width: 1200,
           }}
         >
-          {applicant === undefined ? (
+          {!applicant?.id ? (
             <RegisterApplicantPage />
           ) : (
             <div className="flex flex-row gap-4 w-full">
@@ -92,7 +92,7 @@ export const ApplicantPages = observer(() => {
           )}
         </div>
       </div>
-      <CreateVacancyApplicationModal />
+      <CreateVacancyRespondModal />
     </>
   );
 });

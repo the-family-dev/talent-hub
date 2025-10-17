@@ -1,23 +1,17 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { addToast } from "@heroui/react";
 import { debounce } from "../../../utils/debounce";
-import {
-  applicantVacanciesApi,
-  type TApplicantRespond,
-} from "../../../api/applicantVacanciesApi";
+import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 import { applicantStore } from "../applicantStore";
 import type {
   IApplicantVacancy,
+  TApplicantRespond,
   TApplicantVacancyFilters,
+  TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
 
 const defaultFilters: TApplicantVacancyFilters = {
   search: "",
-};
-
-type TApplicantVacancyRespond = {
-  vacancy: IApplicantVacancy | undefined;
-  note: string;
 };
 
 class VacanciesApplicantStore {

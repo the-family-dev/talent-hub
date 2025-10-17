@@ -3,7 +3,9 @@ import { addToast } from "@heroui/react";
 import { debounce } from "../../../utils/debounce";
 import type {
   IApplicantVacancy,
+  TApplicantRespond,
   TApplicantVacancyFilters,
+  TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
 import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 
@@ -19,6 +21,11 @@ class VacanciesNoauthStore {
   };
 
   selectedVacancy: IApplicantVacancy | undefined = undefined;
+
+  vacancyRespond: TApplicantVacancyRespond = {
+    vacancy: undefined,
+    note: "",
+  };
 
   private _debouncedFetchVacancies = debounce(
     () => this.fetchNoauthVacancies(),
@@ -74,6 +81,33 @@ class VacanciesNoauthStore {
   public clearFilters() {
     this.filters = { ...defaultFilters };
     this._debouncedFetchVacancies();
+  }
+
+  public setVacancyRespond(vacancy: IApplicantVacancy | undefined) {
+    this.vacancyRespond.vacancy = vacancy;
+  }
+
+  public resetVacancyRespond() {
+    this.vacancyRespond = {
+      vacancy: undefined,
+      note: "",
+    };
+  }
+
+  public setNote(note: string) {
+    this.vacancyRespond.note = note;
+  }
+
+  public async sendVacancyRespond(info: TApplicantRespond) {
+    try {
+      await applicantVacanciesApi.postRespond(info);
+    } catch {
+      addToast({
+        title: "Вы уже откликались на эту вакансию",
+        color: "warning",
+      });
+    }
+    this.resetVacancyRespond();
   }
 }
 

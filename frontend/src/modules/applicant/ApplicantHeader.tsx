@@ -8,7 +8,7 @@ import { applicantStore } from "./applicantStore";
 export const ApplicantHeader = observer(() => {
   const { applicant, headerTitle } = applicantStore;
 
-  if (applicant === undefined) return null;
+  if (applicant === undefined || !applicant?.id) return null;
 
   const { login } = applicant;
 
