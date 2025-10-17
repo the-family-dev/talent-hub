@@ -6,10 +6,10 @@ import { Button } from "@heroui/react";
 export const StartPage = observer(() => {
   const navigate = useNavigate();
 
-  const handleRoleSelect = (role: "jobseeker" | "company") => {
+  const handleRoleSelect = (role: "applicant" | "company") => {
     // Здесь можно сохранить выбор роли в store или localStorage
-    if (role === "jobseeker") {
-      navigate("/jobseeker");
+    if (role === "applicant") {
+      navigate("/applicant");
     } else {
       navigate("/company");
     }
@@ -33,7 +33,7 @@ export const StartPage = observer(() => {
           {/* Карточка соискателя */}
           <div
             className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2"
-            onClick={() => handleRoleSelect("jobseeker")}
+            onClick={() => handleRoleSelect("applicant")}
           >
             <div className="p-8">
               <div className="flex flex-col items-center text-center">
@@ -69,7 +69,7 @@ export const StartPage = observer(() => {
                 </ul>
 
                 <Button
-                  onPress={() => handleRoleSelect("jobseeker")}
+                  onPress={() => handleRoleSelect("applicant")}
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
                 >
                   Найти работу

@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,52 +7,101 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Company {
-  id String @id @default(uuid())
-  name String
-  login String @unique
-  vacancies Vacancy[]  // связь один ко многим
+  id        String    @id @default(uuid())
+  name      String
+  login     String    @unique
+  logoUrl   String?
+  vacancies Vacancy[] // связь один ко многим
 }
 
+model User {
+  id        String  @id @default(uuid())
+  name      String
+  login     String  @unique
+  avatarUrl String?
+  resume    Resume?
+}
+
+model Resume {
+  id              String          @id @default(uuid())
+  title           String
+  description     String?
+  salaryFrom      Int?
+  salaryTo        Int?
+  location        String?
+  pdfUrl          String?
+  tags            ResumeTag[]
+  experienceLevel ExperienceLevel
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId      String        @unique
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Application Application[]
+}
 
 model Vacancy {
-  id           String        @id @default(uuid())
-  title        String
-  description  String?
-  requirements String?
-  salary       Int?
-  employmentType EmploymentType
+  id              String          @id @default(uuid())
+  title           String
+  description     String?
+  salaryFrom      Int?
+  salaryTo        Int?
+  employmentType  EmploymentType
   experienceLevel ExperienceLevel
-  location     String?
-  isRemote     Boolean       @default(false)
-  isActive     Boolean       @default(true)
-  tags      VacancyTag[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  location        String?
+  isRemote        Boolean         @default(false)
+  isActive        Boolean         @default(true)
+  tags            VacancyTag[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
   // Связь с Company
   companyId   String?
-  company     Company?   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company     Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  Application Application[]
 }
 
+model Application {
+  id        String            @id @default(uuid())
+  resumeId  String
+  vacancyId String
+  status    ApplicationStatus @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  note      String? // необязательный комментарий к отклику
+
+  resume  Resume  @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  vacancy Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
+
+  @@unique([resumeId, vacancyId]) // чтобы один резюме мог откликнуться на вакансию только один раз
+}
 
 model Tag {
-  id      String       @id @default(uuid())
-  name    String       @unique
+  id        String       @id @default(uuid())
+  name      String       @unique
   vacancies VacancyTag[]
+  resumes   ResumeTag[]
 }
-
 
 model VacancyTag {
   vacancyId String
   tagId     String
-  vacancy   Vacancy @relation(fields: [vacancyId], references: [id])
+  vacancy   Vacancy @relation(fields: [vacancyId], references: [id], onDelete: Cascade)
   tag       Tag     @relation(fields: [tagId], references: [id])
 
   @@id([vacancyId, tagId])
 }
 
+model ResumeTag {
+  resumeId String
+  tagId    String
+  resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  tag      Tag    @relation(fields: [tagId], references: [id])
+
+  @@id([resumeId, tagId])
+}
 
 enum EmploymentType {
   FULL_TIME
@@ -70,3 +118,9 @@ enum ExperienceLevel {
   LEAD
 }
 
+enum ApplicationStatus {
+  PENDING
+  INTERVIEW
+  ACCEPTED
+  REJECTED
+}

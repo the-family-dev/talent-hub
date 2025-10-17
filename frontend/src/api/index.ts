@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = import.meta.env.VITE_BASE_URL;
+export const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const apiClient = axios.create({
   baseURL: baseUrl || "http://localhost:8080",
@@ -9,5 +9,9 @@ const apiClient = axios.create({
   },
   timeout: 10000,
 });
+
+export function getFileSrc(localPath: string) {
+  return `${baseUrl}${localPath}`;
+}
 
 export default apiClient;

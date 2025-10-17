@@ -1,6 +1,7 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import { apiRoutes } from "./routes";
+import path from "path";
 
 const app: Application = express();
 const PORT = process.env.PORT || 8080;
@@ -12,6 +13,17 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Статические папки
+app.use(
+  "/uploads/images",
+  express.static(path.join(__dirname, "../uploads/images"))
+);
+app.use(
+  "/uploads/pdfs",
+  express.static(path.join(__dirname, "../uploads/pdfs"))
+);
 
 app.use("/", apiRoutes);
 

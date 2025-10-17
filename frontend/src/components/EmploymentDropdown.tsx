@@ -1,29 +1,29 @@
 import { observer } from "mobx-react-lite";
-import { VacancyEmploymentType } from "../api/vacanciesApi";
 import { Select, SelectItem } from "@heroui/react";
+import { EmploymentType } from "../types/rootTypes";
 
 const options = [
   {
-    value: VacancyEmploymentType.Contract,
+    value: EmploymentType.Contract,
     label: "Договор",
   },
   {
-    value: VacancyEmploymentType.FullTime,
+    value: EmploymentType.FullTime,
     label: "Полный день",
   },
   {
-    value: VacancyEmploymentType.PartTime,
+    value: EmploymentType.PartTime,
     label: "Частичное время",
   },
   {
-    value: VacancyEmploymentType.Internship,
+    value: EmploymentType.Internship,
     label: "Стажировка",
   },
 ];
 
 export const EmploymentDropdown = observer<{
-  value: VacancyEmploymentType;
-  onChange: (value: VacancyEmploymentType) => void;
+  value: EmploymentType;
+  onChange: (value: EmploymentType) => void;
 }>((props) => {
   const { value, onChange } = props;
   return (
@@ -33,7 +33,7 @@ export const EmploymentDropdown = observer<{
           return; // Prevent clearing the selection
         }
 
-        onChange(key as VacancyEmploymentType);
+        onChange(key as EmploymentType);
       }}
       selectedKeys={[value]}
       label="Тип занятости"

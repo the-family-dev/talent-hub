@@ -1,8 +1,15 @@
-export function formatSalary(salary?: number): string {
-  if (!salary) {
-    return "Не указано";
-  }
+export const formatNumber = (value: number) =>
+  `${value.toLocaleString("ru-RU")}`;
 
-  // Форматируем число с разделителями тысяч и добавляем " Р"
-  return salary.toLocaleString("ru-RU") + " ₽";
-}
+export const clearEmptyFields = <T extends Record<string, unknown>>(
+  fields: T
+): Partial<T> => {
+  const result: Partial<T> = {};
+  for (const key in fields) {
+    const value = fields[key];
+    if (value !== undefined && value !== null && value !== "") {
+      result[key] = value;
+    }
+  }
+  return result;
+};

@@ -205,4 +205,35 @@ export class CompanyController extends BaseController {
       this.error(res, "Внутренняя ошибка сервера");
     }
   };
+
+  public updateLogo = async (req: Request, res: Response) => {
+    try {
+      if (!req.file) {
+        return this.error(res, "Файл не загружен");
+      }
+
+      const paramsValidation = CompanyIdSchema.safeParse(req.params);
+      if (!paramsValidation.success) {
+        return this.error(res, paramsValidation.error);
+      }
+
+      const { id: companyId } = paramsValidation.data;
+
+      //путь для базы данных
+      const filePath = `/uploads/images/${req.file.filename}`;
+
+      // Для логотипа сохраняем в поле logoUrl
+      if (req.file.mimetype.startsWith("image/")) {
+        const updatedCompany = await prisma.company.update({
+          where: { id: companyId },
+          data: { logoUrl: filePath },
+        });
+
+        return this.success(res, updatedCompany);
+      }
+    } catch (err: any) {
+      console.error("Ошибка загрузки файла:", err);
+      return this.error(res, "Ошибка сервера");
+    }
+  };
 }

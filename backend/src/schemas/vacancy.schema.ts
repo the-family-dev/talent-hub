@@ -9,8 +9,8 @@ export const VacancyIdSchema = z.object({
 export const CreateUpdateVacancySchema = z.object({
   title: z.string().min(2, "Название обязательно").max(255),
   description: z.string().optional(),
-  requirements: z.string().optional(),
-  salary: z.number().optional(),
+  salaryFrom: z.number().optional(),
+  salaryTo: z.number().optional(),
   employmentType: z.enum(EmploymentType),
   experienceLevel: z.enum(ExperienceLevel),
   location: z.string().optional(),
@@ -20,13 +20,20 @@ export const CreateUpdateVacancySchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
-// Схема валидации для query параметров
 export const GetVacanciesBodySchema = z.object({
   search: z.string().optional(),
+  tags: z.array(z.string()).optional(),
   companyId: z.uuid("Некорректный формат companyId").optional(),
+  isActive: z.boolean().optional(),
+});
+
+export const SearchVacanciesBodySchema = z.object({
+  search: z.string().optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 export type TGetVacanciesQuery = z.infer<typeof GetVacanciesBodySchema>;
+export type TSearchVacanciesBody = z.infer<typeof SearchVacanciesBodySchema>;
 
 // Автоматическое выведение TypeScript-типа из схемы
 export type TCreateUpdateVacancyInput = z.infer<

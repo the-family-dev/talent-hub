@@ -4,9 +4,10 @@ import { Link } from "react-router";
 import { observer } from "mobx-react-lite";
 import { companyStore } from "./companyStore";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
+import { AvatarImage } from "../../components/AvatarImage";
 
 export const CompanyHeader = observer(() => {
-  const { company } = companyStore;
+  const { company, companyLogoSrc } = companyStore;
 
   if (company === undefined) return null;
 
@@ -20,7 +21,15 @@ export const CompanyHeader = observer(() => {
       maxWidth={"full"}
       isBordered
     >
-      <NavbarBrand className="font-bold text-2xl">{name}</NavbarBrand>
+      <NavbarBrand className="flex flex-row gap-2">
+        <AvatarImage
+          name={name}
+          width={48}
+          height={48}
+          avatar={companyLogoSrc}
+        />
+        <div className="font-bold text-2xl">{name}</div>
+      </NavbarBrand>
       <NavbarContent justify="end">
         <ThemeSwitcher />
         <Button

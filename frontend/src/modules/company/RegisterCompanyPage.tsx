@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { companyStore, LoginFormType } from "./companyStore";
+import { companyStore } from "./companyStore";
 import {
   Card,
   CardBody,
@@ -10,6 +10,7 @@ import {
   Tab,
   Form,
 } from "@heroui/react";
+import { LoginFormType } from "../../types/rootTypes";
 
 const options = [
   {

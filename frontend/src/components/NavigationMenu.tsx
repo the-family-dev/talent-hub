@@ -1,31 +1,14 @@
-import {
-  BuildingOffice2Icon,
-  DocumentTextIcon,
-  HomeIcon,
-} from "@heroicons/react/24/outline";
-import { Button, Card, CardBody, CardHeader } from "@heroui/react";
-import { Link, useLocation } from "react-router";
+import { Badge, Button } from "@heroui/react";
+import { Link, matchPath, useLocation } from "react-router";
 
-const routes = [
-  {
-    id: 1,
-    path: "/company",
-    title: "Вакансии",
-    icon: HomeIcon,
-  },
-  {
-    id: 2,
-    path: "/company/resume",
-    title: "Кандидаты",
-    icon: DocumentTextIcon,
-  },
-  {
-    id: 3,
-    path: "/company/proflie",
-    title: "Профиль",
-    icon: BuildingOffice2Icon,
-  },
-];
+export type TNavigationButton = {
+  path: string;
+  title: string;
+  badge?: number;
+  icon: React.ForwardRefExoticComponent<
+    Omit<React.SVGProps<SVGSVGElement>, "ref">
+  >;
+};
 
 type TNavigationButtonProps = {
   isActive: boolean;
@@ -46,7 +29,7 @@ const NavigationButton = (props: TNavigationButtonProps) => {
       as={Link}
       variant="flat"
       color={isActive ? "primary" : undefined}
-      className="justify-start select-none"
+      className="justify-start select-none w-full"
       draggable={false}
     >
       {title}
@@ -54,23 +37,44 @@ const NavigationButton = (props: TNavigationButtonProps) => {
   );
 };
 
-export const NavigationMenu = () => {
+type TNavigationMenuProps = {
+  buttons: TNavigationButton[];
+};
+
+export const NavigationMenu = (props: TNavigationMenuProps) => {
+  const { buttons } = props;
+
   const location = useLocation();
 
+  const hasChildRoute = (routePath: string) =>
+    buttons.some(
+      (r) => r.path !== routePath && r.path.startsWith(routePath + "/")
+    );
+
   return (
-    <Card className="w-[300px] h-min">
-      <CardHeader>Меню</CardHeader>
-      <CardBody className="flex flex-col gap-2 w-full">
-        {routes.map((route) => (
-          <NavigationButton
-            key={route.id}
-            isActive={route.path === location.pathname}
-            title={route.title}
-            icon={route.icon}
-            path={route.path}
-          />
-        ))}
-      </CardBody>
-    </Card>
+    <div className="w-[300px] h-min flex flex-col gap-2">
+      {buttons.map((button, index) => {
+        const end = hasChildRoute(button.path);
+        const isActive = Boolean(
+          matchPath({ path: button.path, end }, location.pathname)
+        );
+
+        return (
+          <Badge
+            key={index}
+            color="primary"
+            isInvisible={button.badge === undefined}
+            content={button.badge}
+          >
+            <NavigationButton
+              isActive={isActive}
+              title={button.title}
+              icon={button.icon}
+              path={button.path}
+            />
+          </Badge>
+        );
+      })}
+    </div>
   );
 };

@@ -1,24 +1,26 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import {
-  VacancyEmploymentType,
-  VacancyExperienceLevel,
-  vacanciesApi,
-  type TCreateVacancy,
-  type IListVacancy,
-} from "../../api/vacanciesApi";
+  companyVacanciesApi,
+  type TCreateEditVacancy,
+  type ICompanyVacancyBase,
+  type ICompanyVacancy,
+} from "../../api/companyVacanciesApi";
 import { addToast } from "@heroui/react";
 import { vacancyDescriptionMdTemplate } from "./vacanciesContsants";
 import { companyStore } from "../company/companyStore";
 import { debounce } from "../../utils/debounce";
+import { routerStore } from "../router/routerStore";
+import { EmploymentType, ExperienceLevel } from "../../types/rootTypes";
 
-const defaultVacancyFormData: TCreateVacancy = {
+const defaultVacancyFormData: TCreateEditVacancy = {
   title: "",
   description: vacancyDescriptionMdTemplate,
-  salary: 100_000,
+  salaryFrom: 100_000,
+  salaryTo: 150_000,
   isRemote: false,
   isActive: true,
-  employmentType: VacancyEmploymentType.FullTime,
-  experienceLevel: VacancyExperienceLevel.Junior,
+  employmentType: EmploymentType.FullTime,
+  experienceLevel: ExperienceLevel.Junior,
   tags: [],
   location: "Москва",
   companyId: undefined,
@@ -33,14 +35,16 @@ const defaultFilters: TVacancyFilters = {
 };
 
 class VacanciesStore {
-  vacancies: IListVacancy[] = [];
+  vacancies: ICompanyVacancyBase[] = [];
 
   filters: TVacancyFilters = {
     ...defaultFilters,
   };
 
-  createVacancyForm: TCreateVacancy = defaultVacancyFormData;
+  createVacancyForm: TCreateEditVacancy = defaultVacancyFormData;
+  selectedVacancy?: ICompanyVacancy = undefined;
   isCreateModalOpen = false;
+  isEditModalOpen = false;
 
   private _debouncedFetchVacancies = debounce(() => this.fetchVacancies(), 500);
 
@@ -50,7 +54,7 @@ class VacanciesStore {
 
   public async fetchVacancies() {
     try {
-      const vacancies = await vacanciesApi.getAllVacancies({
+      const vacancies = await companyVacanciesApi.getAllVacancies({
         companyId: companyStore.company?.id,
         search: this.filters.search,
       });
@@ -66,10 +70,10 @@ class VacanciesStore {
     }
   }
 
-  public async addVacancy() {
+  public async addVacancy(vacancy: TCreateEditVacancy) {
     try {
-      await vacanciesApi.addVacancy({
-        ...this.createVacancyForm,
+      await companyVacanciesApi.addVacancy({
+        ...vacancy,
         companyId: companyStore.company?.id,
       });
 
@@ -89,6 +93,23 @@ class VacanciesStore {
     }
   }
 
+  public async fetchFacancyById(id?: string) {
+    if (id === undefined) return;
+
+    try {
+      const vacancy = await companyVacanciesApi.getVacancyById(id);
+
+      runInAction(() => {
+        this.selectedVacancy = vacancy;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка получения вакансии",
+        color: "danger",
+      });
+    }
+  }
+
   public setCreateModalOpen(open: boolean) {
     if (!open) {
       this.createVacancyForm = {
@@ -99,45 +120,61 @@ class VacanciesStore {
     this.isCreateModalOpen = open;
   }
 
+  public setEditModalOpen(open: boolean) {
+    this.isEditModalOpen = open;
+  }
+
+  public async updateVacancy(vacancy: TCreateEditVacancy) {
+    if (this.selectedVacancy === undefined) return;
+
+    try {
+      const updatedVacancy = await companyVacanciesApi.updateVacancy(
+        this.selectedVacancy.id,
+        vacancy
+      );
+
+      runInAction(() => {
+        this.selectedVacancy = updatedVacancy;
+        this.isEditModalOpen = false;
+
+        addToast({
+          title: "Вакансия изменена",
+          color: "success",
+        });
+      });
+    } catch {
+      addToast({
+        title: "Ошибка изменения вакансии",
+        color: "danger",
+      });
+    }
+  }
+
+  public async deleteVacancy(id: string) {
+    try {
+      await companyVacanciesApi.deleteVacancy(id);
+
+      runInAction(() => {
+        this.vacancies = this.vacancies.filter((vacancy) => vacancy.id !== id);
+
+        routerStore.navigate?.("/company/vacancy");
+
+        addToast({
+          title: "Вакансия удалена",
+          color: "success",
+        });
+      });
+    } catch {
+      addToast({
+        title: "Ошибка удаления вакансии",
+        color: "danger",
+      });
+    }
+  }
+
   public setFilterSearch(search: string) {
     this.filters.search = search;
     this._debouncedFetchVacancies();
-  }
-
-  public setVacancyTitle(title: string) {
-    this.createVacancyForm.title = title;
-  }
-
-  public setVacancyDescription(description?: string) {
-    this.createVacancyForm.description = description;
-  }
-
-  public setVacancySlary(salary?: number) {
-    this.createVacancyForm.salary = salary;
-  }
-
-  public setVacancyIsRemote(isRemote: boolean) {
-    this.createVacancyForm.isRemote = isRemote;
-  }
-
-  public setVacancyIsActive(isActive: boolean) {
-    this.createVacancyForm.isActive = isActive;
-  }
-
-  public setVacancyEmploymentType(employmentType: VacancyEmploymentType) {
-    this.createVacancyForm.employmentType = employmentType;
-  }
-
-  public setVacancyExperienceLevel(experienceLevel: VacancyExperienceLevel) {
-    this.createVacancyForm.experienceLevel = experienceLevel;
-  }
-
-  public setVacancyTags(tags: string[]) {
-    this.createVacancyForm.tags = tags;
-  }
-
-  public setVacancyLocation(location: string) {
-    this.createVacancyForm.location = location;
   }
 }
 

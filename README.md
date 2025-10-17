@@ -1,11 +1,37 @@
 # Проект
 
+Название
+
 ## Технологии
 
 - [Heroicons](https://heroicons.com/)
 - [HeroUI](https://www.heroui.com/)
 
 ## Установка и запуск
+
+1. Установить зависимости
+
+```bash
+npm install
+```
+
+2. Создать .env файлы в паках frontend и backend
+
+```bash
+npm run create-env
+```
+
+3. Сгенерировать бд и типы для работы с ним
+
+```bash
+npm run generate
+```
+
+4. Запуск в dev режиме
+
+```bash
+npm run dev
+```
 
 ## Команды для разработки
 

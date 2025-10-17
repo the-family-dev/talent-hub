@@ -7,4 +7,4 @@ const pingController = new PingController();
 
 router.use("/ping", pingController.ping);
 
-export { router as pinRoutes };
+export { router as pingRoutes };

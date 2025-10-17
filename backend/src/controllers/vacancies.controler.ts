@@ -6,6 +6,7 @@ import {
   CreateUpdateVacancySchema,
   VacancyIdSchema,
   GetVacanciesBodySchema,
+  SearchVacanciesBodySchema,
 } from "../schemas/vacancy.schema";
 
 export class VacanciesController extends BaseController {
@@ -17,16 +18,30 @@ export class VacanciesController extends BaseController {
         return this.error(res, validationResult.error);
       }
 
-      const { search, companyId } = validationResult.data;
+      const { search, companyId, tags, isActive } = validationResult.data;
 
       const vacancies = await prisma.vacancy.findMany({
         where: {
           AND: [
+            isActive ? { isActive } : {},
             companyId ? { companyId } : {},
             search
               ? {
                   title: {
                     contains: search,
+                  },
+                }
+              : {},
+            tags
+              ? {
+                  tags: {
+                    some: {
+                      tag: {
+                        name: {
+                          in: tags,
+                        },
+                      },
+                    },
                   },
                 }
               : {},
@@ -47,6 +62,7 @@ export class VacanciesController extends BaseController {
             select: {
               id: true,
               name: true,
+              logoUrl: true,
             },
           },
         },
@@ -82,8 +98,8 @@ export class VacanciesController extends BaseController {
           // Основные данные вакансии
           title: validatedData.title,
           description: validatedData.description,
-          requirements: validatedData.requirements,
-          salary: validatedData.salary,
+          salaryFrom: validatedData.salaryFrom,
+          salaryTo: validatedData.salaryTo,
           employmentType: validatedData.employmentType,
           experienceLevel: validatedData.experienceLevel,
           location: validatedData.location,
@@ -127,13 +143,34 @@ export class VacanciesController extends BaseController {
 
       const vacancy = await prisma.vacancy.findUnique({
         where: { id },
+        include: {
+          tags: {
+            select: {
+              tag: {
+                select: { name: true },
+              },
+            },
+          },
+          company: {
+            select: {
+              id: true,
+              name: true,
+              logoUrl: true,
+            },
+          },
+        },
       });
 
       if (!vacancy) {
         return this.error(res, "Вакансия не найдена", 404);
       }
 
-      this.success(res, vacancy);
+      const formattedVacancy = {
+        ...vacancy,
+        tags: vacancy.tags.map((t) => t.tag.name),
+      };
+
+      this.success(res, formattedVacancy);
     } catch (error) {
       console.error("Ошибка при получении вакансии:", error);
       this.error(res, "Внутренняя ошибка сервера");
@@ -193,6 +230,8 @@ export class VacanciesController extends BaseController {
         return this.error(res, paramsValidation.error);
       }
 
+      console.log(paramsValidation);
+
       // Валидация тела запроса
       const bodyValidation = CreateUpdateVacancySchema.safeParse(req.body);
       if (!bodyValidation.success) {
@@ -218,15 +257,17 @@ export class VacanciesController extends BaseController {
           // Основные данные вакансии
           title: validatedData.title,
           description: validatedData.description,
-          requirements: validatedData.requirements,
-          salary: validatedData.salary,
+          salaryFrom: validatedData.salaryFrom,
+          salaryTo: validatedData.salaryTo,
           employmentType: validatedData.employmentType,
           experienceLevel: validatedData.experienceLevel,
           location: validatedData.location,
           isRemote: validatedData.isRemote,
+          isActive: validatedData.isActive,
 
           // Связь с тегами через промежуточную таблицу
           tags: {
+            deleteMany: {}, // Удаляем все теги, если они есть
             create: validatedData.tags?.map((tagName) => ({
               tag: {
                 connectOrCreate: {
@@ -237,9 +278,29 @@ export class VacanciesController extends BaseController {
             })),
           },
         },
+        include: {
+          tags: {
+            select: {
+              tag: {
+                select: { name: true },
+              },
+            },
+          },
+          company: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
       });
 
-      this.success(res, updatedVacancy);
+      const formattedVacancy = {
+        ...updatedVacancy,
+        tags: updatedVacancy.tags.map((t) => t.tag.name),
+      };
+
+      this.success(res, formattedVacancy);
     } catch (error) {
       console.error("Ошибка при обновлении вакансии:", error);
 

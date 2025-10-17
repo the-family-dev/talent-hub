@@ -1,33 +1,33 @@
 import { observer } from "mobx-react-lite";
-import { VacancyExperienceLevel } from "../api/vacanciesApi";
 import { Select, SelectItem } from "@heroui/react";
+import { ExperienceLevel } from "../types/rootTypes";
 
 const options = [
   {
-    value: VacancyExperienceLevel.Intern,
+    value: ExperienceLevel.Intern,
     label: "Стажер",
   },
   {
-    value: VacancyExperienceLevel.Junior,
+    value: ExperienceLevel.Junior,
     label: "Junior",
   },
   {
-    value: VacancyExperienceLevel.Middle,
+    value: ExperienceLevel.Middle,
     label: "Middle",
   },
   {
-    value: VacancyExperienceLevel.Senior,
+    value: ExperienceLevel.Senior,
     label: "Senior",
   },
   {
-    value: VacancyExperienceLevel.Lead,
+    value: ExperienceLevel.Lead,
     label: "Руководитель",
   },
 ];
 
 export const ExperienceDropdown = observer<{
-  value: VacancyExperienceLevel;
-  onChange: (value: VacancyExperienceLevel) => void;
+  value: ExperienceLevel;
+  onChange: (value: ExperienceLevel) => void;
 }>((props) => {
   const { value, onChange } = props;
   return (
@@ -37,7 +37,7 @@ export const ExperienceDropdown = observer<{
           return; // Prevent clearing the selection
         }
 
-        onChange(key as VacancyExperienceLevel);
+        onChange(key as ExperienceLevel);
       }}
       selectedKeys={[value]}
       label="Уровень опыта"
