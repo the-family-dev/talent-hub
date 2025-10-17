@@ -11,8 +11,6 @@ import {
 } from "@heroui/react";
 import { LoginFormType } from "../../types/rootTypes";
 import { applicantStore } from "./applicantStore";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { routerStore } from "../router/routerStore";
 import { useMemo } from "react";
 import { authOptions } from "../../constants/authConstants";
 
@@ -81,25 +79,14 @@ export const RegisterApplicantPage = observer(() => {
                 required
               />
             ) : null}
-            <div className="flex flex-row items-center gap-4 w-full">
-              <Button
-                color="default"
-                variant="ghost"
-                className="w-full font-semibold"
-                onPress={() => routerStore.navigate?.("/auth")}
-                size="md"
-              >
-                <ArrowLeftIcon className="size-4" /> Назад
-              </Button>
-              <Button
-                type="submit"
-                color="primary"
-                className="w-full font-semibold"
-                size="md"
-              >
-                {submitButtonText}
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              color="primary"
+              className="w-full font-semibold"
+              size="md"
+            >
+              {submitButtonText}
+            </Button>
           </Form>
         </CardBody>
       </Card>

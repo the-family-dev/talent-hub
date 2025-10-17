@@ -13,11 +13,13 @@ export const AuthPage = observer(() => {
   const handleRoleSelect = (role: "applicant" | "company" | "university") => {
     if (role === "applicant") {
       navigate("/applicant");
-    } else if (role === "company") {
-      navigate("/company");
-    } else {
-      navigate("/university");
+      return;
     }
+    if (role === "company") {
+      navigate("/company");
+      return;
+    }
+    navigate("/university");
   };
 
   return (

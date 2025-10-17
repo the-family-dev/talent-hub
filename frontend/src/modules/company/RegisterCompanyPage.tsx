@@ -11,20 +11,8 @@ import {
   Form,
 } from "@heroui/react";
 import { LoginFormType } from "../../types/rootTypes";
-import { routerStore } from "../router/routerStore";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useMemo } from "react";
-
-const options = [
-  {
-    title: "Войти",
-    key: LoginFormType.LogIn,
-  },
-  {
-    title: "Зарегистрироваться",
-    key: LoginFormType.Register,
-  },
-];
+import { authOptions } from "../../constants/authConstants";
 
 export const RegisterCompanyPage = observer(() => {
   const { logInType, form } = companyStore;
@@ -64,7 +52,7 @@ export const RegisterCompanyPage = observer(() => {
             }
             color="primary"
           >
-            {options.map(({ title, key }) => (
+            {authOptions.map(({ title, key }) => (
               <Tab title={title} key={key}></Tab>
             ))}
           </Tabs>
@@ -92,25 +80,14 @@ export const RegisterCompanyPage = observer(() => {
               />
             ) : null}
 
-            <div className="flex flex-row items-center gap-4 w-full">
-              <Button
-                color="default"
-                variant="ghost"
-                className="w-full font-semibold"
-                onPress={() => routerStore.navigate?.("/auth")}
-                size="md"
-              >
-                <ArrowLeftIcon className="size-4" /> Назад
-              </Button>
-              <Button
-                type="submit"
-                color="primary"
-                className="w-full font-semibold"
-                size="md"
-              >
-                {submitButtonText}
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              color="primary"
+              className="w-full font-semibold"
+              size="md"
+            >
+              {submitButtonText}
+            </Button>
           </Form>
         </CardBody>
       </Card>

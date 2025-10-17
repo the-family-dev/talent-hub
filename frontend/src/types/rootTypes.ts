@@ -31,3 +31,9 @@ export enum ApplicationStatus {
   Accepted = "ACCEPTED",
   Rejected = "REJECTED",
 }
+
+export enum VacancyStatus {
+  Moderation = "MODERATION",
+  Active = "ACTIVE",
+  Closed = "CLOSED",
+}

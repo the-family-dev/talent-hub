@@ -3,6 +3,7 @@ import type {
   ApplicationStatus,
   EmploymentType,
   ExperienceLevel,
+  VacancyStatus,
 } from "../types/rootTypes";
 
 export type TVAcancyApplicationResume = {
@@ -43,6 +44,7 @@ export interface ICompanyVacancyBase {
   employmentType: EmploymentType;
   experienceLevel: ExperienceLevel;
   createdAt: string;
+  status: VacancyStatus;
   tags: string[];
 }
 
@@ -54,7 +56,7 @@ export interface ICompanyVacancy extends ICompanyVacancyBase {
 
 export type TCreateEditVacancy = Omit<
   ICompanyVacancy,
-  "id" | "createdAt" | "updatedAt" | "applications"
+  "id" | "createdAt" | "updatedAt" | "applications" | "status"
 >;
 
 class CompanyVacanciesApi {

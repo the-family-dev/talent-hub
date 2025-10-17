@@ -2,18 +2,24 @@ import { Button, Navbar, NavbarBrand, NavbarContent } from "@heroui/react";
 import { useLocation, useNavigate } from "react-router";
 import { observer } from "mobx-react-lite";
 import { ThemeSwitcher } from "./ThemeSwitcher";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  WrenchScrewdriverIcon,
+} from "@heroicons/react/24/outline";
+import { routerStore } from "../modules/router/routerStore";
 
 export const StartPageHeader = observer(() => {
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  const isAuthPath =
+  const isAuthPath = location.pathname.includes("/auth");
+
+  const isLoginPath =
     location.pathname.includes("/applicant") ||
     location.pathname.includes("/company") ||
     location.pathname.includes("/university") ||
-    location.pathname.includes("/auth");
+    isAuthPath;
 
   return (
     <Navbar
@@ -25,22 +31,32 @@ export const StartPageHeader = observer(() => {
     >
       <NavbarBrand className="flex flex-row gap-2"></NavbarBrand>
       <NavbarContent justify="end">
+        <Button
+          onPress={() => routerStore.navigate?.("/admin")}
+          isIconOnly
+          className="text-default-500"
+          variant="light"
+        >
+          <WrenchScrewdriverIcon className="size-6" />
+        </Button>
         <ThemeSwitcher />
-        {!isAuthPath ? (
+        {isLoginPath ? (
+          <Button
+            color="primary"
+            onPress={() =>
+              isAuthPath ? navigate("/vacancy") : navigate("/auth")
+            }
+            className="w-min"
+          >
+            <ArrowLeftIcon className="size-4" /> Назад
+          </Button>
+        ) : (
           <Button
             color="primary"
             variant="solid"
             onPress={() => navigate("/auth")}
           >
             Войти
-          </Button>
-        ) : (
-          <Button
-            color="primary"
-            onPress={() => navigate(-1)}
-            className="w-min"
-          >
-            <ArrowLeftIcon className="size-4" /> Назад
           </Button>
         )}
       </NavbarContent>
