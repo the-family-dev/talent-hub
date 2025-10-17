@@ -30,7 +30,7 @@ export const CreateVacancyApplicationModal = observer(() => {
   return (
     <Modal
       isOpen={Boolean(vacancy)}
-      onClose={() => vacanciesApplicantStore.resetVacacnyRespond()}
+      onClose={() => vacanciesApplicantStore.resetVacancyRespond()}
     >
       <ModalContent>
         <ModalHeader>Отклик</ModalHeader>
@@ -45,13 +45,19 @@ export const CreateVacancyApplicationModal = observer(() => {
         </ModalBody>
         <ModalFooter>
           <Button
-            onPress={() => vacanciesApplicantStore.resetVacacnyRespond()}
+            onPress={() => vacanciesApplicantStore.resetVacancyRespond()}
             variant="flat"
           >
             Отмена
           </Button>
           <Button
-            onPress={() => vacanciesApplicantStore.sendVacancyRespond()}
+            onPress={() =>
+              vacanciesApplicantStore.sendVacancyRespond({
+                vacancyId: vacancy?.id as string,
+                resumeId: resume?.id as string,
+                note,
+              })
+            }
             color="primary"
           >
             Отправить

@@ -92,23 +92,25 @@ export const RegisterCompanyPage = observer(() => {
               />
             ) : null}
 
-            <Button
-              type="submit"
-              color="primary"
-              className="w-full font-semibold"
-              size="lg"
-            >
-              {submitButtonText}
-            </Button>
-            <Button
-              color="default"
-              variant="ghost"
-              className="w-full font-semibold"
-              onPress={() => routerStore.navigate?.("/")}
-              size="lg"
-            >
-              <ArrowLeftIcon className="size-6" /> Назад
-            </Button>
+            <div className="flex flex-row items-center gap-4 w-full">
+              <Button
+                color="default"
+                variant="ghost"
+                className="w-full font-semibold"
+                onPress={() => routerStore.navigate?.("/auth")}
+                size="md"
+              >
+                <ArrowLeftIcon className="size-4" /> Назад
+              </Button>
+              <Button
+                type="submit"
+                color="primary"
+                className="w-full font-semibold"
+                size="md"
+              >
+                {submitButtonText}
+              </Button>
+            </div>
           </Form>
         </CardBody>
       </Card>

@@ -20,7 +20,13 @@ model User {
   name      String
   login     String  @unique
   avatarUrl String?
-  resume    Resume?
+
+  // contacts
+  phone    String?
+  email    String?
+  telegram String?
+
+  resume Resume?
 }
 
 model Resume {
@@ -37,9 +43,9 @@ model Resume {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userId      String        @unique
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Application Application[]
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications Application[]
 }
 
 model Vacancy {
@@ -58,9 +64,9 @@ model Vacancy {
   updatedAt       DateTime        @updatedAt
 
   // Связь с Company
-  companyId   String?
-  company     Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  Application Application[]
+  companyId    String?
+  company      Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  applications Application[]
 }
 
 model Application {

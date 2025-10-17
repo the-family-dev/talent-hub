@@ -1,23 +1,35 @@
 import apiClient from ".";
-import type { EmploymentType, ExperienceLevel } from "../types/rootTypes";
+import type {
+  ApplicationStatus,
+  EmploymentType,
+  ExperienceLevel,
+} from "../types/rootTypes";
 
-export interface ICompanyVacancy {
+export type TVAcancyApplicationResume = {
   id: string;
   title: string;
   description?: string;
-  salaryFrom?: number;
-  salaryTo?: number;
-  requirements?: string;
-  location?: string;
-  isRemote: boolean;
-  isActive: boolean;
-  employmentType: EmploymentType;
   experienceLevel: ExperienceLevel;
   tags: string[];
+  pdfUrl?: string;
+  user: {
+    id: string;
+    name: string;
+    phone?: string;
+    email?: string;
+    telegram?: string;
+    avatarUrl?: string;
+  };
+};
+
+export type TVacancyApplication = {
+  id: string;
+  status: ApplicationStatus;
   createdAt: string;
-  companyId?: string;
   updatedAt: string;
-}
+  note?: string;
+  resume: TVAcancyApplicationResume;
+};
 
 export interface ICompanyVacancyBase {
   id: string;
@@ -34,9 +46,15 @@ export interface ICompanyVacancyBase {
   tags: string[];
 }
 
+export interface ICompanyVacancy extends ICompanyVacancyBase {
+  companyId?: string;
+  updatedAt: string;
+  applications: TVacancyApplication[];
+}
+
 export type TCreateEditVacancy = Omit<
   ICompanyVacancy,
-  "id" | "createdAt" | "updatedAt"
+  "id" | "createdAt" | "updatedAt" | "applications"
 >;
 
 class CompanyVacanciesApi {

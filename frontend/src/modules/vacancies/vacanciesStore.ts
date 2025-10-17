@@ -10,7 +10,13 @@ import { vacancyDescriptionMdTemplate } from "./vacanciesContsants";
 import { companyStore } from "../company/companyStore";
 import { debounce } from "../../utils/debounce";
 import { routerStore } from "../router/routerStore";
-import { EmploymentType, ExperienceLevel } from "../../types/rootTypes";
+import {
+  ApplicationStatus,
+  EmploymentType,
+  ExperienceLevel,
+} from "../../types/rootTypes";
+import cloneDeep from "clone-deep";
+import { applicationApi } from "../../api/applicationApi";
 
 const defaultVacancyFormData: TCreateEditVacancy = {
   title: "",
@@ -30,8 +36,18 @@ type TVacancyFilters = {
   search: string;
 };
 
+type TVacancyApplicationFilters = {
+  status?: ApplicationStatus;
+  search: string;
+};
+
 const defaultFilters: TVacancyFilters = {
   search: "",
+};
+
+const defaultVacancyApplicationFilters: TVacancyApplicationFilters = {
+  search: "",
+  status: undefined,
 };
 
 class VacanciesStore {
@@ -39,7 +55,12 @@ class VacanciesStore {
   filters: TVacancyFilters = {
     ...defaultFilters,
   };
+  applicationFilters: TVacancyApplicationFilters = cloneDeep(
+    defaultVacancyApplicationFilters
+  );
+
   selectedVacancy?: ICompanyVacancy = undefined;
+
   private _debouncedFetchVacancies = debounce(() => this.fetchVacancies(), 500);
 
   constructor() {
@@ -48,9 +69,52 @@ class VacanciesStore {
 
   get defaultVacancyData() {
     return {
-      ...defaultVacancyFormData,
+      ...cloneDeep(defaultVacancyFormData),
       companyId: companyStore.company?.id,
     };
+  }
+
+  get filteredAplications() {
+    if (this.selectedVacancy === undefined) return [];
+
+    const { search, status } = this.applicationFilters;
+
+    return this.selectedVacancy.applications.filter((application) => {
+      const matchName = application.resume.user.name
+        .toLowerCase()
+        .includes(search.toLowerCase());
+
+      const matchStatus = status ? application.status === status : true;
+
+      return matchName && matchStatus;
+    });
+  }
+
+  public setVacancyApplicationFilter<
+    K extends keyof TVacancyApplicationFilters
+  >(field: K, value: TVacancyApplicationFilters[K]) {
+    this.applicationFilters[field] = value;
+  }
+
+  public async updateApplicationStatus(
+    applicationId: string,
+    status: ApplicationStatus
+  ) {
+    try {
+      await applicationApi.updateStatus(applicationId, status);
+
+      addToast({
+        title: "Статус отклика успешно обновлен",
+        color: "success",
+      });
+
+      this.fetchVacancyById(this.selectedVacancy?.id);
+    } catch {
+      addToast({
+        title: "Ошибка обновления статуса",
+        color: "danger",
+      });
+    }
   }
 
   public async fetchVacancies() {
@@ -98,9 +162,12 @@ class VacanciesStore {
 
     try {
       const vacancy = await companyVacanciesApi.getVacancyById(id);
+      console.log("fetchVacancyById", vacancy);
 
       runInAction(() => {
         this.selectedVacancy = vacancy;
+
+        console.log("selectedVacancy", this.selectedVacancy);
       });
     } catch {
       addToast({

@@ -5,7 +5,7 @@ import {
   CreateApplicationSchema,
   UpdateApplicationSchema,
   ApplicationIdSchema,
-  GetApplicationsQuerySchema,
+  GetApplicationsBodySchema,
   TCreateApplicationInput,
   TUpdateApplicationInput,
 } from "../schemas/application.schema";
@@ -14,7 +14,7 @@ export class ApplicationController extends BaseController {
   // Получить все отклики
   getAll = async (req: Request, res: Response) => {
     try {
-      const validation = GetApplicationsQuerySchema.safeParse(req.query);
+      const validation = GetApplicationsBodySchema.safeParse(req.body);
       if (!validation.success) {
         return this.error(res, validation.error);
       }

@@ -5,6 +5,9 @@ export type TApplicant = {
   name: string;
   login: string;
   avatarUrl?: string;
+  phone?: string;
+  email?: string;
+  telegram?: string;
 };
 
 type TRegisterApplicant = Omit<TApplicant, "id">;

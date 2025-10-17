@@ -10,7 +10,11 @@ const apiClient = axios.create({
   timeout: 10000,
 });
 
-export function getFileSrc(localPath: string) {
+export function getFileSrc(localPath?: string) {
+  if (!localPath) {
+    return undefined;
+  }
+
   return `${baseUrl}${localPath}`;
 }
 

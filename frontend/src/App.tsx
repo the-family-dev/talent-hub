@@ -1,10 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { Route, Routes, useNavigate } from "react-router";
-import { StartPage } from "./pages/StartPage";
 import { CompanyPages } from "./pages/CompanyPages";
 import { useEffect } from "react";
 import { routerStore } from "./modules/router/routerStore";
 import { ApplicantPages } from "./pages/ApplicantPages";
+import { NoAuthPages } from "./pages/NoAuthPages";
+import { UniversityPages } from "./pages/UniversityPages";
 
 const App = observer(() => {
   const navigate = useNavigate();
@@ -17,8 +18,9 @@ const App = observer(() => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<StartPage />} />
+        <Route path="/*" element={<NoAuthPages />} />
         <Route path="company/*" element={<CompanyPages />} />
+        <Route path="university/*" element={<UniversityPages />} />
         <Route path="applicant/*" element={<ApplicantPages />} />
       </Routes>
     </>

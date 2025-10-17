@@ -1,4 +1,6 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, toJS } from "mobx";
+import equal from "fast-deep-equal";
+import cloneDeep from "clone-deep";
 import { TypedStorage } from "../../utils/storage";
 import { addToast } from "@heroui/react";
 import { getFileSrc } from "../../api";
@@ -30,10 +32,10 @@ const defaultApplicantForm: TApplicantForm = {
 
 class ApplicantStore {
   public applicant: TApplicant | undefined = applicantLocalStorage.get();
+  public _originalApplicant: TApplicant | undefined =
+    applicantLocalStorage.get();
 
   public logInType: LoginFormType = LoginFormType.LogIn;
-
-  public applicantName = applicantLocalStorage.get()?.name || "";
 
   public newPhoto: File | undefined = undefined;
 
@@ -53,6 +55,14 @@ class ApplicantStore {
     if (this.applicant?.avatarUrl) {
       return getFileSrc(this.applicant.avatarUrl);
     }
+  }
+
+  get headerTitle() {
+    if (this.applicant) {
+      return this.applicant.name;
+    }
+
+    return "Без имени";
   }
 
   get defaultResumeData(): TCreateResume {
@@ -91,12 +101,22 @@ class ApplicantStore {
     this.newPhoto = photo;
   }
 
-  public setApplicantName(name: string) {
-    this.applicantName = name;
+  public setApplicantField<K extends keyof TApplicant>(
+    field: K,
+    value: TApplicant[K]
+  ) {
+    if (this.applicant === undefined) return;
+
+    this.applicant[field] = value;
   }
 
   get hasChanges() {
-    return Boolean(this.applicantName !== this.applicant?.name);
+    if (!this.applicant || !this._originalApplicant) return false;
+
+    const plainApplicant = toJS(this.applicant);
+    const plainOriginal = toJS(this._originalApplicant);
+
+    return !equal(plainApplicant, plainOriginal);
   }
 
   public async updateApplicantAvatar() {
@@ -151,10 +171,10 @@ class ApplicantStore {
     if (this.applicant === undefined) return;
 
     try {
-      const applicant = await applicantApi.updateApplicant(this.applicant!.id, {
-        ...this.applicant,
-        name: this.applicantName,
-      });
+      const applicant = await applicantApi.updateApplicant(
+        this.applicant!.id,
+        this.applicant
+      );
 
       runInAction(() => {
         addToast({
@@ -164,7 +184,8 @@ class ApplicantStore {
 
         this._setApplicant(applicant);
       });
-    } catch {
+    } catch (e) {
+      console.log(e);
       addToast({
         title: "Ошибка",
         description: "Ошибка при обновлении данных профиля",
@@ -174,7 +195,7 @@ class ApplicantStore {
   }
 
   public resetChanges() {
-    this.applicantName = this.applicant?.name || "";
+    this.applicant = cloneDeep(this._originalApplicant);
   }
 
   public async getResume() {
@@ -276,10 +297,15 @@ class ApplicantStore {
     applicantLocalStorage.remove();
   }
 
-  private _setApplicant(applcant: TApplicant) {
-    this.applicant = applcant;
-    this.applicantName = applcant.name;
-    applicantLocalStorage.set(applcant);
+  private _setApplicant(applicant: TApplicant) {
+    // создаём observable (если нужно), но сравнивать будем не Proxy
+    this.applicant = applicant;
+
+    // сохраняем чистую глубокую копию оригинала
+    this._originalApplicant = cloneDeep(toJS(applicant));
+
+    // сохраняем в localStorage (plain-версию, не MobX Proxy)
+    applicantLocalStorage.set(toJS(applicant));
   }
 }
 

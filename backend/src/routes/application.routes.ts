@@ -6,7 +6,8 @@ const router = Router();
 
 const controller = new ApplicationController();
 
-router.get("/", controller.getAll);
+router.post("/search", controller.getAll);
 router.post("/", controller.add);
+router.put("/:id", controller.update);
 
 export { router as applicationRoutes };

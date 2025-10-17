@@ -1,24 +1,17 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { addToast } from "@heroui/react";
 import { debounce } from "../../../utils/debounce";
-import {
-  applicantVacanciesApi,
-  type IApplicantVacancy,
-  type TApplicantRespond,
-  type TApplicantVacancyFilters,
-} from "../../../api/applicantVacanciesApi";
-import { applicantStore } from "../applicantStore";
+import type {
+  IApplicantVacancy,
+  TApplicantVacancyFilters,
+} from "../../../types/vacancyTypes";
+import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 
 const defaultFilters: TApplicantVacancyFilters = {
   search: "",
 };
 
-type TApplicantVacancyRespond = {
-  vacancy: IApplicantVacancy | undefined;
-  note: string;
-};
-
-class VacanciesApplicantStore {
+class VacanciesNoauthStore {
   vacancies: IApplicantVacancy[] = [];
 
   filters: TApplicantVacancyFilters = {
@@ -27,13 +20,8 @@ class VacanciesApplicantStore {
 
   selectedVacancy: IApplicantVacancy | undefined = undefined;
 
-  vacancyRespond: TApplicantVacancyRespond = {
-    vacancy: undefined,
-    note: "",
-  };
-
   private _debouncedFetchVacancies = debounce(
-    () => this.fetchApplicantVacancies(),
+    () => this.fetchNoauthVacancies(),
     500
   );
 
@@ -41,43 +29,7 @@ class VacanciesApplicantStore {
     makeAutoObservable(this);
   }
 
-  public setVacancyRespond(vacancy: IApplicantVacancy | undefined) {
-    if (!applicantStore.resume) {
-      addToast({
-        title: "Чтобы откликнуться сначала загрузите резюме",
-        color: "warning",
-      });
-
-      return;
-    }
-
-    this.vacancyRespond.vacancy = vacancy;
-  }
-
-  public resetVacancyRespond() {
-    this.vacancyRespond = {
-      vacancy: undefined,
-      note: "",
-    };
-  }
-
-  public setNote(note: string) {
-    this.vacancyRespond.note = note;
-  }
-
-  public async sendVacancyRespond(info: TApplicantRespond) {
-    try {
-      await applicantVacanciesApi.postRespond(info);
-    } catch {
-      addToast({
-        title: "Вы уже откликались на эту вакансию",
-        color: "warning",
-      });
-    }
-    this.resetVacancyRespond();
-  }
-
-  public async fetchApplicantVacancies() {
+  public async fetchNoauthVacancies() {
     try {
       const vacancies = await applicantVacanciesApi.getAllVacanciesApplicant(
         this.filters
@@ -125,4 +77,4 @@ class VacanciesApplicantStore {
   }
 }
 
-export const vacanciesApplicantStore = new VacanciesApplicantStore();
+export const vacanciesNoauthStore = new VacanciesNoauthStore();

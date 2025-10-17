@@ -7,7 +7,6 @@ import {
 import { VacanciesListPage } from "../modules/vacancies/VacanciesListPage";
 import { observer } from "mobx-react-lite";
 import { companyStore } from "../modules/company/companyStore";
-import { RegisterCompanyPage } from "../modules/company/RegisterCompanyPage";
 import { CompanyProfilePage } from "../modules/company/CompanyProfilePage";
 import { VacancyPage } from "../modules/vacancies/VacancyPage";
 import {
@@ -18,30 +17,31 @@ import {
 import { VacancyCreatePage } from "../modules/vacancies/VacancyCreatePage";
 import { VacancyEditPage } from "../modules/vacancies/VacancyEditPage";
 import { VacancyApplicationPage } from "../modules/vacancies/VacancyApplicationPage";
+import { RegisterUniversityPage } from "../modules/university/RegisterUniversityPage";
 
 const routes: TNavigationButton[] = [
   {
-    path: "/company",
+    path: "/university",
     title: "Профиль",
     icon: BuildingOffice2Icon,
   },
   {
-    path: "/company/vacancy",
+    path: "/university/vacancy",
     title: "Вакансии",
     icon: HomeIcon,
   },
   {
-    path: "/company/resume",
+    path: "/university/resume",
     title: "Отклики",
     icon: DocumentTextIcon,
   },
 ];
 
-export const CompanyPages = observer(() => {
+export const UniversityPages = observer(() => {
   const { company } = companyStore;
 
   if (company === undefined) {
-    return <RegisterCompanyPage />;
+    return <RegisterUniversityPage />;
   }
 
   return (

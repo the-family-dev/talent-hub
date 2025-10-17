@@ -10,9 +10,9 @@ export const ApplicantProfileCard = observer<{
 }>((props) => {
   const { applicant } = props;
 
-  const { login, name } = applicant;
+  const { login, name, phone, email, telegram } = applicant;
 
-  const { applicantAvatarSrc, hasChanges, applicantName } = applicantStore;
+  const { applicantAvatarSrc, hasChanges } = applicantStore;
 
   return (
     <div className="flex flex-col gap-2">
@@ -32,11 +32,6 @@ export const ApplicantProfileCard = observer<{
         </div>
         <div className="flex flex-col w-full gap-4">
           <div className="flex flex-col w-full gap-2">
-            <Input
-              value={applicantName}
-              onChange={(e) => applicantStore.setApplicantName(e.target.value)}
-              label="ФИО"
-            />
             <Snippet
               tooltipProps={{
                 children: "Скопировать логин",
@@ -47,6 +42,36 @@ export const ApplicantProfileCard = observer<{
             >
               {login}
             </Snippet>
+            <Input
+              value={name}
+              onChange={(e) =>
+                applicantStore.setApplicantField("name", e.target.value)
+              }
+              label="ФИО"
+            />
+            <Input
+              errorMessage="Введите корректный номер телефона в формате +79991234567"
+              pattern="^\+?\d{10,15}$"
+              label="Номер телефона"
+              value={phone ?? ""}
+              onChange={(e) =>
+                applicantStore.setApplicantField("phone", e.target.value)
+              }
+            />
+            <Input
+              value={telegram ?? ""}
+              onChange={(e) =>
+                applicantStore.setApplicantField("telegram", e.target.value)
+              }
+              label="Telegram"
+            />
+            <Input
+              value={email ?? ""}
+              onChange={(e) =>
+                applicantStore.setApplicantField("email", e.target.value)
+              }
+              label="Эл. почта"
+            />
           </div>
           <div className="flex flex-row gap-2">
             <Button

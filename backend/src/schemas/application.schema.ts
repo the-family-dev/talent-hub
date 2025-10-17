@@ -20,7 +20,7 @@ export const UpdateApplicationSchema = z.object({
 
 export type TUpdateApplicationInput = z.infer<typeof UpdateApplicationSchema>;
 
-export const GetApplicationsQuerySchema = z.object({
+export const GetApplicationsBodySchema = z.object({
   resumeId: z.uuid().optional(),
   vacancyId: z.uuid().optional(),
   status: z.enum(ApplicationStatus).optional(),

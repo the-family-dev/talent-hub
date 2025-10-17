@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import ReactMarkdown from "react-markdown";
 import { Button, Chip } from "@heroui/react";
 import {
@@ -8,21 +8,22 @@ import {
   CalendarDaysIcon,
   MapPinIcon,
 } from "@heroicons/react/24/outline";
-import { vacanciesApplicantStore } from "./vacanciesApplicantStore";
-import { routerStore } from "../../router/routerStore";
 import SalaryRange from "../../../components/SalaryRange";
 import { EmploymentTypeLabel } from "../../../types/rootTypes";
 import { AvatarImage } from "../../../components/AvatarImage";
 import { getFileSrc } from "../../../api";
 import dayjs from "dayjs";
+import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
 
-export const VacancyPageApplicant = observer(() => {
+export const VacancyPageNoauth = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
 
-  const { selectedVacancy } = vacanciesApplicantStore;
+  const { selectedVacancy } = vacanciesNoauthStore;
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    vacanciesApplicantStore.fetchVacancyById(pageId);
+    vacanciesNoauthStore.fetchVacancyById(pageId);
   }, [pageId]);
 
   if (selectedVacancy === undefined) return null;
@@ -57,7 +58,7 @@ export const VacancyPageApplicant = observer(() => {
         <div className="flex flex-row justify-end gap-4">
           <Button
             onPress={() => {
-              vacanciesApplicantStore.setVacancyRespond(selectedVacancy);
+              navigate("/auth");
             }}
             size="md"
             variant="solid"
@@ -68,7 +69,9 @@ export const VacancyPageApplicant = observer(() => {
 
           <Button
             color="default"
-            onPress={() => routerStore.navigate?.("/applicant/vacancy")}
+            onPress={() => {
+              navigate("/vacancy");
+            }}
             size="md"
           >
             <ArrowLeftIcon className="size-4" /> Назад

@@ -10,10 +10,10 @@ import {
   Form,
 } from "@heroui/react";
 import { LoginFormType } from "../../types/rootTypes";
-import { applicantStore } from "./applicantStore";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { routerStore } from "../router/routerStore";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useMemo } from "react";
+import { companyStore } from "../company/companyStore";
 
 const options = [
   {
@@ -26,8 +26,8 @@ const options = [
   },
 ];
 
-export const RegisterApplicantPage = observer(() => {
-  const { logInType, form } = applicantStore;
+export const RegisterUniversityPage = observer(() => {
+  const { logInType, form } = companyStore;
 
   const { name, login } = form;
 
@@ -35,11 +35,11 @@ export const RegisterApplicantPage = observer(() => {
     e.preventDefault();
 
     if (logInType === LoginFormType.LogIn) {
-      applicantStore.logIn();
+      companyStore.logIn();
       return;
     }
     if (logInType === LoginFormType.Register) {
-      applicantStore.register();
+      companyStore.register();
       return;
     }
   };
@@ -56,11 +56,11 @@ export const RegisterApplicantPage = observer(() => {
     <div className="min-h-screen flex items-center justify-center">
       <Card className="w-[500px]">
         <CardHeader className="flex flex-col gap-2 pb-4">
-          <div className="text-xl font-bold">Соискатель</div>
+          <div className="text-xl font-bold">Вуз</div>
           <Tabs
             selectedKey={logInType}
             onSelectionChange={(key) =>
-              applicantStore.setLoginType(key as LoginFormType)
+              companyStore.setLoginType(key as LoginFormType)
             }
             color="primary"
           >
@@ -76,21 +76,22 @@ export const RegisterApplicantPage = observer(() => {
               label="Логин"
               placeholder="Введите ваш логин"
               value={login}
-              onChange={(e) => applicantStore.setFormLogin(e.target.value)}
+              onChange={(e) => companyStore.setFormLogin(e.target.value)}
               className="w-full"
               required
             />
 
             {logInType === LoginFormType.Register ? (
               <Input
-                label="ФИО"
-                placeholder="Введите ваше ФИО полностью"
+                label="Наименование вуза (полностью)"
+                placeholder="Введите название вуза"
                 value={name}
-                onChange={(e) => applicantStore.setFormName(e.target.value)}
+                onChange={(e) => companyStore.setFormName(e.target.value)}
                 className="w-full"
                 required
               />
             ) : null}
+
             <div className="flex flex-row items-center gap-4 w-full">
               <Button
                 color="default"

@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { applicantStore } from "./applicantStore";
 import { Button, Skeleton } from "@heroui/react";
 import { routerStore } from "../router/routerStore";
-import { ApplicantResumeViewer } from "./ApplicanrResumeViewer";
+import { ApplicantResumeViewer } from "./ApplicantResumeViewer";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { ConfirmationWrapper } from "../../components/ConfirmationWrapper";
 import { FileInput } from "../../components/FileInput";

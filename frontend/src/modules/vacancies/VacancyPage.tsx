@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router";
 import { vacanciesStore } from "./vacanciesStore";
 import ReactMarkdown from "react-markdown";
-import { Button, Chip } from "@heroui/react";
+import { Badge, Button, Chip } from "@heroui/react";
 import {
   ArrowLeftIcon,
   BuildingOfficeIcon,
@@ -13,6 +13,7 @@ import {
 import { ConfirmationWrapper } from "../../components/ConfirmationWrapper";
 import { routerStore } from "../router/routerStore";
 import SalaryRange from "../../components/SalaryRange";
+import { ApplicationStatus } from "../../types/rootTypes";
 
 export const VacancyPage = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
@@ -25,8 +26,20 @@ export const VacancyPage = observer(() => {
 
   if (selectedVacancy === undefined) return null;
 
-  const { title, description, tags, id, salaryFrom, salaryTo, location } =
-    selectedVacancy;
+  const {
+    title,
+    description,
+    tags,
+    id,
+    salaryFrom,
+    salaryTo,
+    location,
+    applications,
+  } = selectedVacancy;
+
+  const newApplicationsCount = applications.filter(
+    (application) => (application.status = ApplicationStatus.Pending)
+  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -40,6 +53,17 @@ export const VacancyPage = observer(() => {
         </Button>
 
         <div className="flex flex-row gap-2">
+          <Badge color="primary" content={newApplicationsCount.length}>
+            <Button
+              variant="faded"
+              color="primary"
+              onPress={() =>
+                routerStore.navigate?.(`/company/vacancy/${id}/application`)
+              }
+            >
+              Отклики
+            </Button>
+          </Badge>
           <Button
             isIconOnly
             variant="light"

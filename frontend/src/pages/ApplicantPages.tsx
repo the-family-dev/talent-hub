@@ -20,6 +20,7 @@ import { VacanciesApplicantListPage } from "../modules/applicant/vacancies/Vacan
 import { VacancyPageApplicant } from "../modules/applicant/vacancies/VacancyPageApplicant";
 import { CreateVacancyApplicationModal } from "../modules/applicant/vacancies/CreateVacancyApplicationModal";
 import { useEffect } from "react";
+import { StartPageHeader } from "../components/StartPageHeader";
 
 const routes: TNavigationButton[] = [
   {
@@ -46,46 +47,54 @@ export const ApplicantPages = observer(() => {
     applicantStore.getResume();
   }, []);
 
-  if (applicant === undefined) {
-    return <RegisterApplicantPage />;
-  }
-
   return (
     <>
       <div className="w-full flex flex-col justify-center items-center overflow-y-auto">
         <div
-          className="flex flex-col gap-4 h-screen self-center mt-4"
+          className="flex flex-col gap-4 h-screen self-center"
           style={{
             width: 1200,
           }}
         >
-          <ApplicantHeader />
-          <div className="flex flex-row gap-4 w-full">
-            <NavigationMenu buttons={routes} />
-            <div className="w-full pb-6">
-              <Routes>
-                <Route path="/" element={<ApplicantProfilePage />} />
-                <Route path="/resume" element={<ApplicantResumePage />} />
-                <Route
-                  path="/resume/create"
-                  element={<ApplicantResumeCreatePage />}
-                />
-                <Route
-                  path="/resume/edit"
-                  element={<ApplicantResumeEditPage />}
-                />
-                <Route
-                  path="/vacancy"
-                  element={<VacanciesApplicantListPage />}
-                />
-                <Route path="/vacancy/:id" element={<VacancyPageApplicant />} />
-                {/* 
+          {applicant === undefined ? (
+            <>
+              <StartPageHeader />
+              <RegisterApplicantPage />
+            </>
+          ) : (
+            <>
+              <ApplicantHeader />
+              <div className="flex flex-row gap-4 w-full">
+                <NavigationMenu buttons={routes} />
+                <div className="w-full pb-6">
+                  <Routes>
+                    <Route path="/" element={<ApplicantProfilePage />} />
+                    <Route path="/resume" element={<ApplicantResumePage />} />
+                    <Route
+                      path="/resume/create"
+                      element={<ApplicantResumeCreatePage />}
+                    />
+                    <Route
+                      path="/resume/edit"
+                      element={<ApplicantResumeEditPage />}
+                    />
+                    <Route
+                      path="/vacancy"
+                      element={<VacanciesApplicantListPage />}
+                    />
+                    <Route
+                      path="/vacancy/:id"
+                      element={<VacancyPageApplicant />}
+                    />
+                    {/* 
             
             <Route path="/resume" element={<ResumesListPage />} />
             <Route path="/resume/:id" element={<ResumePage />} /> */}
-              </Routes>
-            </div>
-          </div>
+                  </Routes>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
       <CreateVacancyApplicationModal />

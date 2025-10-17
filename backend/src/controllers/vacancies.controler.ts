@@ -156,6 +156,35 @@ export class VacanciesController extends BaseController {
               logoUrl: true,
             },
           },
+          applications: {
+            select: {
+              id: true,
+              status: true,
+              createdAt: true,
+              updatedAt: true,
+              note: true,
+              resume: {
+                select: {
+                  id: true,
+                  title: true,
+                  description: true,
+                  experienceLevel: true,
+                  tags: true,
+                  pdfUrl: true,
+                  user: {
+                    select: {
+                      id: true,
+                      name: true,
+                      phone: true,
+                      telegram: true,
+                      email: true,
+                      avatarUrl: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       });
 

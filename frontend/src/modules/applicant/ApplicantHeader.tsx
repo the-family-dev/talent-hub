@@ -6,11 +6,11 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import { applicantStore } from "./applicantStore";
 
 export const ApplicantHeader = observer(() => {
-  const { applicant } = applicantStore;
+  const { applicant, headerTitle } = applicantStore;
 
   if (applicant === undefined) return null;
 
-  const { name, login } = applicant;
+  const { login } = applicant;
 
   return (
     <Navbar
@@ -20,7 +20,7 @@ export const ApplicantHeader = observer(() => {
       maxWidth={"full"}
       isBordered
     >
-      <NavbarBrand className="font-bold text-2xl">{name}</NavbarBrand>
+      <NavbarBrand className="font-bold text-2xl">{headerTitle}</NavbarBrand>
       <NavbarContent justify="end">
         <ThemeSwitcher />
         <Button

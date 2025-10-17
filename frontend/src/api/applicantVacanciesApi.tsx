@@ -1,33 +1,14 @@
 import apiClient from ".";
-import type { EmploymentType, ExperienceLevel } from "../types/rootTypes";
+import type {
+  IApplicantVacancy,
+  TApplicantVacancyFilters,
+} from "../types/vacancyTypes";
+import { clearEmptyFields } from "../utils/utils";
 
-export interface IApplicantVacancy {
-  id: string;
-  title: string;
-  description?: string;
-  salaryFrom?: number;
-  salaryTo?: number;
-  requirements?: string;
-  location?: string;
-  isRemote: boolean;
-  isActive: boolean;
-  employmentType: EmploymentType;
-  experienceLevel: ExperienceLevel;
-  tags: string[];
-  company: {
-    id: string;
-    name: string;
-    logoUrl?: string;
-  };
-  createdAt: string;
-  companyId?: string;
-  updatedAt: string;
-}
-
-export type TApplicantVacancyFilters = {
-  tags?: string[];
-  search?: string;
-  companyId?: string;
+export type TApplicantRespond = {
+  resumeId: string;
+  vacancyId: string;
+  note?: string;
 };
 
 class ApplicantVacanciesApi {
@@ -42,6 +23,15 @@ class ApplicantVacanciesApi {
 
   public async getVacancyById(id: string) {
     const response = await apiClient.get<IApplicantVacancy>(`/vacancies/${id}`);
+
+    return response.data;
+  }
+
+  public async postRespond(respondInfo: TApplicantRespond) {
+    const response = await apiClient.post(
+      "/application",
+      clearEmptyFields(respondInfo)
+    );
 
     return response.data;
   }
