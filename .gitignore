@@ -4,3 +4,5 @@
 /frontend/dist
 /frontend/node_modules
 backend/prisma/dev.db
+/frontend/.env
+/backend/.env
