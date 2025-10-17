@@ -9,11 +9,11 @@ import {
   MapPinIcon,
 } from "@heroicons/react/24/outline";
 import SalaryRange from "../../../components/SalaryRange";
-import { EmploymentTypeLabel } from "../../../types/rootTypes";
 import { AvatarImage } from "../../../components/AvatarImage";
 import { getFileSrc } from "../../../api";
 import dayjs from "dayjs";
 import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
+import { EmploymentTypeLabel } from "../../../components/EmploymentTypeLabel";
 
 export const VacancyPageNoauth = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
@@ -89,9 +89,7 @@ export const VacancyPageNoauth = observer(() => {
         {tags?.map((tag) => {
           return <Chip color={"default"}>{tag}</Chip>;
         })}
-        <Chip color={"default"} variant="bordered">
-          {EmploymentTypeLabel[employmentType]}
-        </Chip>
+        <EmploymentTypeLabel employmentType={employmentType} />
 
         {isRemote && (
           <Chip color={"default"} variant="bordered">

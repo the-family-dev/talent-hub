@@ -19,7 +19,7 @@ export const CreateUpdateVacancySchema = z.object({
   companyId: z.uuid(),
   tags: z.array(z.string()).optional(),
   status: z.enum(VacancyStatus).optional(),
-  closeDate: z.string().optional(),
+  // closeDate: z.string().optional(),
 });
 
 export const GetVacanciesBodySchema = z.object({

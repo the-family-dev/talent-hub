@@ -52,7 +52,7 @@ export const ApplicantPages = observer(() => {
       <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
         {applicant === undefined ? <StartPageHeader /> : <ApplicantHeader />}
         <div
-          className="flex flex-col gap-4 self-center h-full pt-6"
+          className="flex flex-col gap-4 self-center h-full pt-[65px]"
           style={{
             width: 1200,
           }}

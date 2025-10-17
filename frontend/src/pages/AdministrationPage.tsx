@@ -31,7 +31,7 @@ export const AdministrationPage = observer(() => {
   return (
     <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
       <div
-        className="flex flex-col gap-4 h-full self-center pt-6"
+        className="flex flex-col gap-4 h-full self-center pt-[65px]"
         style={{
           width: 1200,
         }}
