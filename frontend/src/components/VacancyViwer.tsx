@@ -3,13 +3,18 @@ import ReactMarkdown from "react-markdown";
 import { Chip } from "@heroui/react";
 import { CalendarDaysIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
-import type { EmploymentType, ExperienceLevel } from "../types/rootTypes";
+import type {
+  EmploymentType,
+  ExperienceLevel,
+  VacancyStatus,
+} from "../types/rootTypes";
 import SalaryRange from "./SalaryRange";
 import { EmploymentTypeLabel } from "./EmploymentTypeLabel";
 import { LabelWithIcon } from "./LabelWithIcon";
 import { ExperienceLevelLabel } from "./ExperienceLevelLabel";
 import { AvatarImage } from "./AvatarImage";
 import { getFileSrc } from "../api";
+import { VacancyStatusLabel } from "./VacancyStatusLablel";
 
 export const VacancyViwer = observer<{
   title: string;
@@ -23,6 +28,7 @@ export const VacancyViwer = observer<{
   employmentType?: EmploymentType;
   createdAt?: string;
   isRemote?: boolean;
+  status?: VacancyStatus;
   company?: {
     name: string;
     logoUrl?: string;
@@ -40,6 +46,7 @@ export const VacancyViwer = observer<{
     employmentType,
     description,
     company,
+    status,
   } = props;
 
   return (
@@ -58,6 +65,7 @@ export const VacancyViwer = observer<{
       <div className="text-3xl font-bold flex-1">{title}</div>
       <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
       <div className="flex flex-row gap-2">
+        {status ? <VacancyStatusLabel status={status} /> : null}
         {experienceLevel ? (
           <ExperienceLevelLabel experienceLevel={experienceLevel} />
         ) : null}

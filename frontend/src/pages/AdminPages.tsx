@@ -8,6 +8,7 @@ import {
 } from "../components/NavigationMenu";
 import { AdminHeader } from "../modules/administration/AdminHeader";
 import { AdminVacancyListPage } from "../modules/administration/AdminVacancyListPage";
+import { AdminVacancyPage } from "../modules/administration/AdminVacancyPage";
 
 const routes: TNavigationButton[] = [
   {
@@ -27,7 +28,7 @@ const routes: TNavigationButton[] = [
   },
 ];
 
-export const AdministrationPage = observer(() => {
+export const AdminPages = observer(() => {
   return (
     <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
       <div
@@ -42,6 +43,7 @@ export const AdministrationPage = observer(() => {
           <div className="w-full min-h-0">
             <Routes>
               <Route path="" element={<AdminVacancyListPage />} />
+              <Route path="/:id" element={<AdminVacancyPage />} />
             </Routes>
           </div>
         </div>

@@ -162,12 +162,8 @@ class VacanciesStore {
 
     try {
       const vacancy = await companyVacanciesApi.getVacancyById(id);
-      console.log("fetchVacancyById", vacancy);
-
       runInAction(() => {
         this.selectedVacancy = vacancy;
-
-        console.log("selectedVacancy", this.selectedVacancy);
       });
     } catch {
       addToast({
