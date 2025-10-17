@@ -1,4 +1,4 @@
-import { makeObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import {
   companyVacanciesApi,
   type ICompanyVacancyBase,
@@ -6,11 +6,12 @@ import {
 import { addToast } from "@heroui/react";
 import cloneDeep from "clone-deep";
 import { debounce } from "../../utils/debounce";
-import type { ApplicationStatus } from "../../types/rootTypes";
+import type { VacancyStatus } from "../../types/rootTypes";
+import equal from "fast-deep-equal";
 
 type TAdminVacancyFilters = {
   search?: string;
-  status?: ApplicationStatus;
+  status?: VacancyStatus;
 };
 
 const defaultAdminVacancyFilters: TAdminVacancyFilters = {
@@ -23,23 +24,36 @@ class AdminStore {
 
   filters: TAdminVacancyFilters = cloneDeep(defaultAdminVacancyFilters);
 
+  private _debouncedGetVacancyList = debounce(() => this.getVacancyList(), 500);
+
   constructor() {
-    makeObservable(this);
+    makeAutoObservable(this);
   }
 
-  private _debouncedGetVacancyList = debounce(() => this.getVacancyList(), 500);
+  get hasFilterChanges() {
+    return !equal(this.filters, defaultAdminVacancyFilters);
+  }
 
   public setFilterFiled<K extends keyof TAdminVacancyFilters>(
     field: K,
     value: TAdminVacancyFilters[K]
   ) {
     this.filters[field] = value;
+
+    this._debouncedGetVacancyList();
+  }
+
+  public resetFilters() {
+    this.filters = cloneDeep(defaultAdminVacancyFilters);
     this._debouncedGetVacancyList();
   }
 
   public async getVacancyList() {
     try {
-      const vacancies = await companyVacanciesApi.getAllVacancies();
+      const vacancies = await companyVacanciesApi.getAllVacancies({
+        search: this.filters.search,
+        status: this.filters.status,
+      });
 
       runInAction(() => {
         this.vacancies = vacancies;

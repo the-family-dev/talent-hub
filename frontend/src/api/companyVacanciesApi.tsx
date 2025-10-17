@@ -69,6 +69,7 @@ class CompanyVacanciesApi {
   public async getAllVacancies(filters?: {
     tags?: string[];
     search?: string;
+    status?: VacancyStatus;
     companyId?: string;
   }) {
     const response = await apiClient.post<ICompanyVacancyBase[]>(

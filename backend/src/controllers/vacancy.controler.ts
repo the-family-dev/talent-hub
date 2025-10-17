@@ -19,18 +19,21 @@ export class VacancyController extends BaseController {
         return this.error(res, validationResult.error);
       }
 
-      const { search, companyId, tags, isActive } = validationResult.data;
+      const { search, companyId, tags, isActive, status } =
+        validationResult.data;
 
       const vacancies = await prisma.vacancy.findMany({
         where: {
           AND: [
+            status ? { status } : {},
             isActive ? { isActive } : {},
             companyId ? { companyId } : {},
             search
               ? {
-                  title: {
-                    contains: search,
-                  },
+                  OR: [
+                    { title: { contains: search } },
+                    { description: { contains: search } },
+                  ],
                 }
               : {},
             tags

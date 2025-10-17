@@ -3,6 +3,7 @@ import { Input } from "@heroui/react";
 import { useEffect } from "react";
 import { adminStore } from "./adminStore";
 import { AdminVacancyListItem } from "./AdminVacancyListItem";
+import { AdminVacancyListFilters } from "./AdminVacancyListFilters";
 
 export const AdminVacancyListPage = observer(() => {
   const { vacancies, filters } = adminStore;
@@ -12,6 +13,8 @@ export const AdminVacancyListPage = observer(() => {
   useEffect(() => {
     adminStore.getVacancyList();
   }, []);
+
+  console.log(vacancies.length);
 
   return (
     <div className="flex flex-col gap-4 flex-1 h-full">
@@ -26,6 +29,7 @@ export const AdminVacancyListPage = observer(() => {
           onChange={(e) => adminStore.setFilterFiled("search", e.target.value)}
           placeholder="Поиск"
         />
+        <AdminVacancyListFilters />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full overflow-y-auto">
         {vacancies.map((vacancy) => (
