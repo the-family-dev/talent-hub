@@ -5,6 +5,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
 import { VacancyListItemNoauth } from "./VacancyListItemNoauth";
 import { VacancyNoauthListFilters } from "./VacancyNoauthListFilters";
+import { StartCard } from "../../../components/StartCard";
 
 export const VacanciesNoauthListPage = observer(() => {
   const { vacancies, filters } = vacanciesNoauthStore;
@@ -17,10 +18,8 @@ export const VacanciesNoauthListPage = observer(() => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 flex-1 h-full">
-        <div className="flex flex-row justify-between items-end">
-          <div className="text-3xl font-medium">Вакансии</div>
-        </div>
+      <div className="flex flex-col gap-4 flex-1 h-full pt-6">
+        <StartCard />
         <div className="flex flex-row justify-between items-end gap-4">
           <Input
             isClearable
@@ -29,7 +28,7 @@ export const VacanciesNoauthListPage = observer(() => {
             onChange={(e) =>
               vacanciesNoauthStore.setFilterValue("search", e.target.value)
             }
-            placeholder="Поиск"
+            placeholder="Поиск по вакансиям"
             startContent={
               <MagnifyingGlassIcon className="w-5 h-5 text-default-400 pointer-events-none shrink-0" />
             }

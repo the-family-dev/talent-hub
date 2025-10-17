@@ -5,26 +5,29 @@ import { ApplicationStatus } from "../types/rootTypes";
 const statusMap = {
   [ApplicationStatus.Pending]: {
     text: "Новый",
-    // color: 'text'
+    className: "text-default",
   },
   [ApplicationStatus.Interview]: {
     text: "Собеседование",
+    className: "text-primary",
   },
   [ApplicationStatus.Rejected]: {
     text: "Отклонен",
+    className: "text-danger",
   },
   [ApplicationStatus.Accepted]: {
     text: "Принят",
+    className: "text-success",
   },
 };
 
 export const ApplicationStatusLabel = observer<{
   status: ApplicationStatus;
 }>((props) => {
-  const { text } = statusMap[props.status];
+  const { text, className } = statusMap[props.status];
 
   return (
-    <Chip variant="faded" className="text-green-500">
+    <Chip variant="faded" className={className}>
       {text ?? "Неизвестно"}
     </Chip>
   );

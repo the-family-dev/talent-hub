@@ -14,17 +14,7 @@ import { applicantStore } from "./applicantStore";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { routerStore } from "../router/routerStore";
 import { useMemo } from "react";
-
-const options = [
-  {
-    title: "Войти",
-    key: LoginFormType.LogIn,
-  },
-  {
-    title: "Зарегистрироваться",
-    key: LoginFormType.Register,
-  },
-];
+import { authOptions } from "../../constants/authConstants";
 
 export const RegisterApplicantPage = observer(() => {
   const { logInType, form } = applicantStore;
@@ -53,7 +43,7 @@ export const RegisterApplicantPage = observer(() => {
   }, [logInType]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="h-full flex items-center justify-center">
       <Card className="w-[500px]">
         <CardHeader className="flex flex-col gap-2 pb-4">
           <div className="text-xl font-bold">Соискатель</div>
@@ -64,7 +54,7 @@ export const RegisterApplicantPage = observer(() => {
             }
             color="primary"
           >
-            {options.map(({ title, key }) => (
+            {authOptions.map(({ title, key }) => (
               <Tab title={title} key={key}></Tab>
             ))}
           </Tabs>

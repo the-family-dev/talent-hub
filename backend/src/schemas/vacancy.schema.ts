@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EmploymentType, ExperienceLevel } from "@prisma/client";
+import { EmploymentType, ExperienceLevel, VacancyStatus } from "@prisma/client";
 
 // ID параметра (для URL параметров)
 export const VacancyIdSchema = z.object({
@@ -18,6 +18,8 @@ export const CreateUpdateVacancySchema = z.object({
   isActive: z.boolean().default(true),
   companyId: z.uuid(),
   tags: z.array(z.string()).optional(),
+  status: z.enum(VacancyStatus).optional(),
+  closeDate: z.string().optional(),
 });
 
 export const GetVacanciesBodySchema = z.object({
@@ -32,8 +34,13 @@ export const SearchVacanciesBodySchema = z.object({
   tags: z.array(z.string()).optional(),
 });
 
+export const UpdateStatusBodySchema = z.object({
+  status: z.enum(VacancyStatus),
+});
+
 export type TGetVacanciesQuery = z.infer<typeof GetVacanciesBodySchema>;
 export type TSearchVacanciesBody = z.infer<typeof SearchVacanciesBodySchema>;
+export type TUpdateStatusBody = z.infer<typeof UpdateStatusBodySchema>;
 
 // Автоматическое выведение TypeScript-типа из схемы
 export type TCreateUpdateVacancyInput = z.infer<

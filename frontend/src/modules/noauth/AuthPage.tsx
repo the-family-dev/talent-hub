@@ -21,7 +21,7 @@ export const AuthPage = observer(() => {
   };
 
   return (
-    <div className="min-h-screen p-8 transition-colors duration-300 w-full">
+    <div className="transition-colors duration-300 w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {/* Карточка соискателя */}
         <div

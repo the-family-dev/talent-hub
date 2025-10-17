@@ -3,11 +3,13 @@ import { addToast } from "@heroui/react";
 import { debounce } from "../../../utils/debounce";
 import {
   applicantVacanciesApi,
-  type IApplicantVacancy,
   type TApplicantRespond,
-  type TApplicantVacancyFilters,
 } from "../../../api/applicantVacanciesApi";
 import { applicantStore } from "../applicantStore";
+import type {
+  IApplicantVacancy,
+  TApplicantVacancyFilters,
+} from "../../../types/vacancyTypes";
 
 const defaultFilters: TApplicantVacancyFilters = {
   search: "",

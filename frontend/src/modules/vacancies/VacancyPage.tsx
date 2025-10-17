@@ -38,8 +38,8 @@ export const VacancyPage = observer(() => {
   } = selectedVacancy;
 
   const newApplicationsCount = applications.filter(
-    (application) => (application.status = ApplicationStatus.Pending)
-  );
+    (application) => application.status === ApplicationStatus.Pending
+  ).length;
 
   return (
     <div className="flex flex-col gap-4">
@@ -53,7 +53,11 @@ export const VacancyPage = observer(() => {
         </Button>
 
         <div className="flex flex-row gap-2">
-          <Badge color="primary" content={newApplicationsCount.length}>
+          <Badge
+            color="primary"
+            isInvisible={newApplicationsCount === 0}
+            content={newApplicationsCount}
+          >
             <Button
               variant="faded"
               color="primary"

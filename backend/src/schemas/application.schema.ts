@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { ApplicationStatus } from "@prisma/client";
+import { ApplicationStatus, ExperienceLevel } from "@prisma/client";
 
 export const ApplicationIdSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
 });
 
 export const CreateApplicationSchema = z.object({
@@ -11,7 +11,22 @@ export const CreateApplicationSchema = z.object({
   note: z.string().optional(),
 });
 
-export type TCreateApplicationInput = z.infer<typeof CreateApplicationSchema>;
+export const PublicApplicationCreateSchema = z.object({
+  vacancyId: z.uuid(),
+  title: z.string().min(1, "Название обязательное").max(255),
+  note: z.string().optional(),
+  name: z.string().min(1, "Имя пользователя обязательно").max(255),
+  phone: z.string(),
+  email: z.email("Некорректный формат email").optional(),
+  telegram: z.string().optional(),
+  description: z.string().optional(),
+  experienceLevel: z.enum(ExperienceLevel),
+});
+
+export type TPublicApplicationCreateInput = z.infer<
+  typeof PublicApplicationCreateSchema
+>;
+export type TApplicationCreateInput = z.infer<typeof CreateApplicationSchema>;
 
 export const UpdateApplicationSchema = z.object({
   status: z.enum(ApplicationStatus).optional(),

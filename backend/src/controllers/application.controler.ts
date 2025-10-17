@@ -6,8 +6,10 @@ import {
   UpdateApplicationSchema,
   ApplicationIdSchema,
   GetApplicationsBodySchema,
-  TCreateApplicationInput,
+  TApplicationCreateInput,
   TUpdateApplicationInput,
+  PublicApplicationCreateSchema,
+  TPublicApplicationCreateInput,
 } from "../schemas/application.schema";
 
 export class ApplicationController extends BaseController {
@@ -63,7 +65,7 @@ export class ApplicationController extends BaseController {
         return this.error(res, validation.error);
       }
 
-      const data: TCreateApplicationInput = validation.data;
+      const data: TApplicationCreateInput = validation.data;
 
       // Проверяем, не откликался ли уже этот резюме на вакансию
       const existing = await prisma.application.findUnique({
@@ -202,4 +204,89 @@ export class ApplicationController extends BaseController {
       return this.error(res, "Внутренняя ошибка сервера");
     }
   };
+
+  public async createPublicApplication(req: Request, res: Response) {
+    try {
+      const body = PublicApplicationCreateSchema.safeParse(req.body);
+
+      if (!body.success) {
+        return this.error(res, body.error);
+      }
+
+      const data: TPublicApplicationCreateInput = body.data;
+
+      const {
+        phone,
+        telegram,
+        name,
+        vacancyId,
+        title,
+        experienceLevel,
+        description,
+        note,
+      } = data;
+
+      // Путь к загруженному PDF (если есть)
+      const filePath = req.file ? `/uploads/pdfs/${req.file.filename}` : null;
+
+      const user = await prisma.user.create({
+        data: {
+          name,
+          phone,
+          login: phone,
+          telegram,
+        },
+      });
+
+      const resume = await prisma.resume.create({
+        data: {
+          title,
+          experienceLevel,
+          description,
+          pdfUrl: filePath,
+
+          user: { connect: { id: user.id } },
+        },
+      });
+
+      // Проверяем, не откликался ли уже этот резюме на вакансию
+      const existing = await prisma.application.findUnique({
+        where: {
+          resumeId_vacancyId: {
+            resumeId: resume.id,
+            vacancyId: data.vacancyId,
+          },
+        },
+      });
+
+      if (existing) {
+        return this.error(
+          res,
+          "Этот резюме уже откликался на данную вакансию",
+          409
+        );
+      }
+
+      const newApplication = await prisma.application.create({
+        data: {
+          resumeId: resume.id,
+          vacancyId: vacancyId,
+          note,
+        },
+        include: {
+          resume: {
+            select: { id: true, title: true },
+          },
+          vacancy: {
+            select: { id: true, title: true },
+          },
+        },
+      });
+
+      return this.success(res, newApplication);
+    } catch (error) {
+      console.error("Ошибка создания отклика:", error);
+      return this.error(res, "Внутренняя ошибка сервера");
+    }
+  }
 }

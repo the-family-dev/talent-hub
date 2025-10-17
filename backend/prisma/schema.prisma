@@ -62,6 +62,8 @@ model Vacancy {
   tags            VacancyTag[]
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
+  status          VacancyStatus   @default(MODERATION)
+  closeDate       DateTime?
 
   // Связь с Company
   companyId    String?
@@ -129,4 +131,10 @@ enum ApplicationStatus {
   INTERVIEW
   ACCEPTED
   REJECTED
+}
+
+enum VacancyStatus {
+  ACTIVE
+  MODERATION
+  CLOSED
 }

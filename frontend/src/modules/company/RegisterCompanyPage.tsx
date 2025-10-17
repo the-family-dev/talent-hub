@@ -53,7 +53,7 @@ export const RegisterCompanyPage = observer(() => {
   }, [logInType]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="h-full flex items-center justify-center">
       <Card className="w-[500px]">
         <CardHeader className="flex flex-col gap-2 pb-4">
           <div className="text-xl font-bold">Компания</div>

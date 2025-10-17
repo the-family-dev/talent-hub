@@ -10,12 +10,12 @@ import { observer } from "mobx-react-lite";
 import { CalendarDaysIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
 import SalaryRange from "../../../components/SalaryRange";
-import type { IApplicantVacancy } from "../../../api/applicantVacanciesApi";
 import { EmploymentTypeLabel } from "../../../types/rootTypes";
 import { AvatarImage } from "../../../components/AvatarImage";
 import { getFileSrc } from "../../../api";
 import { routerStore } from "../../router/routerStore";
 import { vacanciesApplicantStore } from "./vacanciesApplicantStore";
+import type { IApplicantVacancy } from "../../../types/vacancyTypes";
 
 export const VacancyListItemApplicant = observer<{
   vacancy: IApplicantVacancy;
