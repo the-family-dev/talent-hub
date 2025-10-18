@@ -7,6 +7,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { routerStore } from "../modules/router/routerStore";
+import { AppLogo } from "./AppLogo";
 
 export const StartPageHeader = observer(() => {
   const navigate = useNavigate();
@@ -29,7 +30,9 @@ export const StartPageHeader = observer(() => {
       maxWidth={"full"}
       isBordered
     >
-      <NavbarBrand className="flex flex-row gap-2"></NavbarBrand>
+      <NavbarBrand className="flex flex-row gap-2 font-bold text-2xl">
+        <AppLogo />
+      </NavbarBrand>
       <NavbarContent justify="end">
         <Button
           onPress={() => routerStore.navigate?.("/admin")}

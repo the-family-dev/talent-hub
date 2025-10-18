@@ -8,6 +8,7 @@ import cloneDeep from "clone-deep";
 import { debounce } from "../../utils/debounce";
 import type { VacancyStatus } from "../../types/rootTypes";
 import equal from "fast-deep-equal";
+import { adminApi, type IAdminCompanyVacancy } from "../../api/adminApi";
 
 type TAdminVacancyFilters = {
   search?: string;
@@ -23,6 +24,8 @@ class AdminStore {
   vacancies: ICompanyVacancyBase[] = [];
 
   filters: TAdminVacancyFilters = cloneDeep(defaultAdminVacancyFilters);
+
+  selectedVacancy?: IAdminCompanyVacancy = undefined;
 
   private _debouncedGetVacancyList = debounce(() => this.getVacancyList(), 500);
 
@@ -48,6 +51,22 @@ class AdminStore {
     this._debouncedGetVacancyList();
   }
 
+  public async fetchVacancyById(id?: string) {
+    if (id === undefined) return;
+
+    try {
+      const vacancy = await adminApi.getVacancyById(id);
+      runInAction(() => {
+        this.selectedVacancy = vacancy;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка получения вакансии",
+        color: "danger",
+      });
+    }
+  }
+
   public async getVacancyList() {
     try {
       const vacancies = await companyVacanciesApi.getAllVacancies({
@@ -66,9 +85,29 @@ class AdminStore {
     }
   }
 
-  public async deleteVacancy() {}
+  public async updateVacancyStatus(status: VacancyStatus) {
+    if (this.selectedVacancy === undefined) return;
 
-  public async updateVacancyStatus() {}
+    try {
+      await adminApi.updateVacancyStatus(this.selectedVacancy.id, status);
+
+      runInAction(() => {
+        if (this.selectedVacancy === undefined) return;
+
+        this.selectedVacancy.status = status;
+      });
+
+      addToast({
+        title: "Статус вакансии изменен",
+        color: "success",
+      });
+    } catch {
+      addToast({
+        title: "Ошибка изменения статуса вакансии",
+        color: "danger",
+      });
+    }
+  }
 }
 
 export const adminStore = new AdminStore();

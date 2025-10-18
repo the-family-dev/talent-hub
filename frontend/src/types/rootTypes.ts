@@ -10,13 +10,6 @@ export enum EmploymentType {
   Internship = "INTERNSHIP",
 }
 
-export enum EmploymentTypeLabel {
-  FULL_TIME = "Полная занятость",
-  PART_TIME = "Частичная занятость",
-  CONTRACT = "Проект",
-  INTERNSHIP = "Стажировка",
-}
-
 export enum ExperienceLevel {
   Intern = "INTERN",
   Junior = "JUNIOR",

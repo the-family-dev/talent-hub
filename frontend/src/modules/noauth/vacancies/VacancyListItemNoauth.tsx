@@ -10,11 +10,11 @@ import { observer } from "mobx-react-lite";
 import { CalendarDaysIcon, MapPinIcon } from "@heroicons/react/24/outline";
 import dayjs from "dayjs";
 import SalaryRange from "../../../components/SalaryRange";
-import { EmploymentTypeLabel } from "../../../types/rootTypes";
 import { AvatarImage } from "../../../components/AvatarImage";
 import { getFileSrc } from "../../../api";
 import { routerStore } from "../../router/routerStore";
 import type { IApplicantVacancy } from "../../../types/vacancyTypes";
+import { EmploymentTypeLabel } from "../../../components/EmploymentTypeLabel";
 import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
 
 export const VacancyListItemNoauth = observer<{
@@ -55,9 +55,7 @@ export const VacancyListItemNoauth = observer<{
         </div>
 
         <div className="flex flex-row gap-2">
-          <Chip color={"default"} variant="bordered">
-            {EmploymentTypeLabel[employmentType]}
-          </Chip>
+          <EmploymentTypeLabel employmentType={employmentType} />
 
           {isRemote && (
             <Chip color={"default"} variant="bordered">

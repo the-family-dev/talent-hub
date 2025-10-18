@@ -9,6 +9,6 @@ router.get("/:id", vacancyController.getById); // GET /vacancies/:id - одна 
 router.post("/create", vacancyController.add); // POST /vacancies - создать вакансию
 router.put("/:id", vacancyController.update); // PUT /vacancies/:id - обновить вакансию
 router.delete("/:id", vacancyController.delete); // DELETE /vacancies/:id - удалить вакансию
-router.post("/:id/status", vacancyController.updateStatus);
+router.patch("/:id/status", vacancyController.updateStatus);
 
 export { router as vacancyRoutes };

@@ -40,7 +40,6 @@ export interface ICompanyVacancyBase {
   salaryTo?: number;
   location?: string;
   isRemote: boolean;
-  isActive: boolean;
   employmentType: EmploymentType;
   experienceLevel: ExperienceLevel;
   createdAt: string;

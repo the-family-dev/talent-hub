@@ -46,7 +46,7 @@ export const UniversityPages = observer(() => {
       {company === undefined ? <StartPageHeader /> : <CompanyHeader />}
 
       <div
-        className="flex flex-col gap-4 h-full self-center pt-6"
+        className="flex flex-col gap-4 h-full self-center pt-[65px]"
         style={{
           width: 1200,
         }}

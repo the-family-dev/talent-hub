@@ -11,7 +11,6 @@ export const StartPage = observer(() => {
   return (
     <div className="flex items-center justify-center h-full m-6">
       <div className="max-w-4xl justify-center bg-gray-100 dark:bg-gray-900 p-32 rounded-3xl">
-        {/* Заголовок */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Добро пожаловать в TalentHub

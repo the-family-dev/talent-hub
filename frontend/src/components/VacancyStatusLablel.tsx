@@ -5,7 +5,7 @@ import { VacancyStatus } from "../types/rootTypes";
 const statusMap = {
   [VacancyStatus.Moderation]: {
     text: "Модерация",
-    className: "text-default",
+    className: "text-warning",
   },
   [VacancyStatus.Active]: {
     text: "Активная",

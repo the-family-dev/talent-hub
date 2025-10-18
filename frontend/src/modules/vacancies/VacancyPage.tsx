@@ -2,18 +2,16 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { vacanciesStore } from "./vacanciesStore";
-import ReactMarkdown from "react-markdown";
-import { Badge, Button, Chip } from "@heroui/react";
+import { Badge, Button } from "@heroui/react";
 import {
   ArrowLeftIcon,
-  BuildingOfficeIcon,
   PencilIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { ConfirmationWrapper } from "../../components/ConfirmationWrapper";
 import { routerStore } from "../router/routerStore";
-import SalaryRange from "../../components/SalaryRange";
 import { ApplicationStatus } from "../../types/rootTypes";
+import { VacancyViwer } from "../../components/VacancyViwer";
 
 export const VacancyPage = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
@@ -35,6 +33,10 @@ export const VacancyPage = observer(() => {
     salaryTo,
     location,
     applications,
+    createdAt,
+    employmentType,
+    experienceLevel,
+    isRemote,
   } = selectedVacancy;
 
   const newApplicationsCount = applications.filter(
@@ -43,74 +45,63 @@ export const VacancyPage = observer(() => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row gap-2 w-full justify-end">
         <Button
-          color="primary"
+          color="default"
           onPress={() => routerStore.navigate?.("/company/vacancy")}
+          size="md"
+        >
+          <ArrowLeftIcon className="size-4" /> Назад
+        </Button>
+        <Badge
+          color="primary"
+          isInvisible={newApplicationsCount === 0}
+          content={newApplicationsCount}
+        >
+          <Button
+            variant="faded"
+            color="primary"
+            onPress={() =>
+              routerStore.navigate?.(`/company/vacancy/${id}/application`)
+            }
+          >
+            Отклики
+          </Button>
+        </Badge>
+        <Button
+          isIconOnly
+          variant="light"
+          color="secondary"
+          onPress={() => routerStore.navigate?.(`/company/vacancy/${id}/edit`)}
           className="w-min"
         >
-          <ArrowLeftIcon className="size-6" /> Назад
+          <PencilIcon className="size-6" />
         </Button>
-
-        <div className="flex flex-row gap-2">
-          <Badge
-            color="primary"
-            isInvisible={newApplicationsCount === 0}
-            content={newApplicationsCount}
-          >
-            <Button
-              variant="faded"
-              color="primary"
-              onPress={() =>
-                routerStore.navigate?.(`/company/vacancy/${id}/application`)
-              }
-            >
-              Отклики
-            </Button>
-          </Badge>
-          <Button
-            isIconOnly
-            variant="light"
-            color="secondary"
-            onPress={() =>
-              routerStore.navigate?.(`/company/vacancy/${id}/edit`)
-            }
-            className="w-min"
-          >
-            <PencilIcon className="size-6" />
+        <ConfirmationWrapper
+          title="Удаление вакансии"
+          message={`Вы уверенны что хотите удалить вакансию?\nПосле удаления вернуть её не получится.`}
+          confirmText="Удалить"
+          color="danger"
+          onConfirm={() => vacanciesStore.deleteVacancy(id)}
+        >
+          <Button isIconOnly variant="light" color="danger" className="w-min">
+            <TrashIcon className="size-6" />
           </Button>
-          <ConfirmationWrapper
-            title="Удаление вакансии"
-            message={`Вы уверенны что хотите удалить вакансию?\nПосле удаления вернуть её не получится.`}
-            confirmText="Удалить"
-            color="danger"
-            onConfirm={() => vacanciesStore.deleteVacancy(id)}
-          >
-            <Button isIconOnly variant="light" color="danger" className="w-min">
-              <TrashIcon className="size-6" />
-            </Button>
-          </ConfirmationWrapper>
-        </div>
+        </ConfirmationWrapper>
       </div>
 
-      <div className="flex flex-row gap-4">
-        <div className="text-3xl font-bold flex-1">{title}</div>
-      </div>
-      <div className="flex flex-row gap-2 text-default-500">
-        <BuildingOfficeIcon className="size-6" />
-        {location}
-      </div>
-      <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
-      <div className="flex flex-row gap-2">
-        {tags.map((tag, index) => (
-          <Chip color="secondary" key={index}>
-            {tag}
-          </Chip>
-        ))}
-      </div>
-      <div className="prose prose-lg max-w-none dark:prose-invert">
-        <ReactMarkdown>{description}</ReactMarkdown>
-      </div>
+      <VacancyViwer
+        title={title}
+        tags={tags}
+        createdAt={createdAt}
+        location={location}
+        description={description}
+        employmentType={employmentType}
+        isRemote={isRemote}
+        salaryFrom={salaryFrom}
+        salaryTo={salaryTo}
+        experienceLevel={experienceLevel}
+      />
     </div>
   );
 });

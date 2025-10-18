@@ -6,7 +6,7 @@ import { routerStore } from "./modules/router/routerStore";
 import { ApplicantPages } from "./pages/ApplicantPages";
 import { NoAuthPages } from "./pages/NoAuthPages";
 import { UniversityPages } from "./pages/UniversityPages";
-import { AdministrationPage } from "./pages/AdministrationPage";
+import { AdminPages } from "./pages/AdminPages";
 
 const App = observer(() => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const App = observer(() => {
         <Route path="company/*" element={<CompanyPages />} />
         <Route path="university/*" element={<UniversityPages />} />
         <Route path="applicant/*" element={<ApplicantPages />} />
-        <Route path="admin/*" element={<AdministrationPage />} />
+        <Route path="admin/*" element={<AdminPages />} />
       </Routes>
     </>
   );

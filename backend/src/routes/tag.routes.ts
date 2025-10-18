@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { TagController } from "../controllers/tag.controller";
+import { CatalogController } from "../controllers/catalog.controller";
 
 const router = Router();
 
-const controller = new TagController();
+const controller = new CatalogController();
 
-router.get("/", controller.getAll);
+router.get("/tags", controller.getAllTags);
+router.get("/company", controller.getAllCompany);
 
-export { router as tagRoutes };
+export { router as catalogRoutes };

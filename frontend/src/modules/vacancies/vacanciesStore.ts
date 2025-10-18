@@ -24,7 +24,6 @@ const defaultVacancyFormData: TCreateEditVacancy = {
   salaryFrom: 100_000,
   salaryTo: 150_000,
   isRemote: false,
-  isActive: true,
   employmentType: EmploymentType.FullTime,
   experienceLevel: ExperienceLevel.Junior,
   tags: [],
@@ -162,12 +161,8 @@ class VacanciesStore {
 
     try {
       const vacancy = await companyVacanciesApi.getVacancyById(id);
-      console.log("fetchVacancyById", vacancy);
-
       runInAction(() => {
         this.selectedVacancy = vacancy;
-
-        console.log("selectedVacancy", this.selectedVacancy);
       });
     } catch {
       addToast({

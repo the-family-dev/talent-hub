@@ -1,11 +1,4 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  Chip,
-} from "@heroui/react";
+import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import type { ICompanyVacancyBase } from "../../api/companyVacanciesApi";
 import { CalendarDaysIcon } from "@heroicons/react/24/outline";
@@ -17,16 +10,13 @@ export const AdminVacancyListItem = observer<{
   vacancy: ICompanyVacancyBase;
 }>((props) => {
   const { vacancy } = props;
-  const { title, isActive, createdAt, id, status } = vacancy;
+  const { title, createdAt, id, status } = vacancy;
 
   return (
     <Card className="shrink-0">
       <CardHeader className="flex flex-row justify-between">
         <div className="font-medium text-xl">{title}</div>
         <VacancyStatusLabel status={status} />
-        <Chip color={isActive ? "primary" : "default"}>
-          {isActive ? "Активна" : "Неактивна"}
-        </Chip>
       </CardHeader>
       <CardBody className="flex flex-col gap-4">
         {/* <User
