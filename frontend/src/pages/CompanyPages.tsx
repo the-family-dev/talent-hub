@@ -42,36 +42,44 @@ export const CompanyPages = observer(() => {
   const { company } = companyStore;
 
   return (
-    <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
-      {company === undefined ? <StartPageHeader /> : <CompanyHeader />}
+    <>
+      <div className="w-full flex flex-col items-center overflow-y-auto h-screen">
+        {company === undefined ? <StartPageHeader /> : <CompanyHeader />}
 
-      <div
-        className="flex flex-col gap-4 h-full self-center pt-[65px]"
-        style={{
-          width: 1200,
-        }}
-      >
-        {company === undefined ? (
-          <RegisterCompanyPage />
-        ) : (
-          <div className="flex flex-row gap-4 pb-6">
-            <NavigationMenu buttons={routes} />
-            <div className="w-full min-h-0">
-              <Routes>
-                <Route path="" element={<CompanyProfilePage />} />
-                <Route path="vacancy" element={<VacanciesListPage />} />
-                <Route path="vacancy/:id" element={<VacancyPage />} />
-                <Route path="vacancy/create" element={<VacancyCreatePage />} />
-                <Route path="vacancy/:id/edit" element={<VacancyEditPage />} />
-                <Route
-                  path="vacancy/:id/application"
-                  element={<VacancyApplicationPage />}
-                />
-              </Routes>
+        <div
+          className="flex flex-col gap-4 h-full self-center pt-6"
+          style={{
+            width: 1200,
+          }}
+        >
+          {company === undefined ? (
+            <RegisterCompanyPage />
+          ) : (
+            <div className="flex flex-row gap-4 pb-6">
+              <NavigationMenu buttons={routes} />
+              <div className="w-full min-h-0">
+                <Routes>
+                  <Route path="" element={<CompanyProfilePage />} />
+                  <Route path="vacancy" element={<VacanciesListPage />} />
+                  <Route path="vacancy/:id" element={<VacancyPage />} />
+                  <Route
+                    path="vacancy/create"
+                    element={<VacancyCreatePage />}
+                  />
+                  <Route
+                    path="vacancy/:id/edit"
+                    element={<VacancyEditPage />}
+                  />
+                  <Route
+                    path="vacancy/:id/application"
+                    element={<VacancyApplicationPage />}
+                  />
+                </Routes>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 });

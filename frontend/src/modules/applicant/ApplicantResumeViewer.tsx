@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown";
 import type { TApplicantResume } from "../../api/applicantResumeApi";
 import { OpenPdfButton } from "../../components/OpenPdfButton";
 import SalaryRange from "../../components/SalaryRange";
+import { ExperienceLevelLabel } from "../../components/ExperienceLevelLabel";
+import { MapPinIcon } from "@heroicons/react/24/outline";
 
 // TODO replace from frontend\src\components\ResumeViewer.tsx
 export const ApplicantResumeViewer = observer<{
@@ -22,23 +24,23 @@ export const ApplicantResumeViewer = observer<{
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-3xl font-bold flex-1">{title}</div>
-
-      <div className="flex flex-row gap-4">
-        <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
-        {location && <div>{location}</div>}
-        {experienceLevel && <div>{experienceLevel}</div>}
+      <div className="text-2xl font-medium flex-1">{title}</div>{" "}
+      <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
+      <div className="flex flex-row gap-2 items-center">
+        {location && (
+          <div className="flex items-center font-semibold text-default-500">
+            <MapPinIcon className="size-6 mr-1" />
+            {location}
+          </div>
+        )}
+        {experienceLevel && (
+          <ExperienceLevelLabel experienceLevel={experienceLevel} />
+        )}
+        {tags?.map((tag) => {
+          return <Chip color={"default"}>{tag}</Chip>;
+        })}
+        <OpenPdfButton pdfUrl={pdfUrl} />
       </div>
-      <OpenPdfButton pdfUrl={pdfUrl} />
-
-      <div className="flex flex-row gap-2">
-        {tags.map((tag, index) => (
-          <Chip color="secondary" key={index}>
-            {tag}
-          </Chip>
-        ))}
-      </div>
-
       {description && (
         <div className="prose prose-lg max-w-none dark:prose-invert">
           <ReactMarkdown>{description}</ReactMarkdown>

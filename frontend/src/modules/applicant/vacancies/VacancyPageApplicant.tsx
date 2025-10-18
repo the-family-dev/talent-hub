@@ -33,9 +33,9 @@ export const VacancyPageApplicant = observer(() => {
   } = selectedVacancy;
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-row justify-between items-center">
-        <div className="flex flex-row justify-end gap-4 w-full">
+    <div className="flex flex-col">
+      <div className="flex flex-row justify-between items-center relative">
+        <div className="flex flex-row top-0 right-2 gap-4 absolute">
           <Button
             color="default"
             onPress={() => routerStore.navigate?.("/applicant/vacancy")}

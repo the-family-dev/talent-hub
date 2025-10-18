@@ -51,7 +51,7 @@ export const VacancyViwer = observer<{
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-3xl font-bold flex-1">{title}</div>
+      <div className="text-3xl font-medium flex-1">{title}</div>
       <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
       <div className="flex flex-row gap-2">
         {status ? <VacancyStatusLabel status={status} /> : null}

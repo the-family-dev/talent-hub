@@ -44,8 +44,8 @@ export const VacancyPage = observer(() => {
   ).length;
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-row gap-2 w-full justify-end">
+    <div className="flex flex-col gap-4 relative">
+      <div className="flex flex-row gap-2 top-0 right-6 absolute">
         <Button
           color="default"
           onPress={() => routerStore.navigate?.("/company/vacancy")}

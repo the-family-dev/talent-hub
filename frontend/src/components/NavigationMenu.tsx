@@ -52,7 +52,7 @@ export const NavigationMenu = (props: TNavigationMenuProps) => {
     );
 
   return (
-    <div className="w-[300px] h-min flex flex-col gap-2">
+    <div className="w-[300px] h-full flex flex-col gap-2">
       {buttons.map((button, index) => {
         const end = hasChildRoute(button.path);
         const isActive = Boolean(

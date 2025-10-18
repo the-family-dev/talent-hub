@@ -89,7 +89,7 @@ export const VacancyApplicationItem = observer<{
         <Dropdown>
           <DropdownTrigger>
             <Button color="primary">
-              Действия <EllipsisHorizontalCircleIcon className="size-6" />
+              <EllipsisHorizontalCircleIcon className="size-6" /> Действия
             </Button>
           </DropdownTrigger>
           <DropdownMenu variant="faded">

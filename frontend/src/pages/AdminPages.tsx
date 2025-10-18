@@ -39,7 +39,7 @@ export const AdminPages = observer(() => {
       <AdminHeader />
 
       <div
-        className="flex flex-col gap-4 h-full self-center pt-[65px]"
+        className="flex flex-col gap-4 h-full self-center pt-6"
         style={{
           width: 1200,
         }}

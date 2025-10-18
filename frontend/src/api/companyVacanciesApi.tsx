@@ -13,14 +13,16 @@ export type TVAcancyApplicationResume = {
   experienceLevel: ExperienceLevel;
   tags: string[];
   pdfUrl?: string;
-  user: {
-    id: string;
-    name: string;
-    phone?: string;
-    email?: string;
-    telegram?: string;
-    avatarUrl?: string;
-  };
+  user: TVacancyApplicationUser;
+};
+
+export type TVacancyApplicationUser = {
+  id: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  telegram?: string;
+  avatarUrl?: string;
 };
 
 export type TVacancyApplication = {

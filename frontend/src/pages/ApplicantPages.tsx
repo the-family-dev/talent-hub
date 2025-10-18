@@ -49,10 +49,10 @@ export const ApplicantPages = observer(() => {
 
   return (
     <>
-      <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
+      <div className="w-full flex flex-col items-center h-screen  overflow-y-auto">
         {!applicant?.id ? <StartPageHeader /> : <ApplicantHeader />}
         <div
-          className="flex flex-col gap-4 self-center h-full pt-[65px]"
+          className="flex flex-col gap-4 self-center h-full pt-12"
           style={{
             width: 1200,
           }}

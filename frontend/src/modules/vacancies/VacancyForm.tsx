@@ -79,15 +79,15 @@ export const VacancyForm = observer<{
   } = store.vacancyForm;
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-row gap-2">
+    <div className="flex flex-col gap-4 h-full">
+      <div className="flex flex-row gap-2 items-center">
+        <div className="font-medium text-3xl w-full">{modalTitle}</div>
         <Button color="primary" onPress={onClose} className="w-min">
           <ArrowLeftIcon className="size-6" /> Назад
         </Button>
-        <div className="font-bold text-3xl">{modalTitle}</div>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row w-full gap-2">
           <Input
             label={"Название вакансии"}
             value={title}
@@ -104,6 +104,7 @@ export const VacancyForm = observer<{
             onValueChange={(value) => store.setVacancyIsRemote(value)}
             color="primary"
             size="sm"
+            className="whitespace-nowrap"
           >
             Удаленный формат
           </Switch>
