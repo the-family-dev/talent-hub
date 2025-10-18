@@ -82,7 +82,7 @@ export const VacancyForm = observer<{
     <div className="flex flex-col gap-4 h-full">
       <div className="flex flex-row gap-2 items-center">
         <div className="font-medium text-3xl w-full">{modalTitle}</div>
-        <Button color="primary" onPress={onClose} className="w-min">
+        <Button color="default" onPress={onClose} className="w-min">
           <ArrowLeftIcon className="size-6" /> Назад
         </Button>
       </div>

@@ -31,7 +31,7 @@ export const ApplicantResumePage = observer(() => {
           </Button>
           <ConfirmationWrapper
             title="Удаление резюме"
-            message={`Вы уверенны что хотите удалить резюме?\nПосле удаления вернуть её не получится.`}
+            message={`Вы уверены, что хотите удалить резюме?\nПосле удаления вернуть его не получится.`}
             confirmText="Удалить"
             onConfirm={() => applicantStore.deleteResume()}
             color="danger"
