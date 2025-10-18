@@ -7,8 +7,9 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
-import { DocumentIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { BuildingOffice2Icon, ShareIcon } from "@heroicons/react/24/outline";
 import type { ICompanyVacancy } from "../../api/companyVacanciesApi";
+import { routerStore } from "../router/routerStore";
 
 export const VacancyInternshipsViewer = observer<{
   vacancy: ICompanyVacancy;
@@ -21,33 +22,36 @@ export const VacancyInternshipsViewer = observer<{
   return (
     <>
       <Button color="secondary" onPress={onOpen}>
-        <DocumentIcon className="size-6" />
-        Посмотреть стажировки
+        <BuildingOffice2Icon className="size-6" />
+        Стажировки
       </Button>
-      <Drawer size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
         <DrawerContent className="[&>button]:hidden">
-          {(onClose) => (
-            <>
-              <DrawerBody className="mt-6 relative">
-                <Button
-                  color="primary"
-                  onPress={onClose}
-                  className="absolute top-2 right-6"
-                >
-                  <XMarkIcon className="size-6" />
-                  Закрыть
-                </Button>
-                {internships.map((internship) => {
-                  return (
-                    <div key={internship.id} className="">
-                      {internship.title}
-                    </div>
-                  );
-                })}
-              </DrawerBody>
-              <DrawerFooter className="flex flex-row justify-end"></DrawerFooter>
-            </>
-          )}
+          <DrawerBody className="mt-6 flex flex-col">
+            <div className="font-bold text-xl">
+              {" "}
+              Стажировки от университетов
+            </div>
+            <div className="flex flex-col gap-2">
+              {internships.map((internship) => {
+                return (
+                  <Button
+                    color="primary"
+                    variant="light"
+                    onPress={() =>
+                      routerStore.navigate?.(
+                        `/company/internship/${internship.id}`
+                      )
+                    }
+                  >
+                    {internship.title}
+                    <ShareIcon className="size-6" />
+                  </Button>
+                );
+              })}
+            </div>
+          </DrawerBody>
+          <DrawerFooter className="flex flex-row justify-end"></DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

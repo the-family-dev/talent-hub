@@ -12,7 +12,7 @@ export class ResumeController extends BaseController {
   // Получение всех резюме (поиск по title или location)
   getAll = async (req: Request, res: Response) => {
     try {
-      const validation = GetResumesQuerySchema.safeParse(req.query);
+      const validation = GetResumesQuerySchema.safeParse(req.body);
       if (!validation.success) {
         return this.error(res, validation.error);
       }
