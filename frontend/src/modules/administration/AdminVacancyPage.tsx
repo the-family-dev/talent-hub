@@ -72,15 +72,7 @@ export const AdminVacancyPage = observer(() => {
               >
                 Сделать активной
               </DropdownItem>
-              <DropdownItem
-                key="close"
-                color="danger"
-                className="text-danger"
-                startContent={<NoSymbolIcon className={"size-6"} />}
-                onPress={() => adminStore.setTargetStatus(VacancyStatus.Closed)}
-              >
-                Закрыть вакансию
-              </DropdownItem>
+
               <DropdownItem
                 key="reject"
                 color="danger"
@@ -97,9 +89,7 @@ export const AdminVacancyPage = observer(() => {
                 color="danger"
                 className="text-danger"
                 startContent={<LockClosedIcon className={"size-6"} />}
-                onPress={() =>
-                  adminStore.updateVacancyStatus(VacancyStatus.Closed)
-                }
+                onPress={() => adminStore.setTargetStatus(VacancyStatus.Closed)}
               >
                 Закрыть вакансию
               </DropdownItem>
@@ -130,13 +120,13 @@ export const AdminVacancyPage = observer(() => {
       </div>
       <Modal isOpen={isCompentOpned} onClose={() => adminStore.closeComment()}>
         <ModalContent>
-          <ModalHeader>Комметнарий</ModalHeader>
+          <ModalHeader>Комментарий</ModalHeader>
           <ModalBody>
             <Input
               type="textarea"
               value={comment}
               onChange={(e) => adminStore.setComment(e.target.value)}
-              placeholder="Комментарий"
+              placeholder="Введите комментарий"
             />
           </ModalBody>
           <ModalFooter>
