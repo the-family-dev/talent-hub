@@ -13,3 +13,20 @@ export const clearEmptyFields = <T extends Record<string, string | string[]>>(
   }
   return result;
 };
+
+export const formatFileSize = (bytes: number): string => {
+  const KB = 1024;
+  const MB = KB * 1024;
+
+  if (bytes < KB) {
+    return `${bytes} B`;
+  }
+
+  if (bytes < MB) {
+    const kilobytes = bytes / KB;
+    return `${kilobytes.toFixed(1)} KB`;
+  }
+
+  const megabytes = bytes / MB;
+  return `${megabytes.toFixed(1)} MB`;
+};

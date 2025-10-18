@@ -21,6 +21,7 @@ export const CreateVacancyPublicRespondModal = observer(() => {
 
   return (
     <Modal
+      size="lg"
       isOpen={Boolean(vacancyId)}
       onClose={() => vacanciesNoauthStore.resetPublicRespond()}
     >
@@ -31,7 +32,7 @@ export const CreateVacancyPublicRespondModal = observer(() => {
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-2">
               <Input
-                required
+                isRequired
                 value={name}
                 onChange={(e) =>
                   vacanciesNoauthStore.setPublicRespondField(
@@ -43,7 +44,7 @@ export const CreateVacancyPublicRespondModal = observer(() => {
                 size="sm"
               />
               <Input
-                required
+                isRequired
                 errorMessage="Введите корректный номер телефона в формате +79991234567."
                 pattern="^\+?\d{10,15}$"
                 label="Номер телефона"
@@ -94,7 +95,7 @@ export const CreateVacancyPublicRespondModal = observer(() => {
               placeholder="Сопроводительное письмо"
             />
             <FileSelect
-              text="Загрузить резюме"
+              text="Загрузить резюме, файл PDF"
               allowedFileExts={[".pdf"]}
               file={pdfFile}
               onChange={(file) =>
