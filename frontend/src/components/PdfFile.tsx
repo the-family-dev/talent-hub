@@ -17,11 +17,11 @@ export const PdfFile = observer<PdfFileProps>(({ name, size, url }) => {
   };
 
   return (
-    <div className="flex items-center justify-between rounded-md border border-default px-3 py-2">
-      <div
-        className="flex items-center gap-2 min-w-0 cursor-pointer"
-        onClick={handleOpenPdf}
-      >
+    <div
+      className="flex items-center justify-between rounded-md border border-default px-3 py-2 cursor-pointer"
+      onClick={handleOpenPdf}
+    >
+      <div className="flex items-center gap-2 min-w-0">
         <DocumentIcon className="size-8 text-red-500" />
         <div className="flex flex-col min-w-0">
           <span className=" font-medium truncate">{name}</span>

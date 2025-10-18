@@ -13,8 +13,9 @@ import {
 } from "@heroui/react";
 import {
   ArrowLeftIcon,
-  CheckBadgeIcon,
+  CheckCircleIcon,
   EllipsisHorizontalCircleIcon,
+  LockClosedIcon,
   NoSymbolIcon,
 } from "@heroicons/react/24/outline";
 import { routerStore } from "../router/routerStore";
@@ -66,23 +67,12 @@ export const AdminVacancyPage = observer(() => {
                 key="aprove"
                 color="success"
                 className="text-success"
-                startContent={<CheckBadgeIcon className={"size-6"} />}
+                startContent={<CheckCircleIcon className={"size-6"} />}
                 onPress={() =>
                   adminStore.updateVacancyStatus(VacancyStatus.Active)
                 }
               >
                 Активировать вакансию
-              </DropdownItem>
-              <DropdownItem
-                key="close"
-                color="danger"
-                className="text-danger"
-                startContent={<NoSymbolIcon className={"size-6"} />}
-                onPress={() =>
-                  adminStore.updateVacancyStatus(VacancyStatus.Closed)
-                }
-              >
-                Закрыть вакансию
               </DropdownItem>
               <DropdownItem
                 key="reject"
@@ -94,6 +84,17 @@ export const AdminVacancyPage = observer(() => {
                 }
               >
                 Отклонить вакансию
+              </DropdownItem>
+              <DropdownItem
+                key="close"
+                color="danger"
+                className="text-danger"
+                startContent={<LockClosedIcon className={"size-6"} />}
+                onPress={() =>
+                  adminStore.updateVacancyStatus(VacancyStatus.Closed)
+                }
+              >
+                Закрыть вакансию
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

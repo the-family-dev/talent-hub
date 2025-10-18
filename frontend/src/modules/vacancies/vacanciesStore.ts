@@ -4,6 +4,7 @@ import {
   type TCreateEditVacancy,
   type ICompanyVacancyBase,
   type ICompanyVacancy,
+  type TResumeBankListItem,
 } from "../../api/companyVacanciesApi";
 import { addToast } from "@heroui/react";
 import { vacancyDescriptionMdTemplate } from "./vacanciesContsants";
@@ -81,6 +82,10 @@ class VacanciesStore {
   );
 
   public internships: IUniversityInternshipBase[] = [];
+
+  public resumes: TResumeBankListItem[] = [];
+
+  resumeFilters: TVacancyFilters = cloneDeep(defaultFilters);
 
   selectedVacancy?: ICompanyVacancy = undefined;
   public selectedIternship: IUniversityInternship | undefined = undefined;
@@ -340,6 +345,22 @@ class VacanciesStore {
         color: "danger",
       });
     }
+  }
+  public async getAllResumes(search: string) {
+    try {
+      const resumes = await companyVacanciesApi.getResumes(search);
+      this.resumes = resumes;
+    } catch {
+      addToast({
+        title: "Не удалось получить список стажировок",
+        color: "danger",
+      });
+    }
+  }
+
+  public setResumeFilterSearch(search: string) {
+    this.resumeFilters.search = search;
+    this._debouncedFetchVacancies();
   }
 
   public setFilterSearch(search: string) {

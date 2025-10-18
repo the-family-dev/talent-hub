@@ -39,18 +39,7 @@ export const VacancyInternshipListItem = observer<{
         <div className="font-medium text-xl">{title}</div>
         {internsCountLabel()}
       </CardHeader>
-      <CardBody className="flex flex-row gap-8">
-        <div className="flex flex-col gap-2">
-          {location ? (
-            <LabelWithIcon label={location} icon={MapPinIcon} />
-          ) : null}
-
-          <LabelWithIcon
-            label={` от ${dayjs(createdAt).format("DD.MM.YYYY")}`}
-            icon={CalendarDaysIcon}
-          />
-        </div>
-
+      <CardBody className="flex flex-col gap-4">
         {university ? (
           <div className="flex flex-row gap-2 items-center">
             <AvatarImage
@@ -64,6 +53,16 @@ export const VacancyInternshipListItem = observer<{
             <div className="font-medium text-x2">{university.name}</div>
           </div>
         ) : null}
+        <div className="flex flex-row gap-2">
+          {location ? (
+            <LabelWithIcon label={location} icon={MapPinIcon} />
+          ) : null}
+
+          <LabelWithIcon
+            label={` от ${dayjs(createdAt).format("DD.MM.YYYY")}`}
+            icon={CalendarDaysIcon}
+          />
+        </div>
       </CardBody>
       <CardFooter className="flex flex-row justify-end">
         <Button as={Link} to={id} size="md" variant="flat" color="primary">
