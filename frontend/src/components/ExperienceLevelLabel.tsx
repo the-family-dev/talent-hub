@@ -3,19 +3,19 @@ import { ExperienceLevel } from "../types/rootTypes";
 
 const experienceTypeMap = {
   [ExperienceLevel.Intern]: {
-    title: "Стажер",
+    title: "Без опыта",
     className: "text-primary",
   },
   [ExperienceLevel.Junior]: {
-    title: "Junior",
+    title: "от 1 до 3 лет",
     className: "text-primary",
   },
   [ExperienceLevel.Middle]: {
-    title: "Middle",
+    title: "от 3 до 6 лет",
     className: "text-primary",
   },
   [ExperienceLevel.Senior]: {
-    title: "Senior",
+    title: "6 лет и более",
     className: "text-primary",
   },
   [ExperienceLevel.Lead]: {

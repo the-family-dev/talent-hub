@@ -12,12 +12,16 @@ import {
 import { observer } from "mobx-react-lite";
 import { catalogStore } from "../../catalog/catalogStore";
 import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
+import { AvatarImage } from "../../../components/AvatarImage";
+import { getFileSrc } from "../../../api";
 
 export const VacancyNoauthListFilters = observer(() => {
-  const { allTags } = catalogStore;
+  const { allTags, allCompanies } = catalogStore;
   const { hasFilterChanges } = vacanciesNoauthStore;
 
-  const { tags, location } = vacanciesNoauthStore.filters;
+  const { tags, location, companyId } = vacanciesNoauthStore.filters;
+
+  const selectedCompany = companyId ? [companyId] : [];
 
   return (
     <Popover placement="bottom-end">
@@ -49,8 +53,6 @@ export const VacancyNoauthListFilters = observer(() => {
           onSelectionChange={(keys) => {
             const value = Array.from(keys);
 
-            console.log(value);
-
             if (value.length === 0) {
               vacanciesNoauthStore.setFilterValue("tags", undefined);
 
@@ -61,6 +63,30 @@ export const VacancyNoauthListFilters = observer(() => {
         >
           {allTags.map((item) => (
             <SelectItem key={item.name}>{item.name}</SelectItem>
+          ))}
+        </Select>
+        <Select
+          label="Компании"
+          placeholder="Выберите компанию"
+          selectedKeys={selectedCompany}
+          onSelectionChange={([value]) => {
+            vacanciesNoauthStore.setFilterValue("companyId", value as string);
+          }}
+        >
+          {allCompanies.map((company) => (
+            <SelectItem key={company.id} textValue={company.name}>
+              <div className="flex gap-2 items-center">
+                <AvatarImage
+                  name={company.name}
+                  width={16}
+                  height={16}
+                  avatar={getFileSrc(company.logoUrl)}
+                />
+                <div className="flex flex-col">
+                  <span className="text-small">{company.name}</span>
+                </div>
+              </div>
+            </SelectItem>
           ))}
         </Select>
         <Input

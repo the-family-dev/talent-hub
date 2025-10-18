@@ -24,6 +24,7 @@ const defaultPublicVacanyFilters: TVacancyFilters = {
   search: "",
   tags: undefined,
   location: "",
+  companyId: undefined,
 };
 
 const defaultPublicApplicatioonData: TPublicApplicationInput = {

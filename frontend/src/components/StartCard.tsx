@@ -27,7 +27,9 @@ export const StartCard = () => {
         </div>
 
         <div className="p-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
-          <h3 className="text-lg font-semibold mb-1">Для соискателей</h3>
+          <h3 className="text-lg font-semibold mb-1">
+            Для тех, кто ищет работу
+          </h3>
           <p className="text-sm text-gray-600 dark:text-gray-300">
             Просматривайте вакансии и откликайтесь онлайн.
           </p>

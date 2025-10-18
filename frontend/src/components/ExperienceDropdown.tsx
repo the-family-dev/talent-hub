@@ -5,19 +5,19 @@ import { ExperienceLevel } from "../types/rootTypes";
 const options = [
   {
     value: ExperienceLevel.Intern,
-    label: "Стажер",
+    label: "Без опыта",
   },
   {
     value: ExperienceLevel.Junior,
-    label: "Junior",
+    label: "от 1 до 3 лет",
   },
   {
     value: ExperienceLevel.Middle,
-    label: "Middle",
+    label: "от 3 до 6 лет",
   },
   {
     value: ExperienceLevel.Senior,
-    label: "Senior",
+    label: "6 лет и более",
   },
   {
     value: ExperienceLevel.Lead,
