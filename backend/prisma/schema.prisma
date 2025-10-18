@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model University {
+  id       String  @id @default(uuid())
+  name     String
+  login    String  @unique
+  logoUrl  String?
+  location String?
+}
+
 model Company {
   id        String    @id @default(uuid())
   name      String
