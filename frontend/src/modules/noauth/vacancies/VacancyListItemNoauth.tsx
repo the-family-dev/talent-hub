@@ -41,7 +41,7 @@ export const VacancyListItemNoauth = observer<{
       <CardHeader className="flex flex-row justify-between">
         <div className="font-medium text-xl">{title}</div>
 
-        {ExperienceLevelLabel({ experienceLevel })}
+        <ExperienceLevelLabel experienceLevel={experienceLevel} />
       </CardHeader>
 
       <CardBody className="flex flex-column gap-4">

@@ -48,7 +48,7 @@ export const UniversityInternshipListPage = observer(() => {
         {internships.map((internship) => (
           <UniversityInternshipListItem
             key={internship.id}
-            vacancy={internship}
+            internship={internship}
           />
         ))}
       </div>

@@ -8,6 +8,12 @@ export interface IUniversityInternshipBase {
   createdAt?: string;
   files?: string[];
   tags: string[];
+  university?: {
+    name: string;
+    id: string;
+    logoUrl?: string;
+    location?: string;
+  };
 }
 
 export interface IUniversityInternship extends IUniversityInternshipBase {

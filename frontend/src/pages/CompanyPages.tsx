@@ -11,14 +11,16 @@ import { RegisterCompanyPage } from "../modules/company/RegisterCompanyPage";
 import { CompanyProfilePage } from "../modules/company/CompanyProfilePage";
 import { VacancyPage } from "../modules/vacancies/VacancyPage";
 import {
+  BuildingLibraryIcon,
   BuildingOffice2Icon,
-  DocumentTextIcon,
-  HomeIcon,
+  DocumentMagnifyingGlassIcon,
+  UserIcon,
 } from "@heroicons/react/24/outline";
 import { VacancyCreatePage } from "../modules/vacancies/VacancyCreatePage";
 import { VacancyEditPage } from "../modules/vacancies/VacancyEditPage";
 import { VacancyApplicationPage } from "../modules/vacancies/VacancyApplicationPage";
 import { StartPageHeader } from "../components/StartPageHeader";
+import { VacancyInternshipListPage } from "../modules/vacancies/VacancyInternshipListPage";
 
 const routes: TNavigationButton[] = [
   {
@@ -29,12 +31,17 @@ const routes: TNavigationButton[] = [
   {
     path: "/company/vacancy",
     title: "Вакансии",
-    icon: HomeIcon,
+    icon: DocumentMagnifyingGlassIcon,
+  },
+  {
+    path: "/company/internship",
+    title: "Стажировки",
+    icon: BuildingLibraryIcon,
   },
   {
     path: "/company/resume",
-    title: "Отклики",
-    icon: DocumentTextIcon,
+    title: "Банк резюме",
+    icon: UserIcon,
   },
 ];
 
@@ -73,6 +80,10 @@ export const CompanyPages = observer(() => {
                   <Route
                     path="vacancy/:id/application"
                     element={<VacancyApplicationPage />}
+                  />
+                  <Route
+                    path="internship"
+                    element={<VacancyInternshipListPage />}
                   />
                 </Routes>
               </div>

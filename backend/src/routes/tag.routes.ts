@@ -7,5 +7,6 @@ const controller = new CatalogController();
 
 router.get("/tags", controller.getAllTags);
 router.get("/company", controller.getAllCompany);
+router.get("/university", controller.getAllUniversity);
 
 export { router as catalogRoutes };

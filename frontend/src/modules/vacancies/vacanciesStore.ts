@@ -17,6 +17,10 @@ import {
 } from "../../types/rootTypes";
 import cloneDeep from "clone-deep";
 import { applicationApi } from "../../api/applicationApi";
+import {
+  internshipApi,
+  type IUniversityInternshipBase,
+} from "../../api/internshipApi";
 
 const defaultVacancyFormData: TCreateEditVacancy = {
   title: "",
@@ -35,6 +39,11 @@ type TVacancyFilters = {
   search: string;
 };
 
+type TInternShipFilter = {
+  search: string;
+  companyId?: string;
+};
+
 type TVacancyApplicationFilters = {
   status?: ApplicationStatus;
   search: string;
@@ -42,6 +51,11 @@ type TVacancyApplicationFilters = {
 
 const defaultFilters: TVacancyFilters = {
   search: "",
+};
+
+const defaultInternShipFilters: TInternShipFilter = {
+  search: "",
+  companyId: undefined,
 };
 
 const defaultVacancyApplicationFilters: TVacancyApplicationFilters = {
@@ -54,13 +68,23 @@ class VacanciesStore {
   filters: TVacancyFilters = {
     ...defaultFilters,
   };
+  internShipFilters: TInternShipFilter = {
+    ...defaultInternShipFilters,
+  };
+
   applicationFilters: TVacancyApplicationFilters = cloneDeep(
     defaultVacancyApplicationFilters
   );
 
+  public internships: IUniversityInternshipBase[] = [];
+
   selectedVacancy?: ICompanyVacancy = undefined;
 
   private _debouncedFetchVacancies = debounce(() => this.fetchVacancies(), 500);
+  private _debouncedFetchInternships = debounce(
+    () => this.fetchInternships(),
+    500
+  );
 
   constructor() {
     makeAutoObservable(this);
@@ -93,6 +117,20 @@ class VacanciesStore {
     K extends keyof TVacancyApplicationFilters
   >(field: K, value: TVacancyApplicationFilters[K]) {
     this.applicationFilters[field] = value;
+  }
+
+  public setInternshipFilter<K extends keyof TInternShipFilter>(
+    field: K,
+    value: TInternShipFilter[K]
+  ) {
+    this.internShipFilters[field] = value;
+    this._debouncedFetchInternships();
+  }
+
+  public resetInternshipFilters() {
+    this.internShipFilters = {
+      ...defaultInternShipFilters,
+    };
   }
 
   public async updateApplicationStatus(
@@ -151,6 +189,21 @@ class VacanciesStore {
     } catch {
       addToast({
         title: "Ошибка добавления вакансии",
+        color: "danger",
+      });
+    }
+  }
+
+  public async fetchInternships() {
+    try {
+      const internships = await internshipApi.getInternships();
+      runInAction(() => {
+        this.internships = internships;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при получении стажировок",
         color: "danger",
       });
     }

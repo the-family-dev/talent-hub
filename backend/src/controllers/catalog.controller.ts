@@ -37,4 +37,21 @@ export class CatalogController extends BaseController {
       this.error(res, "Внутренняя ошибка сервера");
     }
   };
+
+  public getAllUniversity = async (req: Request, res: Response) => {
+    try {
+      const tags = await prisma.university.findMany({
+        select: {
+          id: true,
+          name: true,
+          logoUrl: true,
+        },
+      });
+
+      this.success(res, tags);
+    } catch (error) {
+      console.error("Ошибка при получении универститеов:", error);
+      this.error(res, "Внутренняя ошибка сервера");
+    }
+  };
 }
