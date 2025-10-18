@@ -109,7 +109,7 @@ export const ApplicantResumeForm = observer<{
             onValueChange={(v) => store.setResumeSalaryTo(v)}
           />
           <Input
-            label="Город"
+            label="Отрасль"
             value={location}
             onChange={(e) => store.setResumeLocation(e.target.value)}
           />

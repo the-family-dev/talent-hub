@@ -6,6 +6,13 @@ import { universityApi, type TUniversity } from "../../api/universityApi";
 import { addToast } from "@heroui/react";
 import equal from "fast-deep-equal";
 import cloneDeep from "clone-deep";
+import {
+  internshipApi,
+  type IUniversityInternship,
+  type IUniversityInternshipBase,
+  type TCreateEditInternship,
+} from "../../api/internshipApi";
+import { routerStore } from "../router/routerStore";
 const universityLocalStorageKey = "university";
 const universityLocalStorage = new TypedStorage<TCompany | undefined>(
   universityLocalStorageKey,
@@ -17,18 +24,34 @@ type TUniversityForm = {
   name: string;
 };
 
+type TInternshipFilters = {
+  search: string;
+};
+
 const defaultCompanyForm: TUniversityForm = {
   login: "",
   name: "",
+};
+
+const defaultFilters: TInternshipFilters = {
+  search: "",
 };
 
 class UniversityStore {
   form: TUniversityForm = defaultCompanyForm;
   public logInType: LoginFormType = LoginFormType.LogIn;
 
+  filters: TInternshipFilters = {
+    ...defaultFilters,
+  };
+
   public university: TUniversity | undefined = universityLocalStorage.get();
-  public _originalUniversity: TUniversity | undefined =
+  private _originalUniversity: TUniversity | undefined =
     universityLocalStorage.get();
+
+  public internships: IUniversityInternshipBase[] = [];
+
+  public selectedIternship: IUniversityInternship | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -36,6 +59,24 @@ class UniversityStore {
 
   get hasChanges() {
     return !equal(this.university, this._originalUniversity);
+  }
+
+  get defaultInternshipData(): TCreateEditInternship {
+    return {
+      title: "",
+      description: "",
+      location: "",
+      universityId: "",
+      tags: [],
+      files: [],
+    };
+  }
+
+  public setInternshipFilterField<K extends keyof TInternshipFilters>(
+    field: K,
+    value: TInternshipFilters[K]
+  ) {
+    this.filters[field] = value;
   }
 
   public setLoginType(type: LoginFormType) {
@@ -57,6 +98,48 @@ class UniversityStore {
     if (this.university === undefined) return;
 
     this.university[field] = value;
+  }
+
+  public async fetchInternshipById(id?: string) {
+    if (id === undefined) return;
+
+    try {
+      const internship = await internshipApi.getVacancyById(id);
+
+      runInAction(() => {
+        this.selectedIternship = internship;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при получении стажировки",
+        color: "danger",
+      });
+    }
+  }
+
+  public async addInternship(internship: TCreateEditInternship) {
+    if (this.university === undefined) return;
+
+    try {
+      await internshipApi.addInternship({
+        ...internship,
+        universityId: this.university.id,
+      });
+
+      addToast({
+        title: "Стажировка добавлена",
+        color: "success",
+      });
+
+      routerStore.navigate?.("/university/internship");
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при добавлении стажировки",
+        color: "danger",
+      });
+    }
   }
 
   public async register() {
@@ -135,6 +218,70 @@ class UniversityStore {
       addToast({
         title: "Ошибка",
         description: "Ошибка при обновлении компании",
+        color: "danger",
+      });
+    }
+  }
+
+  public async fetchInternships() {
+    try {
+      const internships = await internshipApi.getInternships();
+      runInAction(() => {
+        this.internships = internships;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при получении стажировок",
+        color: "danger",
+      });
+    }
+  }
+
+  public async deleteInternship(id: string) {
+    try {
+      await internshipApi.deleteInternship(id);
+
+      addToast({
+        title: "Стажировка удалена",
+        color: "success",
+      });
+
+      routerStore.navigate?.("/university/internship");
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при удалении стажировки",
+        color: "danger",
+      });
+    }
+  }
+
+  public async updateInternship(internship: TCreateEditInternship) {
+    if (this.selectedIternship === undefined) return;
+
+    try {
+      const updatedInternship = await internshipApi.updateInternship(
+        this.selectedIternship.id,
+        internship
+      );
+
+      runInAction(() => {
+        this.selectedIternship = updatedInternship;
+
+        addToast({
+          title: "Стажировка изменена",
+          color: "success",
+        });
+
+        routerStore.navigate?.(
+          `/university/internship/${updatedInternship.id}`
+        );
+      });
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при обновлении стажировки",
         color: "danger",
       });
     }

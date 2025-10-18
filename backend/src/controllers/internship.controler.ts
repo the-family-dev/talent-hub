@@ -17,14 +17,12 @@ export class InternshipController extends BaseController {
       if (!validationResult.success)
         return this.error(res, validationResult.error);
 
-      const { search, universityId, tags, location, experienceLevel } =
-        validationResult.data;
+      const { search, universityId, tags, location } = validationResult.data;
 
       const internships = await prisma.internship.findMany({
         where: {
           AND: [
             location ? { location } : {},
-            experienceLevel ? { experienceLevel } : {},
             universityId ? { universityId } : {},
             search
               ? {
@@ -59,6 +57,7 @@ export class InternshipController extends BaseController {
 
       const formattedInternships = internships.map((i) => ({
         ...i,
+        files: i.files.map((f) => f.fileUrl),
         tags: i.tags.map((t) => t.tag.name),
       }));
 
@@ -75,16 +74,18 @@ export class InternshipController extends BaseController {
       if (!validationResult.success)
         return this.error(res, validationResult.error);
 
+      // Файлы из запроса
+      const files = Array.isArray(req.files)
+        ? (req.files as Express.Multer.File[])
+        : [];
+
       const validatedData: TCreateUpdateInternshipInput = validationResult.data;
 
       const newInternship = await prisma.internship.create({
         data: {
           title: validatedData.title,
           description: validatedData.description,
-          salaryFrom: validatedData.salaryFrom,
-          salaryTo: validatedData.salaryTo,
           location: validatedData.location,
-          experienceLevel: validatedData.experienceLevel,
           university: { connect: { id: validatedData.universityId } },
           tags: {
             create: validatedData.tags?.map((tagName) => ({
@@ -97,7 +98,9 @@ export class InternshipController extends BaseController {
             })),
           },
           files: {
-            create: validatedData.files?.map((fileUrl) => ({ fileUrl })),
+            create: files.map((file) => ({
+              fileUrl: `/uploads/pdfs/${file.filename}`,
+            })),
           },
         },
         include: {
@@ -142,6 +145,7 @@ export class InternshipController extends BaseController {
       const formattedInternship = {
         ...internship,
         tags: internship.tags.map((t) => t.tag.name),
+        files: internship.files.map((f) => f.fileUrl),
       };
 
       this.success(res, formattedInternship);
@@ -163,15 +167,17 @@ export class InternshipController extends BaseController {
       const { id } = paramsValidation.data;
       const validatedData: TCreateUpdateInternshipInput = bodyValidation.data;
 
+      // Файлы из запроса
+      const files = Array.isArray(req.files)
+        ? (req.files as Express.Multer.File[])
+        : [];
+
       const updatedInternship = await prisma.internship.update({
         where: { id },
         data: {
           title: validatedData.title,
           description: validatedData.description,
-          salaryFrom: validatedData.salaryFrom,
-          salaryTo: validatedData.salaryTo,
           location: validatedData.location,
-          experienceLevel: validatedData.experienceLevel,
           tags: {
             deleteMany: {},
             create: validatedData.tags?.map((tagName) => ({
@@ -185,7 +191,9 @@ export class InternshipController extends BaseController {
           },
           files: {
             deleteMany: {},
-            create: validatedData.files?.map((fileUrl) => ({ fileUrl })),
+            create: files.map((file) => ({
+              fileUrl: `/uploads/pdfs/${file.filename}`,
+            })),
           },
         },
         include: {

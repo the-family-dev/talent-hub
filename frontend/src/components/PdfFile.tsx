@@ -1,0 +1,37 @@
+import { formatFileSize } from "../utils/utils";
+import { DocumentIcon } from "@heroicons/react/24/outline";
+import { observer } from "mobx-react-lite";
+import { getFileSrc } from "../api";
+
+interface PdfFileProps {
+  name: string;
+  url?: string;
+  size?: number; // размер в байтах (опционально)
+}
+
+export const PdfFile = observer<PdfFileProps>(({ name, size, url }) => {
+  const fileSrc = getFileSrc(url);
+
+  const handleOpenPdf = () => {
+    window.open(fileSrc, "_blank", "noopener,noreferrer");
+  };
+
+  return (
+    <div className="flex items-center justify-between rounded-md border border-default-200 px-3 py-2">
+      <div
+        className="flex items-center gap-2 min-w-0 cursor-pointer"
+        onClick={handleOpenPdf}
+      >
+        <DocumentIcon className="size-5 flex-shrink-0" />
+        <div className="flex flex-col min-w-0">
+          <span className="text-sm font-medium truncate">{name}</span>
+          {size && (
+            <span className="text-xs text-default-500">
+              {formatFileSize(size)}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+});

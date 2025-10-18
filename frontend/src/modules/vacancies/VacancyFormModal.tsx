@@ -125,7 +125,7 @@ export const VacancyFormModal = observer<{
               onValueChange={(v) => store.setVacancySlaryTo(v)}
             />
             <Input
-              label={"Город"}
+              label={"Отрасль"}
               value={location}
               onChange={(event) => store.setVacancyLocation(event.target.value)}
             />
