@@ -3,10 +3,12 @@ import { ApplicationsLineChart } from "./statistics/ApplicationsLineChart";
 import { ApplicationsPieChart } from "./statistics/ApplicationsPieChart";
 import { CompaniesBarChart } from "./statistics/CompaniesBarChart";
 import { KpiCard } from "./statistics/KpiCard";
-import { statisticsStore } from "./statistics/mockStatisticsStore";
+import { statisticsStore } from "./statistics/statisticsStore";
 import WordFrequencyDashboard from "./statistics/WordFrequencyDashboard";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 
-export const AdminAnalyticsPage = () => {
+export const AdminAnalyticsPage = observer(() => {
   const stats = statisticsStore;
 
   const wordData = {
@@ -26,6 +28,10 @@ export const AdminAnalyticsPage = () => {
     transition: { delay, duration: 0.6, ease: "easeOut" as any },
   });
 
+  useEffect(() => {
+    statisticsStore.getDashboardData();
+  }, []);
+
   return (
     <div>
       <div className="text-2xl font-semibold">Статистика</div>
@@ -36,21 +42,21 @@ export const AdminAnalyticsPage = () => {
             <KpiCard
               title="Всего резюме"
               value={stats.totalResumes}
-              change={5}
+              // change={5}
             />
           </motion.div>
           <motion.div {...fadeInUp(0.2)}>
             <KpiCard
               title="Всего откликов"
               value={stats.totalApplications}
-              change={-2}
+              // change={-2}
             />
           </motion.div>
           <motion.div {...fadeInUp(0.3)}>
             <KpiCard
               title="Устроены на работу"
               value={stats.hiredCount}
-              change={3}
+              // change={3}
             />
           </motion.div>
         </div>
@@ -86,4 +92,4 @@ export const AdminAnalyticsPage = () => {
       </div>
     </div>
   );
-};
+});

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import type { CompanyData } from "./mockStatisticsStore";
+import type { CompanyData } from "./statisticsStore";
 
 interface Props {
   data: CompanyData[];

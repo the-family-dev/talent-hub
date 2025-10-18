@@ -4,11 +4,7 @@ import {
   type TNavigationButton,
 } from "../components/NavigationMenu";
 import { observer } from "mobx-react-lite";
-import {
-  AcademicCapIcon,
-  BuildingOffice2Icon,
-  HomeIcon,
-} from "@heroicons/react/24/outline";
+import { AcademicCapIcon, HomeIcon } from "@heroicons/react/24/outline";
 import { RegisterUniversityPage } from "../modules/university/RegisterUniversityPage";
 import { StartPageHeader } from "../components/StartPageHeader";
 import { UniversityProfilePage } from "../modules/university/UniversityProfilePage";
@@ -29,11 +25,6 @@ const routes: TNavigationButton[] = [
     path: "/university/internship",
     title: "Мои стажировки",
     icon: HomeIcon,
-  },
-  {
-    path: "/university/company",
-    title: "Компании",
-    icon: BuildingOffice2Icon,
   },
 ];
 

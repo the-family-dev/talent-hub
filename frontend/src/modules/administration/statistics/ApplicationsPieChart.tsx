@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import type { StatusData } from "./mockStatisticsStore";
+import type { StatusData } from "./statisticsStore";
 
 interface Props {
   data: StatusData[];
