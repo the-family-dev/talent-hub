@@ -5,7 +5,7 @@ import type { ApplicationStatus, ExperienceLevel } from "../types/rootTypes";
 export type TPublicApplicationInput = {
   name: string;
   phone: string;
-  email: string;
+  email?: string;
   vacancyId: string;
   title: string;
   telegram?: string;

@@ -90,7 +90,7 @@ export const VacancyListItemNoauth = observer<{
       <CardFooter className="flex flex-row justify-start gap-2">
         <Button
           onPress={() => {
-            vacanciesNoauthStore.setVacancyRespond(vacancy);
+            vacanciesNoauthStore.selectVacancyForRespond(vacancy);
           }}
           size="md"
           variant="solid"

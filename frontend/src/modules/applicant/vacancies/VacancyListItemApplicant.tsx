@@ -88,7 +88,6 @@ export const VacancyListItemApplicant = observer<{
       </CardBody>
 
       <CardFooter className="flex flex-row justify-start gap-2">
-        {/* Потом дописать открытие модалки с сопроводом и т д */}
         <Button
           onPress={() => {
             vacanciesApplicantStore.setVacancyRespond(vacancy);

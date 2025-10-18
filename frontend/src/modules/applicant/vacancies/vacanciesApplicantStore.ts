@@ -5,7 +5,6 @@ import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 import { applicantStore } from "../applicantStore";
 import type {
   IApplicantVacancy,
-  TApplicantRespond,
   TApplicantVacancyFilters,
   TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
@@ -61,9 +60,24 @@ class VacanciesApplicantStore {
     this.vacancyRespond.note = note;
   }
 
-  public async sendVacancyRespond(info: TApplicantRespond) {
+  public async sendVacancyRespond() {
+    if (!applicantStore.resume) {
+      addToast({
+        title: "Чтобы откликнуться сначала загрузите резюме",
+        color: "warning",
+      });
+
+      return;
+    }
+
+    if (this.vacancyRespond.vacancy === undefined) return;
+
     try {
-      await applicantVacanciesApi.postRespond(info);
+      await applicantVacanciesApi.postRespond({
+        vacancyId: this.vacancyRespond.vacancy.id,
+        note: this.vacancyRespond.note,
+        resumeId: applicantStore.resume.id,
+      });
     } catch {
       addToast({
         title: "Вы уже откликались на эту вакансию",

@@ -4,31 +4,36 @@ import { debounce } from "../../../utils/debounce";
 import type {
   IApplicantVacancy,
   TApplicantVacancyFilters,
-  TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
 import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 import {
   applicationApi,
   type TPublicApplicationInput,
 } from "../../../api/applicationApi";
+import { ExperienceLevel } from "../../../types/rootTypes";
 
 const defaultFilters: TApplicantVacancyFilters = {
   search: "",
 };
 
+const defaultPublicApplicatioonData: TPublicApplicationInput = {
+  name: "",
+  note: "",
+  email: "",
+  title: "",
+  phone: "",
+  experienceLevel: ExperienceLevel.Junior,
+  vacancyId: "",
+  pdfFile: undefined,
+};
+
 class VacanciesNoauthStore {
   vacancies: IApplicantVacancy[] = [];
-
   filters: TApplicantVacancyFilters = {
     ...defaultFilters,
   };
-
   selectedVacancy: IApplicantVacancy | undefined = undefined;
-
-  vacancyRespond: TApplicantVacancyRespond = {
-    vacancy: undefined,
-    note: "",
-  };
+  publicVacancyRespond: TPublicApplicationInput = defaultPublicApplicatioonData;
 
   private _debouncedFetchVacancies = debounce(
     () => this.fetchNoauthVacancies(),
@@ -73,6 +78,17 @@ class VacanciesNoauthStore {
     }
   }
 
+  public resetPublicRespond() {
+    this.publicVacancyRespond = defaultPublicApplicatioonData;
+  }
+
+  public setPublicRespondField<K extends keyof TPublicApplicationInput>(
+    field: K,
+    value: TPublicApplicationInput[K]
+  ) {
+    this.publicVacancyRespond[field] = value;
+  }
+
   public setFilterValue<K extends keyof TApplicantVacancyFilters>(
     filter: K,
     value: TApplicantVacancyFilters[K]
@@ -86,31 +102,22 @@ class VacanciesNoauthStore {
     this._debouncedFetchVacancies();
   }
 
-  public setVacancyRespond(vacancy: IApplicantVacancy | undefined) {
-    this.vacancyRespond.vacancy = vacancy;
+  public selectVacancyForRespond(vacancy: IApplicantVacancy) {
+    this.publicVacancyRespond.title = vacancy.title;
+    this.publicVacancyRespond.vacancyId = vacancy.id;
+    this.publicVacancyRespond.experienceLevel = vacancy.experienceLevel;
   }
 
-  public resetVacancyRespond() {
-    this.vacancyRespond = {
-      vacancy: undefined,
-      note: "",
-    };
-  }
-
-  public setNote(note: string) {
-    this.vacancyRespond.note = note;
-  }
-
-  public async sendVacancyRespond(info: TPublicApplicationInput) {
+  public async sendVacancyPublicRespond() {
     try {
-      await applicationApi.createPublicApplication(info);
+      await applicationApi.createPublicApplication(this.publicVacancyRespond);
     } catch {
       addToast({
         title: "Не удалось отправить отклик",
         color: "warning",
       });
     }
-    this.resetVacancyRespond();
+    this.resetPublicRespond();
   }
 }
 

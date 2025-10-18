@@ -58,7 +58,7 @@ export const VacancyPageNoauth = observer(() => {
         <div className="flex flex-row justify-end gap-4">
           <Button
             onPress={() => {
-              vacanciesNoauthStore.setVacancyRespond(selectedVacancy);
+              vacanciesNoauthStore.selectVacancyForRespond(selectedVacancy);
             }}
             size="md"
             variant="solid"
