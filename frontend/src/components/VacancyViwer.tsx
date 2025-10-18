@@ -15,6 +15,7 @@ import { ExperienceLevelLabel } from "./ExperienceLevelLabel";
 import { AvatarImage } from "./AvatarImage";
 import { getFileSrc } from "../api";
 import { VacancyStatusLabel } from "./VacancyStatusLablel";
+import { PdfFile } from "./PdfFile";
 
 export const VacancyViwer = observer<{
   title: string;
@@ -23,7 +24,7 @@ export const VacancyViwer = observer<{
   salaryFrom?: number;
   salaryTo?: number;
   location?: string;
-  pdfUrl?: string;
+  pdfUrls?: string[];
   experienceLevel?: ExperienceLevel;
   employmentType?: EmploymentType;
   createdAt?: string;
@@ -47,6 +48,7 @@ export const VacancyViwer = observer<{
     description,
     company,
     status,
+    pdfUrls,
   } = props;
 
   return (
@@ -92,6 +94,19 @@ export const VacancyViwer = observer<{
           />
         ) : null}
       </div>
+      {pdfUrls ? (
+        <div className="flex flex-col gap-2">
+          {pdfUrls.map((pdfUrl, index) => {
+            return (
+              <PdfFile
+                key={index}
+                name={pdfUrl.split("/").pop() ?? "Без названия"}
+                url={pdfUrl}
+              />
+            );
+          })}
+        </div>
+      ) : null}
       <div className="prose prose-lg max-w-none dark:prose-invert">
         <ReactMarkdown>{description}</ReactMarkdown>
       </div>

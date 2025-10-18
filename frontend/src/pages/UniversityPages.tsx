@@ -14,6 +14,10 @@ import { StartPageHeader } from "../components/StartPageHeader";
 import { UniversityProfilePage } from "../modules/university/UniversityProfilePage";
 import { UniversityHeader } from "../modules/university/UniversityHeader";
 import { universityStore } from "../modules/university/universityStore";
+import { UniversityInternshipListPage } from "../modules/university/UniversityInternshipListPage";
+import { UniversityInternshipCreatePage } from "../modules/university/UniversityInternshipCreatePage";
+import { UniversityInternshipEditPage } from "../modules/university/UniversityInternshipEditPage";
+import { UniversityInternsipPage } from "../modules/university/UniversityInternsipPage";
 
 const routes: TNavigationButton[] = [
   {
@@ -54,15 +58,23 @@ export const UniversityPages = observer(() => {
             <div className="w-full min-h-0">
               <Routes>
                 <Route path="" element={<UniversityProfilePage />} />
-                {/* 
-                <Route path="vacancy" element={<VacanciesListPage />} />
-                <Route path="vacancy/:id" element={<VacancyPage />} />
-                <Route path="vacancy/create" element={<VacancyCreatePage />} />
-                <Route path="vacancy/:id/edit" element={<VacancyEditPage />} />
                 <Route
-                  path="vacancy/:id/application"
-                  element={<VacancyApplicationPage />}
-                /> */}
+                  path="internship"
+                  element={<UniversityInternshipListPage />}
+                />
+                <Route
+                  path="internship/create"
+                  element={<UniversityInternshipCreatePage />}
+                />
+                <Route
+                  path="internship/:id/edit"
+                  element={<UniversityInternshipEditPage />}
+                />
+
+                <Route
+                  path="internship/:id"
+                  element={<UniversityInternsipPage />}
+                />
               </Routes>
             </div>
           </div>

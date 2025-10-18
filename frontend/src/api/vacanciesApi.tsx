@@ -1,4 +1,5 @@
 import apiClient from ".";
+import type { EmploymentType, ExperienceLevel } from "../types/rootTypes";
 
 export interface IVacancy {
   id: string;
@@ -8,8 +9,8 @@ export interface IVacancy {
   requirements?: string;
   location?: string;
   isRemote: boolean;
-  employmentType: VacancyEmploymentType;
-  experienceLevel: VacancyExperienceLevel;
+  employmentType: EmploymentType;
+  experienceLevel: ExperienceLevel;
   tags: string[];
   createdAt: string;
   companyId?: string;
@@ -23,8 +24,8 @@ export interface IListVacancy {
   salary?: number;
   location?: string;
   isRemote: boolean;
-  employmentType: VacancyEmploymentType;
-  experienceLevel: VacancyExperienceLevel;
+  employmentType: EmploymentType;
+  experienceLevel: ExperienceLevel;
   tags: string[];
   createdAt: string;
   company: {
@@ -34,21 +35,6 @@ export interface IListVacancy {
 }
 
 export type TCreateVacancy = Omit<IVacancy, "id" | "createdAt" | "updatedAt">;
-
-export enum VacancyEmploymentType {
-  FullTime = "FULL_TIME",
-  PartTime = "PART_TIME",
-  Contract = "CONTRACT",
-  Internship = "INTERNSHIP",
-}
-
-export enum VacancyExperienceLevel {
-  Intern = "INTERN",
-  Junior = "JUNIOR",
-  Middle = "MIDDLE",
-  Senior = "SENIOR",
-  Lead = "LEAD",
-}
 
 class VacanciesApi {
   public async addVacancy(vacancy: TCreateVacancy) {

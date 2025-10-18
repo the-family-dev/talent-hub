@@ -17,15 +17,12 @@ model University {
 }
 
 model Internship {
-  id              String          @id @default(uuid())
-  title           String
-  description     String?
-  salaryFrom      Int?
-  salaryTo        Int?
-  location        String?
-  experienceLevel ExperienceLevel
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  location    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   universityId String // связь с вузом
   university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)

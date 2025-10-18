@@ -94,7 +94,7 @@ export const VacancyNoauthListFilters = observer(() => {
           onChange={(e) => {
             vacanciesNoauthStore.setFilterValue("location", e.target.value);
           }}
-          placeholder="Город"
+          placeholder="Отрасль"
         />
 
         <Button
