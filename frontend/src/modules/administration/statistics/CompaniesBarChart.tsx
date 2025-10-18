@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import type { CompanyData } from "./statisticsStore";
+import type { ICompanyData } from "../../../api/statisticsApi";
 
 interface Props {
-  data: CompanyData[];
+  data: ICompanyData[];
   title: string;
 }
 
