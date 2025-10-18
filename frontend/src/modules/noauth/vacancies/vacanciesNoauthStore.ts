@@ -111,6 +111,11 @@ class VacanciesNoauthStore {
   public async sendVacancyPublicRespond() {
     try {
       await applicationApi.createPublicApplication(this.publicVacancyRespond);
+
+      addToast({
+        title: "Отклик успешно отправлен",
+        color: "success",
+      });
     } catch {
       addToast({
         title: "Не удалось отправить отклик",
