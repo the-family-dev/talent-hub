@@ -29,7 +29,6 @@ export const VacancyInternshipsViewer = observer<{
         <DrawerContent className="[&>button]:hidden">
           <DrawerBody className="mt-6 flex flex-col">
             <div className="font-bold text-xl">
-              {" "}
               Стажировки от университетов
             </div>
             <div className="flex flex-col gap-2">

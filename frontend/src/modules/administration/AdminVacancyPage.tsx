@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
 import {
   Button,
@@ -7,9 +7,12 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
+  ModalHeader,
 } from "@heroui/react";
 import {
   ArrowLeftIcon,
@@ -25,10 +28,7 @@ import { VacancyStatus } from "../../types/rootTypes";
 export const AdminVacancyPage = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
 
-  const [open, setOpen] = useState(false);
-  const [comment, setComment] = useState("");
-
-  const { selectedVacancy } = adminStore;
+  const { selectedVacancy, isCompentOpned, comment } = adminStore;
 
   useEffect(() => {
     adminStore.fetchVacancyById(pageId);
@@ -68,10 +68,10 @@ export const AdminVacancyPage = observer(() => {
                 className="text-success"
                 startContent={<CheckBadgeIcon className={"size-6"} />}
                 onPress={() =>
-                  adminStore.updateVacancyStatus(VacancyStatus.Active)
+                  adminStore.setTargetStatus(VacancyStatus.Active)
                 }
               >
-                Активировать вакансию
+                Сделать активной
               </DropdownItem>
               <DropdownItem
                 key="close"
@@ -79,7 +79,7 @@ export const AdminVacancyPage = observer(() => {
                 className="text-danger"
                 startContent={<NoSymbolIcon className={"size-6"} />}
                 onPress={() =>
-                  adminStore.updateVacancyStatus(VacancyStatus.Closed)
+                  adminStore.setTargetStatus(VacancyStatus.Closed)
                 }
               >
                 Закрыть вакансию
@@ -90,7 +90,7 @@ export const AdminVacancyPage = observer(() => {
                 className="text-danger"
                 startContent={<NoSymbolIcon className={"size-6"} />}
                 onPress={() =>
-                  adminStore.updateVacancyStatus(VacancyStatus.Rejected)
+                  adminStore.setTargetStatus(VacancyStatus.Rejected)
                 }
               >
                 Отклонить вакансию
@@ -120,9 +120,21 @@ export const AdminVacancyPage = observer(() => {
           experienceLevel={experienceLevel}
         />
       </div>
-      <Modal>
+      <Modal isOpen={isCompentOpned} onClose={() => adminStore.closeComment()}>
         <ModalContent>
-          <ModalBody></ModalBody>
+          <ModalHeader>Комметнарий</ModalHeader>
+          <ModalBody>
+            <Input
+              type="textarea"
+              value={comment}
+              onChange={(e) => adminStore.setComment(e.target.value)}
+              placeholder="Комментарий"
+            />
+          </ModalBody>
+          <ModalFooter>
+            <Button onPress={() => adminStore.closeComment()}>Отмена</Button>
+            <Button color="primary" onPress={()=> adminStore.confirmStatusChange()}>Подтвердить</Button>
+          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

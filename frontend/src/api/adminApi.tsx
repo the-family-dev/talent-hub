@@ -23,11 +23,12 @@ class AdminApi {
     return response.data;
   }
 
-  public async updateVacancyStatus(id: string, status: string) {
+  public async updateVacancyStatus(id: string, status: string, comment?: string) {
     const response = await apiClient.patch<IAdminCompanyVacancy>(
       `/vacancies/${id}/status`,
       {
         status,
+        comment
       }
     );
 

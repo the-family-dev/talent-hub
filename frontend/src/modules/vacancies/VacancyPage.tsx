@@ -2,10 +2,11 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useParams } from "react-router";
 import { vacanciesStore } from "./vacanciesStore";
-import { Badge, Button } from "@heroui/react";
+import { Badge, Button, Tooltip } from "@heroui/react";
 import {
   ArrowLeftIcon,
   PencilIcon,
+  QuestionMarkCircleIcon,
   TrashIcon,
 } from "@heroicons/react/24/outline";
 import { ConfirmationWrapper } from "../../components/ConfirmationWrapper";
@@ -13,6 +14,7 @@ import { routerStore } from "../router/routerStore";
 import { ApplicationStatus } from "../../types/rootTypes";
 import { VacancyViwer } from "../../components/VacancyViwer";
 import { VacancyInternshipsViewer } from "./VacancyInternshipsViewer";
+import { VacancyStatusLabel } from "../../components/VacancyStatusLablel";
 
 export const VacancyPage = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
@@ -38,6 +40,8 @@ export const VacancyPage = observer(() => {
     employmentType,
     experienceLevel,
     isRemote,
+    status,
+    comment,
   } = selectedVacancy;
 
   const newApplicationsCount = applications.filter(
@@ -45,51 +49,63 @@ export const VacancyPage = observer(() => {
   ).length;
 
   return (
-    <div className="flex flex-col gap-4 relative">
-      <div className="flex flex-row gap-2 top-0 right-6 absolute">
-        <Button
-          color="default"
-          onPress={() => routerStore.navigate?.("/company/vacancy")}
-          size="md"
-        >
-          <ArrowLeftIcon className="size-4" /> Назад
-        </Button>
-        <VacancyInternshipsViewer vacancy={selectedVacancy} />
-        <Badge
-          color="primary"
-          isInvisible={newApplicationsCount === 0}
-          content={newApplicationsCount}
-        >
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-row gap-2 justify-between w-full">
+        <div className="flex flex-row gap-2 items-center">
+          <VacancyStatusLabel status={status} />
+          {comment ? (
+            <Tooltip content={comment}>
+              <QuestionMarkCircleIcon className="text size-6" />
+            </Tooltip>
+          ) : null}
+        </div>
+        <div className="flex flex-row gap-2">
           <Button
-            variant="faded"
-            color="primary"
-            onPress={() =>
-              routerStore.navigate?.(`/company/vacancy/${id}/application`)
-            }
+            color="default"
+            onPress={() => routerStore.navigate?.("/company/vacancy")}
+            size="md"
           >
-            Отклики
+            <ArrowLeftIcon className="size-4" /> Назад
           </Button>
-        </Badge>
-        <Button
-          isIconOnly
-          variant="light"
-          color="secondary"
-          onPress={() => routerStore.navigate?.(`/company/vacancy/${id}/edit`)}
-          className="w-min"
-        >
-          <PencilIcon className="size-6" />
-        </Button>
-        <ConfirmationWrapper
-          title="Удаление вакансии"
-          message={`Вы уверенны что хотите удалить вакансию?\nПосле удаления вернуть её не получится.`}
-          confirmText="Удалить"
-          color="danger"
-          onConfirm={() => vacanciesStore.deleteVacancy(id)}
-        >
-          <Button isIconOnly variant="light" color="danger" className="w-min">
-            <TrashIcon className="size-6" />
+          <VacancyInternshipsViewer vacancy={selectedVacancy} />
+          <Badge
+            color="primary"
+            isInvisible={newApplicationsCount === 0}
+            content={newApplicationsCount}
+          >
+            <Button
+              variant="faded"
+              color="primary"
+              onPress={() =>
+                routerStore.navigate?.(`/company/vacancy/${id}/application`)
+              }
+            >
+              Отклики
+            </Button>
+          </Badge>
+          <Button
+            isIconOnly
+            variant="light"
+            color="secondary"
+            onPress={() =>
+              routerStore.navigate?.(`/company/vacancy/${id}/edit`)
+            }
+            className="w-min"
+          >
+            <PencilIcon className="size-6" />
           </Button>
-        </ConfirmationWrapper>
+          <ConfirmationWrapper
+            title="Удаление вакансии"
+            message={`Вы уверенны что хотите удалить вакансию?\nПосле удаления вернуть её не получится.`}
+            confirmText="Удалить"
+            color="danger"
+            onConfirm={() => vacanciesStore.deleteVacancy(id)}
+          >
+            <Button isIconOnly variant="light" color="danger" className="w-min">
+              <TrashIcon className="size-6" />
+            </Button>
+          </ConfirmationWrapper>
+        </div>
       </div>
 
       <VacancyViwer
