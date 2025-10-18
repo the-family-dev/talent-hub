@@ -29,7 +29,9 @@ export const StartPageHeader = observer(() => {
       maxWidth={"full"}
       isBordered
     >
-      <NavbarBrand className="flex flex-row gap-2"></NavbarBrand>
+      <NavbarBrand className="flex flex-row gap-2 font-bold text-2xl">
+        TalentHub
+      </NavbarBrand>
       <NavbarContent justify="end">
         <Button
           onPress={() => routerStore.navigate?.("/admin")}

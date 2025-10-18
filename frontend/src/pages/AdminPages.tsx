@@ -1,6 +1,10 @@
 import { Route, Routes } from "react-router";
 
-import { DocumentTextIcon } from "@heroicons/react/24/outline";
+import {
+  BuildingOffice2Icon,
+  DocumentTextIcon,
+  WindowIcon,
+} from "@heroicons/react/24/outline";
 import { observer } from "mobx-react-lite";
 import {
   NavigationMenu,
@@ -9,6 +13,7 @@ import {
 import { AdminHeader } from "../modules/administration/AdminHeader";
 import { AdminVacancyListPage } from "../modules/administration/AdminVacancyListPage";
 import { AdminVacancyPage } from "../modules/administration/AdminVacancyPage";
+import { AdminAnalyticsPage } from "../modules/administration/AdminAnalyticsPage";
 
 const routes: TNavigationButton[] = [
   {
@@ -19,12 +24,12 @@ const routes: TNavigationButton[] = [
   {
     path: "/admin/company",
     title: "Создание компании",
-    icon: DocumentTextIcon,
+    icon: BuildingOffice2Icon,
   },
   {
     path: "/admin/analytics",
     title: "Аналитика",
-    icon: DocumentTextIcon,
+    icon: WindowIcon,
   },
 ];
 
@@ -45,6 +50,7 @@ export const AdminPages = observer(() => {
             <Routes>
               <Route path="" element={<AdminVacancyListPage />} />
               <Route path="/:id" element={<AdminVacancyPage />} />
+              <Route path="/analytics" element={<AdminAnalyticsPage />} />
             </Routes>
           </div>
         </div>
