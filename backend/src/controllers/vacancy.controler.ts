@@ -410,6 +410,10 @@ export class VacancyController extends BaseController {
         return this.error(res, "Вакансия не найдена", 404);
       }
 
+      console.log({
+        validatedData
+      });
+
       // Обновляем статус вакансии
       const updatedVacancy = await prisma.vacancy.update({
         where: { id },

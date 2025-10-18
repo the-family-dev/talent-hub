@@ -8,6 +8,7 @@ import { catalogRoutes } from "./tag.routes";
 import { applicationRoutes } from "./application.routes";
 import { universityRoutes } from "./university.routes";
 import { internshipRoutes } from "./internship.routes";
+import { analyticsRoutes } from "./atalytics.routes";
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.use("/applicant", userRoutes);
 router.use("/resume", resumeController);
 router.use("/catalog", catalogRoutes);
 router.use("/application", applicationRoutes);
+router.use("/analytics", analyticsRoutes);
 // TODO
 
 export { router as apiRoutes };

@@ -191,10 +191,9 @@ class VacanciesStore {
   public async updateApplicationStatus(
     applicationId: string,
     status: ApplicationStatus,
-    comment?: string
   ) {
     try {
-      await applicationApi.updateStatus(applicationId, status, comment);
+      await applicationApi.updateStatus(applicationId, status,);
 
       addToast({
         title: "Статус отклика успешно обновлен",

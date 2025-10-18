@@ -13,6 +13,7 @@ import { LoginFormType } from "../../types/rootTypes";
 import { applicantStore } from "./applicantStore";
 import { useMemo } from "react";
 import { authOptions } from "../../constants/authConstants";
+import { AuthHelpBanner } from "../../components/AuthHelpBanner";
 
 export const RegisterApplicantPage = observer(() => {
   const { logInType, form } = applicantStore;
@@ -58,7 +59,8 @@ export const RegisterApplicantPage = observer(() => {
           </Tabs>
         </CardHeader>
 
-        <CardBody>
+        <CardBody className="flex flex-col gap-2">
+          <AuthHelpBanner />
           <Form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input
               isRequired
