@@ -3,11 +3,14 @@ import { addToast } from "@heroui/react";
 import { debounce } from "../../../utils/debounce";
 import type {
   IApplicantVacancy,
-  TApplicantRespond,
   TApplicantVacancyFilters,
   TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
 import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
+import {
+  applicationApi,
+  type TPublicApplicationInput,
+} from "../../../api/applicationApi";
 
 const defaultFilters: TApplicantVacancyFilters = {
   search: "",
@@ -98,12 +101,12 @@ class VacanciesNoauthStore {
     this.vacancyRespond.note = note;
   }
 
-  public async sendVacancyRespond(info: TApplicantRespond) {
+  public async sendVacancyRespond(info: TPublicApplicationInput) {
     try {
-      await applicantVacanciesApi.postRespond(info);
+      await applicationApi.createPublicApplication(info);
     } catch {
       addToast({
-        title: "Вы уже откликались на эту вакансию",
+        title: "Не удалось отправить отклик",
         color: "warning",
       });
     }

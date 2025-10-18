@@ -64,7 +64,7 @@ export const VacancyPageNoauth = observer(() => {
             variant="solid"
             color="primary"
           >
-            Отклинуться
+            Откликнуться
           </Button>
 
           <Button

@@ -99,7 +99,7 @@ export const VacancyListItemApplicant = observer<{
           variant="solid"
           color="primary"
         >
-          Отклинуться
+          Откликнуться
         </Button>
         <Button
           onPress={() => routerStore.navigate?.(`applicant/vacancy/${id}`)}

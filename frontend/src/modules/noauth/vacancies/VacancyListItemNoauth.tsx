@@ -15,7 +15,7 @@ import { AvatarImage } from "../../../components/AvatarImage";
 import { getFileSrc } from "../../../api";
 import { routerStore } from "../../router/routerStore";
 import type { IApplicantVacancy } from "../../../types/vacancyTypes";
-import { useNavigate } from "react-router";
+import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
 
 export const VacancyListItemNoauth = observer<{
   vacancy: IApplicantVacancy;
@@ -34,8 +34,6 @@ export const VacancyListItemNoauth = observer<{
     experienceLevel,
     employmentType,
   } = vacancy;
-
-  const navigate = useNavigate();
 
   return (
     <Card className="shrink-0 m-[1px]">
@@ -94,13 +92,13 @@ export const VacancyListItemNoauth = observer<{
       <CardFooter className="flex flex-row justify-start gap-2">
         <Button
           onPress={() => {
-            navigate("/auth");
+            vacanciesNoauthStore.setVacancyRespond(vacancy);
           }}
           size="md"
           variant="solid"
           color="primary"
         >
-          Отклинуться
+          Откликнуться
         </Button>
         <Button
           onPress={() => routerStore.navigate?.(`/vacancy/${id}`)}

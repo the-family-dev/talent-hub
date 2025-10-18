@@ -15,6 +15,7 @@ import { applicantStore } from "../applicantStore";
 import { useLocation } from "react-router";
 import { ApplicantInfoForm } from "../../../components/ApplicantInfoForm";
 import { vacanciesNoauthStore } from "../../noauth/vacancies/vacanciesNoauthStore";
+import type { ExperienceLevel } from "../../../types/rootTypes";
 
 export const CreateVacancyRespondModal = observer(() => {
   const location = useLocation();
@@ -22,8 +23,9 @@ export const CreateVacancyRespondModal = observer(() => {
   const { vacancy, note } = isApplicantPath
     ? vacanciesApplicantStore.vacancyRespond
     : vacanciesNoauthStore.vacancyRespond;
-  const { resume, applicant } = applicantStore;
 
+  const { resume, publicApplicant } = applicantStore;
+  const { name, phone, email, telegram } = publicApplicant;
   const resumeRender = () => {
     if (resume) {
       return (
@@ -34,31 +36,45 @@ export const CreateVacancyRespondModal = observer(() => {
     }
   };
 
+  const isDisabledButton = !isApplicantPath && (!name || !phone || !email);
+
+  const handleSendResume = () => {
+    if (isApplicantPath) {
+      vacanciesApplicantStore.sendVacancyRespond({
+        vacancyId: vacancy?.id as string,
+        resumeId: resume?.id as string,
+        note: note,
+      });
+      return;
+    }
+    vacanciesNoauthStore.sendVacancyRespond({
+      title: vacancy?.experienceLevel ?? "",
+      vacancyId: vacancy?.id as string,
+      note: note,
+      name,
+      phone,
+      email,
+      telegram,
+      experienceLevel: vacancy?.experienceLevel as ExperienceLevel,
+    });
+    handleCloseModal();
+  };
+
+  const handleCloseModal = () => {
+    applicantStore.resetPublicApplicant();
+    vacanciesApplicantStore.resetVacancyRespond();
+    vacanciesNoauthStore.resetVacancyRespond();
+  };
+
   return (
-    <Modal
-      isOpen={Boolean(vacancy?.id)}
-      onClose={() => {
-        vacanciesApplicantStore.resetVacancyRespond();
-        vacanciesNoauthStore.resetVacancyRespond();
-      }}
-    >
+    <Modal isOpen={Boolean(vacancy?.id)} onClose={handleCloseModal}>
       <ModalContent>
         <ModalHeader>Отклик</ModalHeader>
 
         <ModalBody className="flex flex-col gap-2">
           {resumeRender()}
-          {!isApplicantPath && applicant && (
-            <ApplicantInfoForm
-              applicant={{
-                id: "",
-                name: "",
-                login: "",
-                avatarUrl: undefined,
-                phone: undefined,
-                email: undefined,
-                telegram: undefined,
-              }}
-            />
+          {!isApplicantPath && (
+            <ApplicantInfoForm applicant={publicApplicant} />
           )}
           <Textarea
             value={note}
@@ -71,26 +87,14 @@ export const CreateVacancyRespondModal = observer(() => {
           />
         </ModalBody>
         <ModalFooter>
-          <Button
-            onPress={() => vacanciesApplicantStore.resetVacancyRespond()}
-            variant="flat"
-          >
+          <Button onPress={handleCloseModal} variant="flat">
             Отмена
           </Button>
           <Button
-            onPress={() =>
-              isApplicantPath
-                ? vacanciesApplicantStore.sendVacancyRespond({
-                    vacancyId: vacancy?.id as string,
-                    resumeId: resume?.id as string,
-                    note: note,
-                  })
-                : vacanciesNoauthStore.sendVacancyRespond({
-                    vacancyId: vacancy?.id as string,
-                    note: note,
-                  })
-            }
+            onPress={handleSendResume}
             color="primary"
+            disabled={isDisabledButton}
+            className={isDisabledButton ? "opacity-50 cursor-not-allowed" : ""}
           >
             Отправить
           </Button>
