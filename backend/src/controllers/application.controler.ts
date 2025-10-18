@@ -205,7 +205,7 @@ export class ApplicationController extends BaseController {
     }
   };
 
-  public async createPublicApplication(req: Request, res: Response) {
+  createPublicApplication = async (req: Request, res: Response) => {
     try {
       const body = PublicApplicationCreateSchema.safeParse(req.body);
 
@@ -288,5 +288,5 @@ export class ApplicationController extends BaseController {
       console.error("Ошибка создания отклика:", error);
       return this.error(res, "Внутренняя ошибка сервера");
     }
-  }
+  };
 }
