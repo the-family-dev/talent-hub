@@ -43,7 +43,7 @@ export const ApplicantProfileCard = observer<{
             >
               {login}
             </Snippet>
-            <ApplicantInfoForm applicant={applicant} />
+            <ApplicantInfoForm />
           </div>
           <div className="flex flex-row justify-end gap-2">
             <Button

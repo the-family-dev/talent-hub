@@ -10,8 +10,8 @@ import {
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 
-import { vacanciesNoauthStore } from "../../noauth/vacancies/vacanciesNoauthStore";
-import { FileSelect } from "../../../components/FileSelect";
+import { vacanciesNoauthStore } from "./vacancies/vacanciesNoauthStore";
+import { FileSelect } from "../../components/FileSelect";
 
 export const CreateVacancyPublicRespondModal = observer(() => {
   const { vacancyId, name, phone, pdfFile, email, telegram, note } =

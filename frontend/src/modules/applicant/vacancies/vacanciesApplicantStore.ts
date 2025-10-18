@@ -78,6 +78,11 @@ class VacanciesApplicantStore {
         note: this.vacancyRespond.note,
         resumeId: applicantStore.resume.id,
       });
+
+      addToast({
+        title: "Отклик отправлен",
+        color: "success",
+      });
     } catch {
       addToast({
         title: "Вы уже откликались на эту вакансию",

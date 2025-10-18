@@ -46,7 +46,6 @@ class ApplicantStore {
     applicantLocalStorage.get();
 
   public publicApplicant: TPublicApplicationInput = defaultPublicApplicantInfo;
-
   public logInType: LoginFormType = LoginFormType.LogIn;
 
   public newPhoto: File | undefined = undefined;
@@ -120,17 +119,6 @@ class ApplicantStore {
     if (this.applicant === undefined) return;
 
     this.applicant[field] = value;
-  }
-
-  public setPublicApplicantField<K extends keyof TPublicApplicationInput>(
-    field: K,
-    value: TPublicApplicationInput[K]
-  ) {
-    this.publicApplicant[field] = value;
-  }
-
-  public resetPublicApplicant() {
-    this.publicApplicant = defaultPublicApplicantInfo;
   }
 
   get hasChanges() {
@@ -322,13 +310,8 @@ class ApplicantStore {
   }
 
   private _setApplicant(applicant: TApplicant) {
-    // создаём observable (если нужно), но сравнивать будем не Proxy
     this.applicant = applicant;
-
-    // сохраняем чистую глубокую копию оригинала
     this._originalApplicant = cloneDeep(toJS(applicant));
-
-    // сохраняем в localStorage (plain-версию, не MobX Proxy)
     applicantLocalStorage.set(toJS(applicant));
   }
 }

@@ -4,7 +4,7 @@ import { StartPageHeader } from "../components/StartPageHeader";
 import { VacanciesNoauthListPage } from "../modules/noauth/vacancies/VacanciesNoauthListPage";
 import { VacancyPageNoauth } from "../modules/noauth/vacancies/VacancyPageNoauth";
 import { AuthPage } from "../modules/noauth/AuthPage";
-import { CreateVacancyPublicRespondModal } from "../modules/applicant/vacancies/CreateVacancyPublicRespondModal";
+import { CreateVacancyPublicRespondModal } from "../modules/noauth/CreateVacancyPublicRespondModal";
 
 export const NoAuthPages = observer(() => {
   return (
