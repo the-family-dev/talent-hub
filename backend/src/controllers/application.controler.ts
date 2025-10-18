@@ -275,7 +275,7 @@ export class ApplicationController extends BaseController {
         },
         include: {
           resume: {
-            select: { id: true, title: true },
+            select: { id: true, title: true, pdfUrl: true },
           },
           vacancy: {
             select: { id: true, title: true },
