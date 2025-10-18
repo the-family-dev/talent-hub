@@ -5,18 +5,18 @@ import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 import { applicantStore } from "../applicantStore";
 import type {
   IApplicantVacancy,
-  TApplicantVacancyFilters,
+  TVacancyFilters,
   TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
 
-const defaultFilters: TApplicantVacancyFilters = {
+const defaultFilters: TVacancyFilters = {
   search: "",
 };
 
 class VacanciesApplicantStore {
   vacancies: IApplicantVacancy[] = [];
 
-  filters: TApplicantVacancyFilters = {
+  filters: TVacancyFilters = {
     ...defaultFilters,
   };
 
@@ -126,9 +126,9 @@ class VacanciesApplicantStore {
     }
   }
 
-  public setFilterValue<K extends keyof TApplicantVacancyFilters>(
+  public setFilterValue<K extends keyof TVacancyFilters>(
     filter: K,
-    value: TApplicantVacancyFilters[K]
+    value: TVacancyFilters[K]
   ) {
     this.filters[filter] = value;
     this._debouncedFetchVacancies();

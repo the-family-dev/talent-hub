@@ -23,6 +23,7 @@ export const CreateUpdateVacancySchema = z.object({
 
 export const GetVacanciesBodySchema = z.object({
   search: z.string().optional(),
+  location: z.string().optional(),
   tags: z.array(z.string()).optional(),
   status: z.enum(VacancyStatus).optional(),
   companyId: z.uuid("Некорректный формат companyId").optional(),

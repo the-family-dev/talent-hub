@@ -3,12 +3,12 @@ import { VacancyStatus } from "../types/rootTypes";
 import type {
   IApplicantVacancy,
   TApplicantRespond,
-  TApplicantVacancyFilters,
+  TVacancyFilters,
 } from "../types/vacancyTypes";
 import { clearEmptyFields } from "../utils/utils";
 
 class ApplicantVacanciesApi {
-  public async getAllVacanciesApplicant(filters: TApplicantVacancyFilters) {
+  public async getAllVacanciesApplicant(filters: TVacancyFilters) {
     const response = await apiClient.post<IApplicantVacancy[]>(
       "/vacancies",
       { ...filters, status: VacancyStatus.Active } // Соискатель видит только активные вакансии

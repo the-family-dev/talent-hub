@@ -7,8 +7,8 @@ import {
 import { addToast } from "@heroui/react";
 
 class CatalogStore {
-  tags: TCatalogTag[] = [];
-  companies: TCatalogCompany[] = [];
+  allTags: TCatalogTag[] = [];
+  allCompanies: TCatalogCompany[] = [];
 
   public async fetchCatalog() {
     try {
@@ -18,8 +18,8 @@ class CatalogStore {
       ]);
 
       runInAction(() => {
-        this.tags = tags;
-        this.companies = companies;
+        this.allTags = tags;
+        this.allCompanies = companies;
       });
     } catch {
       addToast({

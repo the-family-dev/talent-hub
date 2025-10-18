@@ -22,10 +22,11 @@ export interface IApplicantVacancy {
   updatedAt: string;
 }
 
-export type TApplicantVacancyFilters = {
+export type TVacancyFilters = {
   tags?: string[];
   search?: string;
   companyId?: string;
+  location?: string;
 };
 
 export type TApplicantVacancyRespond = {
@@ -34,7 +35,7 @@ export type TApplicantVacancyRespond = {
 };
 
 export type TApplicantRespond = {
-  resumeId?: string;
+  resumeId: string;
   vacancyId: string;
   note?: string;
 };

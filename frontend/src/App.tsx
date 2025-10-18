@@ -7,6 +7,7 @@ import { ApplicantPages } from "./pages/ApplicantPages";
 import { NoAuthPages } from "./pages/NoAuthPages";
 import { UniversityPages } from "./pages/UniversityPages";
 import { AdminPages } from "./pages/AdminPages";
+import { catalogStore } from "./modules/catalog/catalogStore";
 
 const App = observer(() => {
   const navigate = useNavigate();
@@ -15,6 +16,10 @@ const App = observer(() => {
     // прокидываем navigate в стор один раз
     routerStore.setNavigate(navigate);
   }, [navigate]);
+
+  useEffect(() => {
+    catalogStore.fetchCatalog();
+  }, []);
 
   return (
     <>

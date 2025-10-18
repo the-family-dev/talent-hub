@@ -3,7 +3,7 @@ import { addToast } from "@heroui/react";
 import { debounce } from "../../../utils/debounce";
 import type {
   IApplicantVacancy,
-  TApplicantVacancyFilters,
+  TVacancyFilters,
 } from "../../../types/vacancyTypes";
 import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
 import {
@@ -11,9 +11,19 @@ import {
   type TPublicApplicationInput,
 } from "../../../api/applicationApi";
 import { ExperienceLevel } from "../../../types/rootTypes";
+import equal from "fast-deep-equal";
 
-const defaultFilters: TApplicantVacancyFilters = {
+type TPublicVacancyFilters = {
+  search?: string;
+  tags?: string[];
+  companyId?: string;
+  location?: string;
+};
+
+const defaultPublicVacanyFilters: TVacancyFilters = {
   search: "",
+  tags: undefined,
+  location: "",
 };
 
 const defaultPublicApplicatioonData: TPublicApplicationInput = {
@@ -29,8 +39,8 @@ const defaultPublicApplicatioonData: TPublicApplicationInput = {
 
 class VacanciesNoauthStore {
   vacancies: IApplicantVacancy[] = [];
-  filters: TApplicantVacancyFilters = {
-    ...defaultFilters,
+  filters: TPublicVacancyFilters = {
+    ...defaultPublicVacanyFilters,
   };
   selectedVacancy: IApplicantVacancy | undefined = undefined;
   publicVacancyRespond: TPublicApplicationInput = defaultPublicApplicatioonData;
@@ -44,11 +54,18 @@ class VacanciesNoauthStore {
     makeAutoObservable(this);
   }
 
+  get hasFilterChanges() {
+    return !equal(this.filters, defaultPublicVacanyFilters);
+  }
+
   public async fetchNoauthVacancies() {
     try {
-      const vacancies = await applicantVacanciesApi.getAllVacanciesApplicant(
-        this.filters
-      );
+      const vacancies = await applicantVacanciesApi.getAllVacanciesApplicant({
+        search: this.filters.search,
+        tags: this.filters.tags,
+        companyId: this.filters.companyId,
+        location: this.filters.location,
+      });
 
       runInAction(() => {
         this.vacancies = vacancies;
@@ -89,16 +106,16 @@ class VacanciesNoauthStore {
     this.publicVacancyRespond[field] = value;
   }
 
-  public setFilterValue<K extends keyof TApplicantVacancyFilters>(
+  public setFilterValue<K extends keyof TPublicVacancyFilters>(
     filter: K,
-    value: TApplicantVacancyFilters[K]
+    value: TPublicVacancyFilters[K]
   ) {
     this.filters[filter] = value;
     this._debouncedFetchVacancies();
   }
 
-  public clearFilters() {
-    this.filters = { ...defaultFilters };
+  public resetFilters() {
+    this.filters = { ...defaultPublicVacanyFilters };
     this._debouncedFetchVacancies();
   }
 
