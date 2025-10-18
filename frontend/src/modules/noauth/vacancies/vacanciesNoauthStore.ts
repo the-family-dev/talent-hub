@@ -4,8 +4,13 @@ import { debounce } from "../../../utils/debounce";
 import type {
   IApplicantVacancy,
   TApplicantVacancyFilters,
+  TApplicantVacancyRespond,
 } from "../../../types/vacancyTypes";
 import { applicantVacanciesApi } from "../../../api/applicantVacanciesApi";
+import {
+  applicationApi,
+  type TPublicApplicationInput,
+} from "../../../api/applicationApi";
 
 const defaultFilters: TApplicantVacancyFilters = {
   search: "",
@@ -19,6 +24,11 @@ class VacanciesNoauthStore {
   };
 
   selectedVacancy: IApplicantVacancy | undefined = undefined;
+
+  vacancyRespond: TApplicantVacancyRespond = {
+    vacancy: undefined,
+    note: "",
+  };
 
   private _debouncedFetchVacancies = debounce(
     () => this.fetchNoauthVacancies(),
@@ -74,6 +84,33 @@ class VacanciesNoauthStore {
   public clearFilters() {
     this.filters = { ...defaultFilters };
     this._debouncedFetchVacancies();
+  }
+
+  public setVacancyRespond(vacancy: IApplicantVacancy | undefined) {
+    this.vacancyRespond.vacancy = vacancy;
+  }
+
+  public resetVacancyRespond() {
+    this.vacancyRespond = {
+      vacancy: undefined,
+      note: "",
+    };
+  }
+
+  public setNote(note: string) {
+    this.vacancyRespond.note = note;
+  }
+
+  public async sendVacancyRespond(info: TPublicApplicationInput) {
+    try {
+      await applicationApi.createPublicApplication(info);
+    } catch {
+      addToast({
+        title: "Не удалось отправить отклик",
+        color: "warning",
+      });
+    }
+    this.resetVacancyRespond();
   }
 }
 

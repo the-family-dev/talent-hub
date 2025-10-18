@@ -8,6 +8,7 @@ export type TApplicant = {
   phone?: string;
   email?: string;
   telegram?: string;
+  pdfFile?: string;
 };
 
 type TRegisterApplicant = Omit<TApplicant, "id">;

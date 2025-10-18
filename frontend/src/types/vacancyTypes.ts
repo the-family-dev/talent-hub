@@ -27,3 +27,14 @@ export type TApplicantVacancyFilters = {
   search?: string;
   companyId?: string;
 };
+
+export type TApplicantVacancyRespond = {
+  vacancy: IApplicantVacancy | undefined;
+  note: string;
+};
+
+export type TApplicantRespond = {
+  resumeId?: string;
+  vacancyId: string;
+  note?: string;
+};

@@ -44,7 +44,7 @@ export const VacancyPageApplicant = observer(() => {
             variant="solid"
             color="primary"
           >
-            Отклинуться
+            Откликнуться
           </Button>
 
           <Button

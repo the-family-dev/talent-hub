@@ -2,15 +2,10 @@ import apiClient from ".";
 import { VacancyStatus } from "../types/rootTypes";
 import type {
   IApplicantVacancy,
+  TApplicantRespond,
   TApplicantVacancyFilters,
 } from "../types/vacancyTypes";
 import { clearEmptyFields } from "../utils/utils";
-
-export type TApplicantRespond = {
-  resumeId: string;
-  vacancyId: string;
-  note?: string;
-};
 
 class ApplicantVacanciesApi {
   public async getAllVacanciesApplicant(filters: TApplicantVacancyFilters) {

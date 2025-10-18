@@ -13,6 +13,7 @@ import {
 } from "../../api/applicantResumeApi";
 import { routerStore } from "../router/routerStore";
 import { resumeDescriptionTemplate } from "./resume/resumeConstants";
+import type { TPublicApplicationInput } from "../../api/applicationApi";
 
 const applicantLocalStorageKey = "applicant";
 const applicantLocalStorage = new TypedStorage<TApplicant | undefined>(
@@ -30,10 +31,21 @@ const defaultApplicantForm: TApplicantForm = {
   name: "",
 };
 
+const defaultPublicApplicantInfo: TPublicApplicationInput = {
+  name: "",
+  phone: "",
+  vacancyId: "",
+  title: "",
+  email: "",
+  experienceLevel: ExperienceLevel.Junior,
+};
+
 class ApplicantStore {
   public applicant: TApplicant | undefined = applicantLocalStorage.get();
   public _originalApplicant: TApplicant | undefined =
     applicantLocalStorage.get();
+
+  public publicApplicant: TPublicApplicationInput = defaultPublicApplicantInfo;
 
   public logInType: LoginFormType = LoginFormType.LogIn;
 
@@ -108,6 +120,17 @@ class ApplicantStore {
     if (this.applicant === undefined) return;
 
     this.applicant[field] = value;
+  }
+
+  public setPublicApplicantField<K extends keyof TPublicApplicationInput>(
+    field: K,
+    value: TPublicApplicationInput[K]
+  ) {
+    this.publicApplicant[field] = value;
+  }
+
+  public resetPublicApplicant() {
+    this.publicApplicant = defaultPublicApplicantInfo;
   }
 
   get hasChanges() {
@@ -294,6 +317,7 @@ class ApplicantStore {
 
   public logOut() {
     this.applicant = undefined;
+    this.resume = undefined;
     applicantLocalStorage.remove();
   }
 
