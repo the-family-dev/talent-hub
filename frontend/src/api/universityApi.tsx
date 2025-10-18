@@ -27,7 +27,31 @@ class CompanyApi {
     return result.data;
   }
 
-  // public async updateLogo(companyId: string, logo: File) {}
+  public async updateLogo(companyId: string, logo: File) {
+    const formData = new FormData();
+    formData.append("file", logo);
+
+    const result = await apiClient.post<TUniversity>(
+      `/university/${companyId}/logo`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return result.data;
+  }
+
+  public async updateCompany(companyId: string, company: TUniversity) {
+    const result = await apiClient.put<TUniversity>(
+      `/university/${companyId}`,
+      company
+    );
+
+    return result.data;
+  }
 }
 
 export const universityApi = new CompanyApi();

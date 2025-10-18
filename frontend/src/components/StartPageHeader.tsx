@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import {
   ArrowLeftIcon,
+  UserIcon,
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { routerStore } from "../modules/router/routerStore";
@@ -34,6 +35,14 @@ export const StartPageHeader = observer(() => {
         <AppLogo />
       </NavbarBrand>
       <NavbarContent justify="end">
+        <Button
+          onPress={() => routerStore.navigate?.("/applicant")}
+          isIconOnly
+          className="text-default-500"
+          variant="light"
+        >
+          <UserIcon className="size-6" />
+        </Button>
         <Button
           onPress={() => routerStore.navigate?.("/admin")}
           isIconOnly

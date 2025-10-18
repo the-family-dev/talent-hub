@@ -1,24 +1,25 @@
-import { Routes } from "react-router";
-import { CompanyHeader } from "../modules/company/CompanyHeader";
+import { Route, Routes } from "react-router";
 import {
   NavigationMenu,
   type TNavigationButton,
 } from "../components/NavigationMenu";
 import { observer } from "mobx-react-lite";
-import { companyStore } from "../modules/company/companyStore";
 import {
+  AcademicCapIcon,
   BuildingOffice2Icon,
-  DocumentTextIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
 import { RegisterUniversityPage } from "../modules/university/RegisterUniversityPage";
 import { StartPageHeader } from "../components/StartPageHeader";
+import { UniversityProfilePage } from "../modules/university/UniversityProfilePage";
+import { UniversityHeader } from "../modules/university/UniversityHeader";
+import { universityStore } from "../modules/university/universityStore";
 
 const routes: TNavigationButton[] = [
   {
     path: "/university",
     title: "Профиль",
-    icon: BuildingOffice2Icon,
+    icon: AcademicCapIcon,
   },
   {
     path: "/university/internship",
@@ -28,16 +29,16 @@ const routes: TNavigationButton[] = [
   {
     path: "/university/company",
     title: "Компании",
-    icon: DocumentTextIcon,
+    icon: BuildingOffice2Icon,
   },
 ];
 
 export const UniversityPages = observer(() => {
-  const { company } = companyStore;
+  const { university } = universityStore;
 
   return (
     <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
-      {company === undefined ? <StartPageHeader /> : <CompanyHeader />}
+      {university === undefined ? <StartPageHeader /> : <UniversityHeader />}
 
       <div
         className="flex flex-col gap-4 h-full self-center pt-[65px]"
@@ -45,14 +46,15 @@ export const UniversityPages = observer(() => {
           width: 1200,
         }}
       >
-        {company === undefined ? (
+        {university === undefined ? (
           <RegisterUniversityPage />
         ) : (
           <div className="flex flex-row gap-4 pb-6">
             <NavigationMenu buttons={routes} />
             <div className="w-full min-h-0">
               <Routes>
-                {/* <Route path="" element={<CompanyProfilePage />} />
+                <Route path="" element={<UniversityProfilePage />} />
+                {/* 
                 <Route path="vacancy" element={<VacanciesListPage />} />
                 <Route path="vacancy/:id" element={<VacancyPage />} />
                 <Route path="vacancy/create" element={<VacancyCreatePage />} />

@@ -56,7 +56,6 @@ export const RegisterUniversityPage = observer(() => {
               <Tab title={title} key={key}></Tab>
             ))}
           </Tabs>
-          й1
         </CardHeader>
 
         <CardBody>

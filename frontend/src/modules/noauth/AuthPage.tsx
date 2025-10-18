@@ -2,7 +2,6 @@ import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
 import {
   BuildingOfficeIcon,
-  UserIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline";
 import { Button } from "@heroui/react";
@@ -24,9 +23,9 @@ export const AuthPage = observer(() => {
 
   return (
     <div className="transition-colors duration-300 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
         {/* Карточка соискателя */}
-        <div
+        {/* <div
           className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-2"
           onClick={() => handleRoleSelect("applicant")}
         >
@@ -65,7 +64,7 @@ export const AuthPage = observer(() => {
               Найти работу
             </Button>
           </div>
-        </div>
+        </div> */}
 
         {/* Карточка компании */}
         <div
