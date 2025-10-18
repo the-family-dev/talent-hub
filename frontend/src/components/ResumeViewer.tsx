@@ -24,7 +24,7 @@ export const ResumeViewer = observer<{
   location?: string;
   pdfUrl?: string;
   experienceLevel?: ExperienceLevel;
-  user: TVacancyApplicationUser;
+  user?: TVacancyApplicationUser;
 }>((props) => {
   const {
     title,
@@ -42,41 +42,46 @@ export const ResumeViewer = observer<{
     <div className="flex flex-col gap-4">
       <div className="text-3xl font-medium flex-1">{title}</div>
       <div className="flex flex-row gap-6 items-center w-full">
-        <User
-          avatarProps={{
-            src: getFileSrc(user.avatarUrl),
-          }}
-          name={user.name}
-        />
-        <div className="flex flex-row gap-4 items-center">
-          {user.phone && (
-            <LabelWithIcon
-              label={user.phone}
-              icon={PhoneIcon}
-              isCopied={true}
-            />
-          )}
-          {user.phone && (user.telegram || user.email) && (
-            <Divider className="h-6" orientation="vertical" />
-          )}
-          {user.telegram && (
-            <LabelWithIcon
-              label={user.telegram}
-              icon={ChatBubbleOvalLeftIcon}
-              isCopied={true}
-            />
-          )}
-          {user.email && user.telegram && (
-            <Divider className="h-6" orientation="vertical" />
-          )}
-          {user.email && (
-            <LabelWithIcon
-              label={user.email}
-              icon={EnvelopeIcon}
-              isCopied={true}
-            />
-          )}
-        </div>
+        {user ? (
+          <User
+            avatarProps={{
+              src: getFileSrc(user.avatarUrl),
+            }}
+            name={user.name}
+          />
+        ) : null}
+
+        {user ? (
+          <div className="flex flex-row gap-4 items-center">
+            {user.phone && (
+              <LabelWithIcon
+                label={user.phone}
+                icon={PhoneIcon}
+                isCopied={true}
+              />
+            )}
+            {user.phone && (user.telegram || user.email) && (
+              <Divider className="h-6" orientation="vertical" />
+            )}
+            {user.telegram && (
+              <LabelWithIcon
+                label={user.telegram}
+                icon={ChatBubbleOvalLeftIcon}
+                isCopied={true}
+              />
+            )}
+            {user.email && user.telegram && (
+              <Divider className="h-6" orientation="vertical" />
+            )}
+            {user.email && (
+              <LabelWithIcon
+                label={user.email}
+                icon={EnvelopeIcon}
+                isCopied={true}
+              />
+            )}
+          </div>
+        ) : null}
         <OpenPdfButton pdfUrl={pdfUrl} />
       </div>
       <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />

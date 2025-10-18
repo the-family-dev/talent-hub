@@ -89,12 +89,6 @@ class ApplicantStore {
     };
   }
 
-  get resumePdfUrl() {
-    if (this.resume?.pdfUrl) {
-      return getFileSrc(this.resume.pdfUrl);
-    }
-  }
-
   public setFormLogin(login: string) {
     this.form.login = login;
   }

@@ -44,6 +44,12 @@ export const VacancyApplicationResumeViewer = observer<{
                   description={description}
                   experienceLevel={experienceLevel}
                   user={user}
+                  pdfUrl={resume.pdfUrl}
+                  // experienceLevel={resume.experienceLevel}
+                  // location={resume.location}
+                  // description={resume.description}
+                  // salaryFrom={resume.salaryFrom}
+                  // salaryTo={resume.salaryTo}
                 />
               </DrawerBody>
               <DrawerFooter className="flex flex-row justify-end"></DrawerFooter>

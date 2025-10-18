@@ -9,6 +9,8 @@ export const OpenPdfButton = observer<{
   const url = getFileSrc(pdfUrl);
 
   const handleOpenPdf = () => {
+    console.log(url);
+
     window.open(url, "_blank", "noopener,noreferrer");
   };
 

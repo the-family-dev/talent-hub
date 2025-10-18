@@ -2,13 +2,13 @@ import { observer } from "mobx-react-lite";
 import { applicantStore } from "./applicantStore";
 import { Button, Skeleton } from "@heroui/react";
 import { routerStore } from "../router/routerStore";
-import { ApplicantResumeViewer } from "./ApplicantResumeViewer";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { ConfirmationWrapper } from "../../components/ConfirmationWrapper";
 import { FileInput } from "../../components/FileInput";
+import { ResumeViewer } from "../../components/ResumeViewer";
 
 export const ApplicantResumePage = observer(() => {
-  const { resume, resumePdfUrl } = applicantStore;
+  const { resume } = applicantStore;
 
   return (
     <div className="flex flex-col gap-4">
@@ -68,7 +68,16 @@ export const ApplicantResumePage = observer(() => {
         }
 
         return (
-          <ApplicantResumeViewer resume={{ ...resume, pdfUrl: resumePdfUrl }} />
+          <ResumeViewer
+            title={resume.title}
+            tags={resume.tags}
+            pdfUrl={resume.pdfUrl}
+            experienceLevel={resume.experienceLevel}
+            location={resume.location}
+            description={resume.description}
+            salaryFrom={resume.salaryFrom}
+            salaryTo={resume.salaryTo}
+          />
         );
       })()}
     </div>
