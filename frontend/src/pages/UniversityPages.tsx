@@ -1,22 +1,16 @@
-import { Route, Routes } from "react-router";
+import { Routes } from "react-router";
 import { CompanyHeader } from "../modules/company/CompanyHeader";
 import {
   NavigationMenu,
   type TNavigationButton,
 } from "../components/NavigationMenu";
-import { VacanciesListPage } from "../modules/vacancies/VacanciesListPage";
 import { observer } from "mobx-react-lite";
 import { companyStore } from "../modules/company/companyStore";
-import { CompanyProfilePage } from "../modules/company/CompanyProfilePage";
-import { VacancyPage } from "../modules/vacancies/VacancyPage";
 import {
   BuildingOffice2Icon,
   DocumentTextIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
-import { VacancyCreatePage } from "../modules/vacancies/VacancyCreatePage";
-import { VacancyEditPage } from "../modules/vacancies/VacancyEditPage";
-import { VacancyApplicationPage } from "../modules/vacancies/VacancyApplicationPage";
 import { RegisterUniversityPage } from "../modules/university/RegisterUniversityPage";
 import { StartPageHeader } from "../components/StartPageHeader";
 
@@ -27,13 +21,13 @@ const routes: TNavigationButton[] = [
     icon: BuildingOffice2Icon,
   },
   {
-    path: "/university/vacancy",
-    title: "Вакансии",
+    path: "/university/internship",
+    title: "Мои стажировки",
     icon: HomeIcon,
   },
   {
-    path: "/university/resume",
-    title: "Отклики",
+    path: "/university/company",
+    title: "Компании",
     icon: DocumentTextIcon,
   },
 ];
@@ -58,7 +52,7 @@ export const UniversityPages = observer(() => {
             <NavigationMenu buttons={routes} />
             <div className="w-full min-h-0">
               <Routes>
-                <Route path="" element={<CompanyProfilePage />} />
+                {/* <Route path="" element={<CompanyProfilePage />} />
                 <Route path="vacancy" element={<VacanciesListPage />} />
                 <Route path="vacancy/:id" element={<VacancyPage />} />
                 <Route path="vacancy/create" element={<VacancyCreatePage />} />
@@ -66,7 +60,7 @@ export const UniversityPages = observer(() => {
                 <Route
                   path="vacancy/:id/application"
                   element={<VacancyApplicationPage />}
-                />
+                /> */}
               </Routes>
             </div>
           </div>

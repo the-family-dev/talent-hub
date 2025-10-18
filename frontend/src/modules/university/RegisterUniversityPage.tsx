@@ -11,11 +11,11 @@ import {
 } from "@heroui/react";
 import { LoginFormType } from "../../types/rootTypes";
 import { useMemo } from "react";
-import { companyStore } from "../company/companyStore";
 import { authOptions } from "../../constants/authConstants";
+import { universityStore } from "./universityStore";
 
 export const RegisterUniversityPage = observer(() => {
-  const { logInType, form } = companyStore;
+  const { logInType, form } = universityStore;
 
   const { name, login } = form;
 
@@ -23,11 +23,11 @@ export const RegisterUniversityPage = observer(() => {
     e.preventDefault();
 
     if (logInType === LoginFormType.LogIn) {
-      companyStore.logIn();
+      universityStore.logIn();
       return;
     }
     if (logInType === LoginFormType.Register) {
-      companyStore.register();
+      universityStore.register();
       return;
     }
   };
@@ -48,7 +48,7 @@ export const RegisterUniversityPage = observer(() => {
           <Tabs
             selectedKey={logInType}
             onSelectionChange={(key) =>
-              companyStore.setLoginType(key as LoginFormType)
+              universityStore.setLoginType(key as LoginFormType)
             }
             color="primary"
           >
@@ -56,15 +56,19 @@ export const RegisterUniversityPage = observer(() => {
               <Tab title={title} key={key}></Tab>
             ))}
           </Tabs>
+          й1
         </CardHeader>
 
         <CardBody>
           <Form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input
+              isRequired
               label="Логин"
               placeholder="Введите ваш логин"
               value={login}
-              onChange={(e) => companyStore.setFormLogin(e.target.value)}
+              onChange={(e) =>
+                universityStore.setFormField("login", e.target.value)
+              }
               className="w-full"
               required
             />
@@ -74,7 +78,9 @@ export const RegisterUniversityPage = observer(() => {
                 label="Наименование вуза (полностью)"
                 placeholder="Введите название вуза"
                 value={name}
-                onChange={(e) => companyStore.setFormName(e.target.value)}
+                onChange={(e) =>
+                  universityStore.setFormField("name", e.target.value)
+                }
                 className="w-full"
                 required
               />

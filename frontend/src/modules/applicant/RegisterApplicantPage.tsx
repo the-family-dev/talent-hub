@@ -61,6 +61,7 @@ export const RegisterApplicantPage = observer(() => {
         <CardBody>
           <Form onSubmit={onSubmit} className="flex flex-col gap-4">
             <Input
+              isRequired
               label="Логин"
               placeholder="Введите ваш логин"
               value={login}
