@@ -2,7 +2,7 @@ import { LoginFormType } from "../types/rootTypes";
 
 export const authOptions = [
   {
-    title: "Авторизация",
+    title: "Вход",
     key: LoginFormType.LogIn,
   },
   {

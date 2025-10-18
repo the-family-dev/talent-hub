@@ -12,8 +12,8 @@ export const GetResumesQuerySchema = z.object({
 export const CreateUpdateResumeSchema = z.object({
   title: z.string().min(1),
   description: z.string().optional(),
-  salaryFrom: z.number().int().positive().optional(),
-  salaryTo: z.number().int().positive().optional(),
+  salaryFrom: z.number().int().positive().optional().nullable(),
+  salaryTo: z.number().int().positive().optional().nullable(),
   location: z.string().optional(),
   experienceLevel: z.enum(ExperienceLevel),
   userId: z.uuid(),

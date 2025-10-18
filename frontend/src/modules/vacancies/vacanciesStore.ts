@@ -27,13 +27,13 @@ import {
 const defaultVacancyFormData: TCreateEditVacancy = {
   title: "",
   description: vacancyDescriptionMdTemplate,
-  salaryFrom: 100_000,
-  salaryTo: 150_000,
+  salaryFrom: undefined,
+  salaryTo: undefined,
   isRemote: false,
   employmentType: EmploymentType.FullTime,
   experienceLevel: ExperienceLevel.Junior,
   tags: [],
-  location: "Москва",
+  location: "",
   companyId: undefined,
 };
 
@@ -190,10 +190,10 @@ class VacanciesStore {
 
   public async updateApplicationStatus(
     applicationId: string,
-    status: ApplicationStatus,
+    status: ApplicationStatus
   ) {
     try {
-      await applicationApi.updateStatus(applicationId, status,);
+      await applicationApi.updateStatus(applicationId, status);
 
       addToast({
         title: "Статус отклика успешно обновлен",
