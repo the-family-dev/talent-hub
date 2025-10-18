@@ -12,7 +12,7 @@ export const UniversityInternshipEditPage = observer(() => {
     <InternshipForm
       modalTitle="Редактирование стажировки"
       confirmText="Сохранить"
-      internship={selectedIternship}
+      internship={{ ...selectedIternship, files: [] }}
       onClose={() => routerStore.navigate?.("/company/vacancy")}
       onConfirm={(internship) => universityStore.updateInternship(internship)}
     />

@@ -22,7 +22,8 @@ export const AdminAnalyticsPage = () => {
   const fadeInUp = (delay = 0) => ({
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
-    transition: { delay, duration: 0.6, ease: "easeOut" },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    transition: { delay, duration: 0.6, ease: "easeOut" as any },
   });
 
   return (
