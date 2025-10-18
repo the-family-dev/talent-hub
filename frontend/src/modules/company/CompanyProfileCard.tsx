@@ -31,39 +31,41 @@ export const CompanyProfileCard = observer<{
             allowedFileExts={[".png", ".jpg", ".svg"]}
           />
         </div>
-
-        <div className="flex flex-col w-full gap-2">
-          <Input
-            value={companyName}
-            onChange={(e) => companyStore.setCompanyName(e.target.value)}
-            label="Название компании"
-          />
-          <Snippet
-            tooltipProps={{
-              children: "Скопировать логин",
-            }}
-            symbol={""}
-            size="md"
-            className="w-min"
-          >
-            {login}
-          </Snippet>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Button
-            isDisabled={!hasChanges}
-            onPress={() => companyStore.updateCompany()}
-            color="primary"
-          >
-            Сохранить
-          </Button>
-          <Button
-            isDisabled={!hasChanges}
-            onPress={() => companyStore.resetChanges()}
-            color="secondary"
-          >
-            Отмена
-          </Button>
+        <div className="flex flex-col w-full gap-4">
+          <div className="flex flex-col w-full gap-2">
+            <Snippet
+              tooltipProps={{
+                children: "Скопировать логин",
+              }}
+              symbol={""}
+              size="md"
+              className="w-min"
+            >
+              {login}
+            </Snippet>
+            <Input
+              value={companyName}
+              onChange={(e) => companyStore.setCompanyName(e.target.value)}
+              label="Название компании"
+              className="w-s"
+            />
+          </div>
+          <div className="flex flex-row justify-end gap-2">
+            <Button
+              isDisabled={!hasChanges}
+              onPress={() => companyStore.updateCompany()}
+              color="primary"
+            >
+              Сохранить
+            </Button>
+            <Button
+              isDisabled={!hasChanges}
+              onPress={() => companyStore.resetChanges()}
+              color="default"
+            >
+              Отмена
+            </Button>
+          </div>
         </div>
       </div>
     </div>

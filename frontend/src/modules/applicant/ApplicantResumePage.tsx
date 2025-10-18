@@ -13,7 +13,7 @@ export const ApplicantResumePage = observer(() => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between">
-        <h1 className="font-bold text-3xl">Резюме</h1>
+        <h1 className="font-medium text-3xl">Резюме</h1>
         <div className="flex flex-row gap-2 items-center">
           <FileInput
             text="Загрузить pdf"

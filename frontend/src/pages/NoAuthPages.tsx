@@ -5,30 +5,34 @@ import { VacanciesNoauthListPage } from "../modules/noauth/vacancies/VacanciesNo
 import { VacancyPageNoauth } from "../modules/noauth/vacancies/VacancyPageNoauth";
 import { AuthPage } from "../modules/noauth/AuthPage";
 import { CreateVacancyPublicRespondModal } from "../modules/noauth/CreateVacancyPublicRespondModal";
-
 export const NoAuthPages = observer(() => {
   return (
-    <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
-      <StartPageHeader />
+    <>
       <div
-        className="flex flex-col gap-4 h-full self-center"
-        style={{
-          width: 1200,
-          marginTop: 64,
-        }}
+        className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen"
+        id="scroll-container"
       >
-        <div className="flex flex-row gap-4 w-full">
-          <div className="w-full h-full pb-6">
-            <Routes>
-              <Route path="/" element={<Navigate to="/vacancy" replace />} />
-              <Route path="auth" element={<AuthPage />} />
-              <Route path="vacancy" element={<VacanciesNoauthListPage />} />
-              <Route path="vacancy/:id" element={<VacancyPageNoauth />} />
-            </Routes>
+        <StartPageHeader />
+        <div
+          className="flex flex-col gap-4 h-full self-center"
+          style={{
+            width: 1200,
+            marginTop: 64,
+          }}
+        >
+          <div className="flex flex-row gap-4 w-full">
+            <div className="w-full h-full pb-6">
+              <Routes>
+                <Route path="/" element={<Navigate to="/vacancy" replace />} />
+                <Route path="auth" element={<AuthPage />} />
+                <Route path="vacancy" element={<VacanciesNoauthListPage />} />
+                <Route path="vacancy/:id" element={<VacancyPageNoauth />} />
+              </Routes>
+            </div>
           </div>
         </div>
+        <CreateVacancyPublicRespondModal />
       </div>
-      <CreateVacancyPublicRespondModal />
-    </div>
+    </>
   );
 });

@@ -16,14 +16,17 @@ export const VacancyApplicationPage = observer(() => {
   return (
     <div>
       <div className="flex flex-col gap-4">
-        <Button
-          color="primary"
-          onPress={() => routerStore.navigate?.(-1)}
-          className="w-min"
-        >
-          <ArrowLeftIcon className="size-6" /> Назад
-        </Button>
-        <div className="font-bold text-3xl">Просмотр откликов</div>
+        <div className="flex flex-row justify-between items-center">
+          <div className="font-medium text-3xl">Просмотр откликов</div>
+          <Button
+            color="primary"
+            onPress={() => routerStore.navigate?.(-1)}
+            className="w-min"
+          >
+            <ArrowLeftIcon className="size-6" /> Назад
+          </Button>
+        </div>
+
         <VacancyApplicationTabs />
         <Input
           value={search}

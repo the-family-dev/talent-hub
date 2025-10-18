@@ -1,7 +1,7 @@
 import { Chip } from "@heroui/react";
 import { EmploymentType } from "../types/rootTypes";
 
-const emplouymentTypeMap = {
+const employmentTypeMap = {
   [EmploymentType.Contract]: {
     title: "По договору",
     className: "text-primary",
@@ -25,7 +25,7 @@ export const EmploymentTypeLabel = ({
 }: {
   employmentType: EmploymentType;
 }) => {
-  const typeInfo = emplouymentTypeMap[employmentType];
+  const typeInfo = employmentTypeMap[employmentType];
 
   if (!typeInfo) {
     return (

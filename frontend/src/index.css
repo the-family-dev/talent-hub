@@ -18,6 +18,9 @@ body {
   overflow: hidden;
 }
 
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
 /* Минималистичный скроллбар для всех элементов */
 /* * {
   scrollbar-width: thin;

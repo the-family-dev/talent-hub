@@ -17,7 +17,7 @@ export const OpenPdfButton = observer<{
       isDisabled={!url}
       onPress={handleOpenPdf}
       className="flex items-center gap-2 w-min"
-      color="primary"
+      color="secondary"
       variant="light"
       size="sm"
     >

@@ -8,7 +8,7 @@ import {
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import type { TVAcancyApplicationResume } from "../../api/companyVacanciesApi";
-import { DocumentIcon } from "@heroicons/react/24/outline";
+import { DocumentIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ResumeViewer } from "../../components/ResumeViewer";
 
 export const VacancyApplicationResumeViewer = observer<{
@@ -17,7 +17,7 @@ export const VacancyApplicationResumeViewer = observer<{
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { resume } = props;
 
-  const { title, description, experienceLevel } = resume;
+  const { title, description, experienceLevel, user } = resume;
 
   return (
     <>
@@ -29,17 +29,24 @@ export const VacancyApplicationResumeViewer = observer<{
         <DrawerContent className="[&>button]:hidden">
           {(onClose) => (
             <>
-              <DrawerBody className="mt-6">
+              <DrawerBody className="mt-6 relative">
+                <Button
+                  color="primary"
+                  onPress={onClose}
+                  className="absolute top-2 right-6"
+                >
+                  <XMarkIcon className="size-6" />
+                  Закрыть
+                </Button>
                 <ResumeViewer
                   tags={[]}
                   title={title}
                   description={description}
                   experienceLevel={experienceLevel}
+                  user={user}
                 />
               </DrawerBody>
-              <DrawerFooter className="flex flex-row justify-end">
-                <Button onPress={onClose}>Закрыть</Button>
-              </DrawerFooter>
+              <DrawerFooter className="flex flex-row justify-end"></DrawerFooter>
             </>
           )}
         </DrawerContent>
