@@ -81,7 +81,7 @@ export const VacancyPage = observer(() => {
         </Button>
         <ConfirmationWrapper
           title="Удаление вакансии"
-          message={`Вы уверенны что хотите удалить вакансию?\nПосле удаления вернуть её не получится.`}
+          message={`Вы уверены, что хотите удалить вакансию?\nПосле удаления вернуть её не получится.`}
           confirmText="Удалить"
           color="danger"
           onConfirm={() => vacanciesStore.deleteVacancy(id)}

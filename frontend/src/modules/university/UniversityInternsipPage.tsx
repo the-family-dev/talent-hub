@@ -48,8 +48,8 @@ export const UniversityInternsipPage = observer(() => {
           <PencilIcon className="size-6" />
         </Button>
         <ConfirmationWrapper
-          title="Удаление вакансии"
-          message={`Вы уверенны что хотите удалить стажировку?\nПосле удаления вернуть её не получится.`}
+          title="Удаление стажировки"
+          message={`Вы уверены, что хотите удалить стажировку?\nПосле удаления вернуть её не получится.`}
           confirmText="Удалить"
           color="danger"
           onConfirm={() => universityStore.deleteInternship(id)}

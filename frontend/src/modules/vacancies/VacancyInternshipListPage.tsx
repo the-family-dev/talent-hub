@@ -40,7 +40,7 @@ export const VacancyInternshipListPage = observer(() => {
           }
         />
         <Select
-          placeholder="Выберите компанию"
+          placeholder="Компания"
           className="w-sm"
           selectedKeys={selectedCompany}
           onSelectionChange={([value]) => {
@@ -64,7 +64,7 @@ export const VacancyInternshipListPage = observer(() => {
           ))}
         </Select>
         <Button onPress={() => vacanciesStore.resetInternshipFilters()}>
-          Сбросить
+          Очистить
         </Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full overflow-y-auto">
