@@ -23,14 +23,14 @@ export const ApplicantResumeViewer = observer<{
     <div className="flex flex-col gap-4">
       <div className="text-3xl font-bold flex-1">{title}</div>
 
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 flex-wrap">
         <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
         {location && <div>{location}</div>}
         {experienceLevel && <div>{experienceLevel}</div>}
       </div>
       <OpenPdfButton pdfUrl={pdfUrl} />
 
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 flex-wrap">
         {tags.map((tag, index) => (
           <Chip color="secondary" key={index}>
             {tag}

@@ -47,7 +47,7 @@ export const VacancyListItemNoauth = observer<{
       <CardBody className="flex flex-column gap-4">
         <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
 
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 flex-wrap">
           <EmploymentTypeLabel employmentType={employmentType} />
 
           {isRemote && (

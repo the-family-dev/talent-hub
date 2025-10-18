@@ -2,6 +2,7 @@ import { Input } from "@heroui/react";
 import { useEffect } from "react";
 import { vacanciesStore } from "./vacanciesStore";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { VacanciesResumeBankListItem } from "./VacanciesResumeBankListItem";
 
 export const VacanciesResumeBankPage = () => {
   const { resumes, resumeFilters } = vacanciesStore;
@@ -31,11 +32,11 @@ export const VacanciesResumeBankPage = () => {
           }
         />
       </div>
-      {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full overflow-y-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full overflow-y-auto">
         {resumes.map((resume) => (
-          <VacancyListItem key={vacancy.id} vacancy={vacancy} />
+          <VacanciesResumeBankListItem key={resume.id} resume={resume} />
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };
