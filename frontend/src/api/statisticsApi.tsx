@@ -22,6 +22,8 @@ export interface IStatisticsData {
   applicationsOverTime: IApplicationData[];
   applicationStatuses: IStatusData[];
   topCompanies: ICompanyData[];
+  tagFrequencies: Record<string, number>;
+  totalVacancies: number;
 }
 
 class StatisticsApi {

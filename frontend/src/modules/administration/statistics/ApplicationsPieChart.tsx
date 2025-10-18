@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import type { StatusData } from "./statisticsStore";
+import type { IStatusData } from "../../../api/statisticsApi";
 
 interface Props {
-  data: StatusData[];
+  data: IStatusData[];
   title: string;
 }
 

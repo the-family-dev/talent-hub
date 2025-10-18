@@ -84,6 +84,29 @@ export class AnalyticsController extends BaseController {
         .sort((a, b) => b.applications - a.applications)
         .slice(0, 5);
 
+      // 7. Статистика по тегам для виджета WordFrequencyDashboard
+      const tags = await prisma.tag.findMany({
+        select: {
+          name: true,
+          _count: {
+            select: {
+              vacancies: true,
+              resumes: true,
+              InternshipTag: true,
+            },
+          },
+        },
+      });
+
+      const tagFrequencies: Record<string, number> = {};
+      tags.forEach((tag) => {
+        const count =
+          tag._count.vacancies + tag._count.resumes + tag._count.InternshipTag;
+        tagFrequencies[tag.name] = count;
+      });
+
+      const totalVacancies = await prisma.vacancy.count();
+
       // Возвращаем готовый объект для дэшборда
       return this.success(res, {
         totalResumes,
@@ -92,6 +115,8 @@ export class AnalyticsController extends BaseController {
         applicationsOverTime,
         applicationStatuses,
         topCompanies,
+        tagFrequencies,
+        totalVacancies,
       });
     } catch (error) {
       console.error("Ошибка при получении данных для дэшборда:", error);

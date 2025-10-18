@@ -21,7 +21,7 @@ const WordFrequencyDashboard: React.FC<WordFrequencyDashboardProps> = ({
       <Card className="w-full max-w-xl mx-auto mt-10 shadow-lg">
         <CardHeader>Частота слов</CardHeader>
         <CardBody>
-          <p className="text-center text-gray-500">
+          <p className="text-center text-defult-500">
             Нет данных для отображения.
           </p>
         </CardBody>
@@ -43,7 +43,7 @@ const WordFrequencyDashboard: React.FC<WordFrequencyDashboardProps> = ({
 
   return (
     <Card className="w-full mt-0 p-4 shadow-lg">
-      <CardHeader className="text-lg font-medium">Частота слов</CardHeader>
+      <CardHeader className="text-lg font-medium">Популярные теги</CardHeader>
       <CardBody>
         <div className="flex flex-wrap justify-center gap-3">
           {Object.entries(data).map(([word, count]) => (

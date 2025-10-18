@@ -9,8 +9,8 @@ export const VacancyIdSchema = z.object({
 export const CreateUpdateVacancySchema = z.object({
   title: z.string().min(2, "Название обязательно").max(255),
   description: z.string().optional(),
-  salaryFrom: z.number().optional(),
-  salaryTo: z.number().optional(),
+  salaryFrom: z.number().int().positive().optional().nullable(),
+  salaryTo: z.number().int().positive().optional().nullable(),
   employmentType: z.enum(EmploymentType),
   experienceLevel: z.enum(ExperienceLevel),
   location: z.string().optional(),

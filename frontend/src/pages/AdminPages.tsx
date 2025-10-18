@@ -1,10 +1,6 @@
 import { Route, Routes } from "react-router";
 
-import {
-  BuildingOffice2Icon,
-  DocumentTextIcon,
-  WindowIcon,
-} from "@heroicons/react/24/outline";
+import { DocumentTextIcon, WindowIcon } from "@heroicons/react/24/outline";
 import { observer } from "mobx-react-lite";
 import {
   NavigationMenu,
@@ -20,11 +16,6 @@ const routes: TNavigationButton[] = [
     path: "/admin",
     title: "Вакансии",
     icon: DocumentTextIcon,
-  },
-  {
-    path: "/admin/company",
-    title: "Создание компании",
-    icon: BuildingOffice2Icon,
   },
   {
     path: "/admin/analytics",
