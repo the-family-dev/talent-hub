@@ -17,9 +17,14 @@ export type TPublicApplicationInput = {
 
 class ApplicationApi {
   // Обновление статуса отклика
-  public async updateStatus(applicationId: string, status: ApplicationStatus) {
+  public async updateStatus(
+    applicationId: string,
+    status: ApplicationStatus,
+    comment?: string
+  ) {
     const response = await apiClient.put(`/application/${applicationId}`, {
       status,
+      comment,
     });
     return response.data;
   }

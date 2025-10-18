@@ -12,6 +12,7 @@ import { ConfirmationWrapper } from "../../components/ConfirmationWrapper";
 import { routerStore } from "../router/routerStore";
 import { ApplicationStatus } from "../../types/rootTypes";
 import { VacancyViwer } from "../../components/VacancyViwer";
+import { VacancyInternshipsViewer } from "./VacancyInternshipsViewer";
 
 export const VacancyPage = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
@@ -53,6 +54,7 @@ export const VacancyPage = observer(() => {
         >
           <ArrowLeftIcon className="size-4" /> Назад
         </Button>
+        <VacancyInternshipsViewer vacancy={selectedVacancy} />
         <Badge
           color="primary"
           isInvisible={newApplicationsCount === 0}

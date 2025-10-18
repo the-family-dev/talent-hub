@@ -41,6 +41,7 @@ export interface ICompanyVacancyBase {
   salaryFrom?: number;
   salaryTo?: number;
   location?: string;
+  comment?: string;
   isRemote: boolean;
   employmentType: EmploymentType;
   experienceLevel: ExperienceLevel;
@@ -53,11 +54,20 @@ export interface ICompanyVacancy extends ICompanyVacancyBase {
   companyId?: string;
   updatedAt: string;
   applications: TVacancyApplication[];
+  internships: {
+    id: string;
+    title: string;
+    university: {
+      id: string;
+      name: string;
+      logoUrl?: string;
+    };
+  }[];
 }
 
 export type TCreateEditVacancy = Omit<
   ICompanyVacancy,
-  "id" | "createdAt" | "updatedAt" | "applications" | "status"
+  "id" | "createdAt" | "updatedAt" | "applications" | "status" | "internships"
 >;
 
 class CompanyVacanciesApi {
@@ -98,6 +108,15 @@ class CompanyVacanciesApi {
 
   public async deleteVacancy(id: string) {
     await apiClient.delete(`/vacancies/${id}`);
+  }
+
+  public async linkInternship(vacancyId: string, internshipId: string) {
+    const response = await apiClient.patch("/vacancies/link-internship", {
+      vacancyId,
+      internshipId,
+    });
+
+    return response.data;
   }
 }
 

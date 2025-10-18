@@ -1,3 +1,4 @@
+import { VacancyStatus } from "@prisma/client";
 import { z } from "zod";
 
 // ID параметра (для URL параметров)
@@ -25,7 +26,7 @@ export const CreateUpdateInternshipSchema = z.object({
 
 // Схема для обновления статуса стажировки (если нужно)
 export const UpdateInternshipStatusSchema = z.object({
-  status: z.enum(["ACTIVE", "CLOSED", "MODERATION"]),
+  status: z.enum(VacancyStatus),
 });
 
 // TypeScript типы

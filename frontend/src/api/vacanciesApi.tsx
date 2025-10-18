@@ -8,6 +8,7 @@ export interface IVacancy {
   salary?: number;
   requirements?: string;
   location?: string;
+  comment?: string;
   isRemote: boolean;
   employmentType: EmploymentType;
   experienceLevel: ExperienceLevel;
@@ -21,6 +22,7 @@ export interface IListVacancy {
   id: string;
   title: string;
   description?: string;
+  comment?: string;
   salary?: number;
   location?: string;
   isRemote: boolean;

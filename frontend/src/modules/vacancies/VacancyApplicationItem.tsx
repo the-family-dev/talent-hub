@@ -128,6 +128,7 @@ export const VacancyApplicationItem = observer<{
               startContent={<NoSymbolIcon className={"size-6"} />}
               onPress={() =>
                 vacanciesStore.updateApplicationStatus(
+                  // TODO Comments
                   id,
                   ApplicationStatus.Rejected
                 )

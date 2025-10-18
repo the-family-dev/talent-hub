@@ -29,4 +29,5 @@ export enum VacancyStatus {
   Moderation = "MODERATION",
   Active = "ACTIVE",
   Closed = "CLOSED",
+  Rejected = "REJECTED",
 }

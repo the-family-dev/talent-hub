@@ -10,5 +10,6 @@ router.post("/create", vacancyController.add); // POST /vacancies - создат
 router.put("/:id", vacancyController.update); // PUT /vacancies/:id - обновить вакансию
 router.delete("/:id", vacancyController.delete); // DELETE /vacancies/:id - удалить вакансию
 router.patch("/:id/status", vacancyController.updateStatus);
+router.patch("/link-internship", vacancyController.linkInternship);
 
 export { router as vacancyRoutes };

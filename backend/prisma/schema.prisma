@@ -27,6 +27,9 @@ model Internship {
   universityId String // связь с вузом
   university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
 
+  vacancy   Vacancy? @relation(fields: [vacancyId], references: [id])
+  vacancyId String?  @unique
+
   tags  InternshipTag[]
   files InternshipFile[] // связь с PDF файлами
 }
@@ -105,11 +108,13 @@ model Vacancy {
   updatedAt       DateTime        @updatedAt
   status          VacancyStatus   @default(MODERATION)
   closeDate       DateTime?
+  comment         String?
 
   // Связь с Company
   companyId    String?
   company      Company?      @relation(fields: [companyId], references: [id], onDelete: Cascade)
   applications Application[]
+  internships  Internship[]
 }
 
 model Application {
@@ -178,5 +183,6 @@ enum ApplicationStatus {
 enum VacancyStatus {
   ACTIVE
   MODERATION
+  REJECTED
   CLOSED
 }

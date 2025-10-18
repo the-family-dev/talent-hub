@@ -22,6 +22,10 @@ const statuses = [
     label: "На модерации",
   },
   {
+    value: VacancyStatus.Rejected,
+    label: "Отклонены",
+  },
+  {
     value: VacancyStatus.Closed,
     label: "Закртые",
   },

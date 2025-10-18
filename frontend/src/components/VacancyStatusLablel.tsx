@@ -11,6 +11,10 @@ const statusMap = {
     text: "Активная",
     className: "text-primary",
   },
+  [VacancyStatus.Rejected]: {
+    text: "Отклонена",
+    className: "text-danger",
+  },
   [VacancyStatus.Closed]: {
     text: "Закрыта",
     className: "text-danger",

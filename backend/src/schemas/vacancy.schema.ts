@@ -29,6 +29,11 @@ export const GetVacanciesBodySchema = z.object({
   companyId: z.uuid("Некорректный формат companyId").optional(),
 });
 
+export const LinkInternshipSchema = z.object({
+  vacancyId: z.uuid(),
+  internshipId: z.uuid(),
+});
+
 export const SearchVacanciesBodySchema = z.object({
   search: z.string().optional(),
   tags: z.array(z.string()).optional(),
@@ -36,6 +41,7 @@ export const SearchVacanciesBodySchema = z.object({
 
 export const UpdateStatusBodySchema = z.object({
   status: z.enum(VacancyStatus),
+  comment: z.string().optional(),
 });
 
 export type TGetVacanciesQuery = z.infer<typeof GetVacanciesBodySchema>;

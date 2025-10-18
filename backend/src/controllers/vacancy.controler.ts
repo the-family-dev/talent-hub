@@ -8,6 +8,7 @@ import {
   GetVacanciesBodySchema,
   UpdateStatusBodySchema,
   TUpdateStatusBody,
+  LinkInternshipSchema,
 } from "../schemas/vacancy.schema";
 
 export class VacancyController extends BaseController {
@@ -67,6 +68,20 @@ export class VacancyController extends BaseController {
               id: true,
               name: true,
               logoUrl: true,
+            },
+          },
+          internships: {
+            select: {
+              id: true,
+              title: true,
+              university: {
+                select: {
+                  id: true,
+                  name: true,
+                  logoUrl: true,
+                  location: true,
+                },
+              },
             },
           },
         },
@@ -157,6 +172,20 @@ export class VacancyController extends BaseController {
               id: true,
               name: true,
               logoUrl: true,
+            },
+          },
+          internships: {
+            select: {
+              id: true,
+              title: true,
+              university: {
+                select: {
+                  id: true,
+                  name: true,
+                  logoUrl: true,
+                  location: true,
+                },
+              },
             },
           },
           applications: {
@@ -313,6 +342,20 @@ export class VacancyController extends BaseController {
               },
             },
           },
+          internships: {
+            select: {
+              id: true,
+              title: true,
+              university: {
+                select: {
+                  id: true,
+                  name: true,
+                  logoUrl: true,
+                  location: true,
+                },
+              },
+            },
+          },
           company: {
             select: {
               id: true,
@@ -372,12 +415,60 @@ export class VacancyController extends BaseController {
         where: { id },
         data: {
           status: validatedData.status,
+          comment: validatedData.comment,
         },
       });
 
       this.success(res, updatedVacancy);
     } catch (error) {
       console.error("Ошибка при обновлении статуса вакансии:", error);
+      this.error(res, "Внутренняя ошибка сервера");
+    }
+  };
+
+  linkInternship = async (req: Request, res: Response) => {
+    try {
+      // Валидация тела запроса
+      const validationResult = LinkInternshipSchema.safeParse(req.body);
+      if (!validationResult.success) {
+        return this.error(res, validationResult.error);
+      }
+
+      const { vacancyId, internshipId } = validationResult.data;
+
+      // Проверяем существование вакансии
+      const vacancy = await prisma.vacancy.findUnique({
+        where: { id: vacancyId },
+      });
+      if (!vacancy) {
+        return this.error(res, "Вакансия не найдена", 404);
+      }
+
+      // Проверяем существование стажировки
+      const internship = await prisma.internship.findUnique({
+        where: { id: internshipId },
+      });
+      if (!internship) {
+        return this.error(res, "Стажировка не найдена", 404);
+      }
+
+      // Обновляем стажировку, привязывая её к вакансии
+      const updatedInternship = await prisma.internship.update({
+        where: { id: internshipId },
+        data: {
+          vacancyId, // связываем с вакансией
+        },
+        include: {
+          university: true,
+          tags: true,
+          files: true,
+          vacancy: true, // чтобы вернуть связанную вакансию
+        },
+      });
+
+      return this.success(res, updatedInternship);
+    } catch (error) {
+      console.error("Ошибка при связывании стажировки с вакансией:", error);
       this.error(res, "Внутренняя ошибка сервера");
     }
   };

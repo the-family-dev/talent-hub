@@ -7,23 +7,22 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
-import type { TVAcancyApplicationResume } from "../../api/companyVacanciesApi";
 import { DocumentIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ResumeViewer } from "../../components/ResumeViewer";
+import type { ICompanyVacancy } from "../../api/companyVacanciesApi";
 
-export const VacancyApplicationResumeViewer = observer<{
-  resume: TVAcancyApplicationResume;
+export const VacancyInternshipsViewer = observer<{
+  vacancy: ICompanyVacancy;
 }>((props) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { resume } = props;
+  const { vacancy } = props;
 
-  const { title, description, experienceLevel, user } = resume;
+  const { internships } = vacancy;
 
   return (
     <>
       <Button color="secondary" onPress={onOpen}>
         <DocumentIcon className="size-6" />
-        Посмотреть резюме
+        Посмотреть стажировки
       </Button>
       <Drawer size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
         <DrawerContent className="[&>button]:hidden">
@@ -38,14 +37,13 @@ export const VacancyApplicationResumeViewer = observer<{
                   <XMarkIcon className="size-6" />
                   Закрыть
                 </Button>
-                <ResumeViewer
-                  tags={[]}
-                  title={title}
-                  description={description}
-                  experienceLevel={experienceLevel}
-                  user={user}
-                  pdfUrl={resume.pdfUrl}
-                />
+                {internships.map((internship) => {
+                  return (
+                    <div key={internship.id} className="">
+                      {internship.title}
+                    </div>
+                  );
+                })}
               </DrawerBody>
               <DrawerFooter className="flex flex-row justify-end"></DrawerFooter>
             </>

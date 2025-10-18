@@ -19,6 +19,7 @@ import cloneDeep from "clone-deep";
 import { applicationApi } from "../../api/applicationApi";
 import {
   internshipApi,
+  type IUniversityInternship,
   type IUniversityInternshipBase,
 } from "../../api/internshipApi";
 
@@ -65,6 +66,9 @@ const defaultVacancyApplicationFilters: TVacancyApplicationFilters = {
 
 class VacanciesStore {
   vacancies: ICompanyVacancyBase[] = [];
+  // список вакансий для стажировки
+  vacanciesInternship: ICompanyVacancyBase[] = [];
+  internshipVacancyId?: string = undefined;
   filters: TVacancyFilters = {
     ...defaultFilters,
   };
@@ -79,6 +83,7 @@ class VacanciesStore {
   public internships: IUniversityInternshipBase[] = [];
 
   selectedVacancy?: ICompanyVacancy = undefined;
+  public selectedIternship: IUniversityInternship | undefined = undefined;
 
   private _debouncedFetchVacancies = debounce(() => this.fetchVacancies(), 500);
   private _debouncedFetchInternships = debounce(
@@ -133,12 +138,58 @@ class VacanciesStore {
     };
   }
 
+  public setInternshipVacancyId(id: string | undefined) {
+    this.internshipVacancyId = id;
+  }
+
+  public async fetchInternshipById(id?: string) {
+    if (id === undefined) return;
+
+    try {
+      const internship = await internshipApi.getVacancyById(id);
+
+      runInAction(() => {
+        this.selectedIternship = internship;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при получении стажировки",
+        color: "danger",
+      });
+    }
+  }
+
+  public async linkInternshipToVacancy() {
+    if (this.internshipVacancyId === undefined) return;
+    if (this.selectedIternship === undefined) return;
+
+    try {
+      await companyVacanciesApi.linkInternship(
+        this.internshipVacancyId,
+        this.selectedIternship.id
+      );
+
+      addToast({
+        title: "Стажировка привязана к вакансии",
+        color: "success",
+      });
+    } catch {
+      addToast({
+        title: "Ошибка",
+        description: "Ошибка при привязке стажировки к вакансии",
+        color: "danger",
+      });
+    }
+  }
+
   public async updateApplicationStatus(
     applicationId: string,
-    status: ApplicationStatus
+    status: ApplicationStatus,
+    comment?: string
   ) {
     try {
-      await applicationApi.updateStatus(applicationId, status);
+      await applicationApi.updateStatus(applicationId, status, comment);
 
       addToast({
         title: "Статус отклика успешно обновлен",
@@ -163,6 +214,23 @@ class VacanciesStore {
 
       runInAction(() => {
         this.vacancies = vacancies;
+      });
+    } catch {
+      addToast({
+        title: "Ошибка получения вакансий",
+        color: "danger",
+      });
+    }
+  }
+
+  public async fetchVacanciesForInternshipt() {
+    try {
+      const vacancies = await companyVacanciesApi.getAllVacancies({
+        companyId: companyStore.company?.id,
+      });
+
+      runInAction(() => {
+        this.vacanciesInternship = vacancies;
       });
     } catch {
       addToast({
