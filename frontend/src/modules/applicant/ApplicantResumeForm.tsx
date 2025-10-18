@@ -69,11 +69,11 @@ export const ApplicantResumeForm = observer<{
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 justify-between">
+        <div className="font-bold text-3xl">{modalTitle}</div>
         <Button color="primary" onPress={onClose} className="w-min">
           <ArrowLeftIcon className="size-6" /> Назад
         </Button>
-        <div className="font-bold text-3xl">{modalTitle}</div>
       </div>
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-2">

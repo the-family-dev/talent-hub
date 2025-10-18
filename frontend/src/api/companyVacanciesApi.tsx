@@ -19,17 +19,26 @@ export type TVAcancyApplicationResume = {
 export type TResumeBankListItem = {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   salaryFrom?: number;
   salaryTo?: number;
   location?: string;
   pdfUrl?: string;
-  experienceLevel: string;
+  experienceLevel: ExperienceLevel;
   createdAt: string;
   updatedAt: string;
   userId: string;
-  tags: string[];
+  tags?: TResumeBankTag[];
   user: TVacancyApplicationUser;
+};
+
+export type TResumeBankTag = {
+  resumeId: string;
+  tagId: string;
+  tag: {
+    id: string;
+    name: string;
+  };
 };
 
 export type TVacancyApplicationUser = {

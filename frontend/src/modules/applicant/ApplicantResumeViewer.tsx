@@ -24,9 +24,9 @@ export const ApplicantResumeViewer = observer<{
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="text-2xl font-medium flex-1">{title}</div>{" "}
+      <div className="text-2xl font-medium flex-1">{title}</div>
       <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
-      <div className="flex flex-row gap-2 items-center">
+      <div className="flex flex-row gap-2 items-center flex-wrap">
         {location && (
           <div className="flex items-center font-semibold text-default-500">
             <MapPinIcon className="size-6 mr-1" />

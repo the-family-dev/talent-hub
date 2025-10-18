@@ -85,7 +85,7 @@ export const ResumeViewer = observer<{
         <OpenPdfButton pdfUrl={pdfUrl} />
       </div>
       <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
-      <div className="flex flex-row gap-2 items-center">
+      <div className="flex flex-row gap-2 items-center flex-wrap">
         {location && (
           <div className="flex items-center font-semibold text-default-500">
             <MapPinIcon className="size-6 mr-1" />
