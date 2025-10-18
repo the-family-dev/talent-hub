@@ -42,15 +42,15 @@ const WordFrequencyDashboard: React.FC<WordFrequencyDashboardProps> = ({
   };
 
   return (
-    <Card className="w-full max-w-3xl mx-auto mt-10 p-4 shadow-lg">
-      <CardHeader className="text-xl font-bold">Частота слов</CardHeader>
+    <Card className="w-full mt-0 p-4 shadow-lg">
+      <CardHeader className="text-lg font-medium">Частота слов</CardHeader>
       <CardBody>
         <div className="flex flex-wrap justify-center gap-3">
           {Object.entries(data).map(([word, count]) => (
             <motion.span
               key={word}
               whileHover={{ scale: 1.2 }}
-              className="text-gray-800 font-semibold cursor-pointer select-none"
+              className="text-gray-600 font-semibold cursor-pointer select-none"
               style={{
                 fontSize: `${getFontSize(count)}px`,
               }}

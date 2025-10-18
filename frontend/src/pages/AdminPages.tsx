@@ -35,7 +35,7 @@ const routes: TNavigationButton[] = [
 
 export const AdminPages = observer(() => {
   return (
-    <div className="w-full flex flex-col justify-center items-center overflow-y-auto h-screen">
+    <div className="w-full flex flex-col items-center overflow-y-auto h-screen">
       <AdminHeader />
 
       <div
