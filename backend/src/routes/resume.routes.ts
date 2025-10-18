@@ -8,6 +8,7 @@ const controller = new ResumeController();
 
 router.get("/:id", controller.getById);
 router.post("/", controller.add);
+router.post("/search", controller.getAll);
 router.put("/:id", controller.update);
 router.delete("/:id", controller.delete);
 router.post("/:id/pdf", upload.single("file"), controller.uploadPdf);

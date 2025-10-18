@@ -6,7 +6,7 @@ export const ResumeIdSchema = z.object({
 });
 
 export const GetResumesQuerySchema = z.object({
-  search: z.string().optional().default(""),
+  search: z.string().optional(),
 });
 
 export const CreateUpdateResumeSchema = z.object({
