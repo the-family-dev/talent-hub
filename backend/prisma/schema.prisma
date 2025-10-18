@@ -7,6 +7,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model University {
+  id         String       @id @default(uuid())
+  name       String
+  login      String       @unique
+  logoUrl    String?
+  location   String?
+  Internship Internship[]
+}
+
+model Internship {
+  id              String          @id @default(uuid())
+  title           String
+  description     String?
+  salaryFrom      Int?
+  salaryTo        Int?
+  location        String?
+  experienceLevel ExperienceLevel
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  universityId String // связь с вузом
+  university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
+
+  tags  InternshipTag[]
+  files InternshipFile[] // связь с PDF файлами
+}
+
+model InternshipFile {
+  id           String     @id @default(uuid())
+  fileUrl      String // путь к PDF
+  internshipId String
+  internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+model InternshipTag {
+  internshipId String
+  tagId        String
+  internship   Internship @relation(fields: [internshipId], references: [id], onDelete: Cascade)
+  tag          Tag        @relation(fields: [tagId], references: [id])
+
+  @@id([internshipId, tagId])
+}
+
 model Company {
   id        String    @id @default(uuid())
   name      String
@@ -86,10 +131,11 @@ model Application {
 }
 
 model Tag {
-  id        String       @id @default(uuid())
-  name      String       @unique
-  vacancies VacancyTag[]
-  resumes   ResumeTag[]
+  id            String          @id @default(uuid())
+  name          String          @unique
+  vacancies     VacancyTag[]
+  resumes       ResumeTag[]
+  InternshipTag InternshipTag[]
 }
 
 model VacancyTag {
