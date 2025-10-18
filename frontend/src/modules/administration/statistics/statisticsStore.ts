@@ -11,6 +11,7 @@ class StatisticsStore {
   totalResumes = 0;
   totalApplications = 0;
   hiredCount = 0;
+  totalVacancies = 0;
 
   applicationsOverTime: IApplicationData[] = [];
 
@@ -20,6 +21,7 @@ class StatisticsStore {
 
   topCompanies: ICompanyData[] = [];
 
+  tagFrequencies: Record<string, number> = {};
   constructor() {
     makeAutoObservable(this);
   }
@@ -33,6 +35,8 @@ class StatisticsStore {
         applicationStatuses,
         applicationsOverTime,
         hiredCount,
+        tagFrequencies,
+        totalVacancies,
       } = await statisticsApi.getStatisticsData();
 
       runInAction(() => {
@@ -42,6 +46,8 @@ class StatisticsStore {
         this.applicationStatuses = applicationStatuses;
         this.applicationsOverTime = applicationsOverTime;
         this.hiredCount = hiredCount;
+        this.tagFrequencies = tagFrequencies;
+        this.totalVacancies = totalVacancies;
       });
     } catch {
       addToast({

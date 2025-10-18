@@ -11,15 +11,6 @@ import { useEffect } from "react";
 export const AdminAnalyticsPage = observer(() => {
   const stats = statisticsStore;
 
-  const wordData = {
-    React: 15,
-    TypeScript: 10,
-    Tailwind: 25,
-    Dashboard: 8,
-    Компонент: 12,
-    UI: 5,
-  };
-
   // Функция для анимации появления элементов с задержкой
   const fadeInUp = (delay = 0) => ({
     initial: { opacity: 0, y: 20 },
@@ -37,27 +28,18 @@ export const AdminAnalyticsPage = observer(() => {
       <div className="text-2xl font-semibold">Статистика</div>
       <div className="mx-auto pt-6 space-y-6">
         {/* KPI карточки */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div {...fadeInUp(0.3)}>
+            <KpiCard title="Всего вакансий" value={stats.totalVacancies} />
+          </motion.div>
           <motion.div {...fadeInUp(0.1)}>
-            <KpiCard
-              title="Всего резюме"
-              value={stats.totalResumes}
-              // change={5}
-            />
+            <KpiCard title="Всего резюме" value={stats.totalResumes} />
           </motion.div>
           <motion.div {...fadeInUp(0.2)}>
-            <KpiCard
-              title="Всего откликов"
-              value={stats.totalApplications}
-              // change={-2}
-            />
+            <KpiCard title="Всего откликов" value={stats.totalApplications} />
           </motion.div>
           <motion.div {...fadeInUp(0.3)}>
-            <KpiCard
-              title="Устроены на работу"
-              value={stats.hiredCount}
-              // change={3}
-            />
+            <KpiCard title="Устроены на работу" value={stats.hiredCount} />
           </motion.div>
         </div>
 
@@ -84,7 +66,7 @@ export const AdminAnalyticsPage = observer(() => {
         </div>
         <motion.div {...fadeInUp(0.7)}>
           <WordFrequencyDashboard
-            data={wordData}
+            data={stats.tagFrequencies}
             maxFontSize={48}
             minFontSize={14}
           />
