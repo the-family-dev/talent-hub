@@ -37,6 +37,13 @@ export const VacancyPageApplicant = observer(() => {
       <div className="flex flex-row justify-between items-center">
         <div className="flex flex-row justify-end gap-4 w-full">
           <Button
+            color="default"
+            onPress={() => routerStore.navigate?.("/applicant/vacancy")}
+            size="md"
+          >
+            <ArrowLeftIcon className="size-4" /> Назад
+          </Button>
+          <Button
             onPress={() => {
               vacanciesApplicantStore.setVacancyRespond(selectedVacancy);
             }}
@@ -45,14 +52,6 @@ export const VacancyPageApplicant = observer(() => {
             color="primary"
           >
             Откликнуться
-          </Button>
-
-          <Button
-            color="default"
-            onPress={() => routerStore.navigate?.("/applicant/vacancy")}
-            size="md"
-          >
-            <ArrowLeftIcon className="size-4" /> Назад
           </Button>
         </div>
       </div>
