@@ -7,6 +7,7 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { routerStore } from "../modules/router/routerStore";
+import { AppLogo } from "./AppLogo";
 
 export const StartPageHeader = observer(() => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export const StartPageHeader = observer(() => {
       isBordered
     >
       <NavbarBrand className="flex flex-row gap-2 font-bold text-2xl">
-        TalentHub
+        <AppLogo />
       </NavbarBrand>
       <NavbarContent justify="end">
         <Button
