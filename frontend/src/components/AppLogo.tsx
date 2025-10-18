@@ -3,9 +3,9 @@ import RotatingText from "./RotatingText";
 export const AppLogo = () => {
   return (
     <div className="flex items-center gap-2">
-      <span className="font-bold text-lg sm:text-xl md:text-2xl">Talent</span>
+      <span className="font-bold text-lg sm:text-xl md:text-2xl">{"Хаб"}</span>
       <RotatingText
-        texts={["Hub", "Hire", "Grow", "Shine"]}
+        texts={["Талантов", "Роста", "Развития", "Технологий"]}
         mainClassName="px-1.5 sm:px-2 bg-primary overflow-hidden py-0.5 rounded-md"
         staggerFrom={"last"}
         initial={{ y: "100%" }}

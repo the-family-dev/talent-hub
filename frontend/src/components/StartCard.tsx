@@ -3,7 +3,7 @@ export const StartCard = () => {
     <div className="w-full bg-gray-100 dark:bg-gray-900 p-6 md:p-10 rounded-2xl text-center">
       {/* Заголовок */}
       <h1 className="text-3xl md:text-4xl font-bold mb-3">
-        Добро пожаловать в TalentHub
+        Добро пожаловать в Хаб Талантов
       </h1>
       <h2 className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-xl mx-auto mb-8">
         Платформа, объединяющая компании, вузы и молодых специалистов для
