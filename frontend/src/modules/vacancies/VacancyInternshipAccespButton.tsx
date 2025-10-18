@@ -41,23 +41,23 @@ export const VacancyInternshipAccespButton = observer(() => {
   return (
     <>
       <Button
-        variant="light"
+        variant="solid"
         color="primary"
         className="w-min"
         onPress={() => setIsOpen(true)}
       >
-        Принять на стажировку
+        Принять заявку
       </Button>
 
       <Modal isOpen={isOpen} onClose={handleCancel}>
         <ModalContent>
           <ModalHeader className="text-lg font-semibold">
-            Принять на стажировку
+            Подтверждение стажировки
           </ModalHeader>
           <ModalBody>
-            <p>Выберите вариант вкансию для стажировки</p>
+            <p>Выберите подходящую вакансию для стажировки</p>
             <Select
-              label="Варианты"
+              label="Вакансия"
               placeholder="Выберите вакансию"
               selectedKeys={selcted}
               onSelectionChange={(keys) => {

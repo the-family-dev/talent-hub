@@ -16,8 +16,9 @@ import {
 } from "@heroui/react";
 import {
   ArrowLeftIcon,
-  CheckBadgeIcon,
+  CheckCircleIcon,
   EllipsisHorizontalCircleIcon,
+  LockClosedIcon,
   NoSymbolIcon,
 } from "@heroicons/react/24/outline";
 import { routerStore } from "../router/routerStore";
@@ -66,24 +67,12 @@ export const AdminVacancyPage = observer(() => {
                 key="aprove"
                 color="success"
                 className="text-success"
-                startContent={<CheckBadgeIcon className={"size-6"} />}
-                onPress={() =>
-                  adminStore.setTargetStatus(VacancyStatus.Active)
-                }
+                startContent={<CheckCircleIcon className={"size-6"} />}
+                onPress={() => adminStore.setTargetStatus(VacancyStatus.Active)}
               >
                 Сделать активной
               </DropdownItem>
-              <DropdownItem
-                key="close"
-                color="danger"
-                className="text-danger"
-                startContent={<NoSymbolIcon className={"size-6"} />}
-                onPress={() =>
-                  adminStore.setTargetStatus(VacancyStatus.Closed)
-                }
-              >
-                Закрыть вакансию
-              </DropdownItem>
+
               <DropdownItem
                 key="reject"
                 color="danger"
@@ -94,6 +83,15 @@ export const AdminVacancyPage = observer(() => {
                 }
               >
                 Отклонить вакансию
+              </DropdownItem>
+              <DropdownItem
+                key="close"
+                color="danger"
+                className="text-danger"
+                startContent={<LockClosedIcon className={"size-6"} />}
+                onPress={() => adminStore.setTargetStatus(VacancyStatus.Closed)}
+              >
+                Закрыть вакансию
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
@@ -122,18 +120,23 @@ export const AdminVacancyPage = observer(() => {
       </div>
       <Modal isOpen={isCompentOpned} onClose={() => adminStore.closeComment()}>
         <ModalContent>
-          <ModalHeader>Комметнарий</ModalHeader>
+          <ModalHeader>Комментарий</ModalHeader>
           <ModalBody>
             <Input
               type="textarea"
               value={comment}
               onChange={(e) => adminStore.setComment(e.target.value)}
-              placeholder="Комментарий"
+              placeholder="Введите комментарий"
             />
           </ModalBody>
           <ModalFooter>
             <Button onPress={() => adminStore.closeComment()}>Отмена</Button>
-            <Button color="primary" onPress={()=> adminStore.confirmStatusChange()}>Подтвердить</Button>
+            <Button
+              color="primary"
+              onPress={() => adminStore.confirmStatusChange()}
+            >
+              Подтвердить
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

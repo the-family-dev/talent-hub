@@ -22,6 +22,7 @@ import { VacancyApplicationPage } from "../modules/vacancies/VacancyApplicationP
 import { StartPageHeader } from "../components/StartPageHeader";
 import { VacancyInternshipListPage } from "../modules/vacancies/VacancyInternshipListPage";
 import { VacancyInternshipPage } from "../modules/vacancies/VacancyInternshipPage";
+import { VacanciesResumeBankPage } from "../modules/vacancies/VacanciesResumeBankPage";
 
 const routes: TNavigationButton[] = [
   {
@@ -90,6 +91,7 @@ export const CompanyPages = observer(() => {
                     path="internship/:id"
                     element={<VacancyInternshipPage />}
                   />
+                  <Route path="resume" element={<VacanciesResumeBankPage />} />
                 </Routes>
               </div>
             </div>

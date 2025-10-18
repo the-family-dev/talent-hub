@@ -16,6 +16,22 @@ export type TVAcancyApplicationResume = {
   user: TVacancyApplicationUser;
 };
 
+export type TResumeBankListItem = {
+  id: string;
+  title: string;
+  description: string;
+  salaryFrom?: number;
+  salaryTo?: number;
+  location?: string;
+  pdfUrl?: string;
+  experienceLevel: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  tags: string[];
+  user: TVacancyApplicationUser;
+};
+
 export type TVacancyApplicationUser = {
   id: string;
   name: string;
@@ -116,6 +132,16 @@ class CompanyVacanciesApi {
       internshipId,
     });
 
+    return response.data;
+  }
+
+  public async getResumes(search: string) {
+    const response = await apiClient.post<TResumeBankListItem[]>(
+      "/resume/search",
+      {
+        search,
+      }
+    );
     return response.data;
   }
 }
