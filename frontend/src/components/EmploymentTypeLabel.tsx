@@ -28,11 +28,15 @@ export const EmploymentTypeLabel = ({
   const typeInfo = emplouymentTypeMap[employmentType];
 
   if (!typeInfo) {
-    return <Chip variant="bordered">Неизвестно</Chip>;
+    return (
+      <Chip variant="bordered" color="default">
+        Неизвестно
+      </Chip>
+    );
   }
 
   return (
-    <Chip className={typeInfo.className} variant="bordered">
+    <Chip color="default" variant="bordered">
       {typeInfo.title}
     </Chip>
   );

@@ -9,18 +9,22 @@ interface SalaryRangeProps {
 const SalaryRange: React.FC<SalaryRangeProps> = ({ salaryFrom, salaryTo }) => {
   if (salaryFrom != null && salaryTo != null) {
     return (
-      <span>
+      <span className="text-2xl flex-1">
         {formatNumber(salaryFrom)} - {formatNumber(salaryTo)} ₽
       </span>
     );
   }
 
   if (salaryFrom != null) {
-    return <span>От {formatNumber(salaryFrom)} ₽</span>;
+    return (
+      <span className="text-2xl flex-1">От {formatNumber(salaryFrom)} ₽</span>
+    );
   }
 
   if (salaryTo != null) {
-    return <span>До {formatNumber(salaryTo)} ₽</span>;
+    return (
+      <span className="text-2xl flex-1">До {formatNumber(salaryTo)} ₽</span>
+    );
   }
 
   return null;

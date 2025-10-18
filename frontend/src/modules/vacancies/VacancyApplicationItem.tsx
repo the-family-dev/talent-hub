@@ -46,22 +46,41 @@ export const VacancyApplicationItem = observer<{
         </div>
       </CardHeader>
       <CardBody className="flex flex-col gap-4 items-start py-0">
-        <div className="flex flex-row gap-2 items-center justify-between w-full">
+        <div className="flex flex-row gap-6 items-center w-full">
           <User
             avatarProps={{
               src: getFileSrc(user.avatarUrl),
             }}
             name={user.name}
           />
-          <div className="flex flex-row gap-4">
-            <LabelWithIcon label={user.phone} icon={PhoneIcon} />
-            <Divider className="h-6" orientation="vertical" />
-            <LabelWithIcon
-              label={user.telegram}
-              icon={ChatBubbleOvalLeftIcon}
-            />
-            <Divider className="h-6" orientation="vertical" />
-            <LabelWithIcon label={user.email} icon={EnvelopeIcon} />
+          <div className="flex flex-row gap-4 items-center">
+            {user.phone && (
+              <LabelWithIcon
+                label={user.phone}
+                icon={PhoneIcon}
+                isCopied={true}
+              />
+            )}
+            {user.phone && (user.telegram || user.email) && (
+              <Divider className="h-6" orientation="vertical" />
+            )}
+            {user.telegram && (
+              <LabelWithIcon
+                label={user.telegram}
+                icon={ChatBubbleOvalLeftIcon}
+                isCopied={true}
+              />
+            )}
+            {user.email && user.telegram && (
+              <Divider className="h-6" orientation="vertical" />
+            )}
+            {user.email && (
+              <LabelWithIcon
+                label={user.email}
+                icon={EnvelopeIcon}
+                isCopied={true}
+              />
+            )}
           </div>
         </div>
         <div>{note ? note : "Сопроводительное письмо не указано"}</div>

@@ -51,17 +51,6 @@ export const VacancyViwer = observer<{
 
   return (
     <div className="flex flex-col gap-4">
-      {company ? (
-        <div className="flex flex-row gap-2 items-center">
-          <AvatarImage
-            name={company.name}
-            width={48}
-            height={48}
-            avatar={getFileSrc(company.logoUrl)}
-          />
-          <div className="font-medium text-2xl">{company.name}</div>
-        </div>
-      ) : null}
       <div className="text-3xl font-bold flex-1">{title}</div>
       <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
       <div className="flex flex-row gap-2">
@@ -83,7 +72,18 @@ export const VacancyViwer = observer<{
           return <Chip color={"default"}>{tag}</Chip>;
         })}
       </div>
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-2 items-center">
+        {company ? (
+          <div className="flex flex-row gap-2 items-center">
+            <AvatarImage
+              name={company.name}
+              width={36}
+              height={36}
+              avatar={getFileSrc(company.logoUrl)}
+            />
+            <div className="font-medium text-l">{company.name}</div>
+          </div>
+        ) : null}
         {location ? <LabelWithIcon label={location} icon={MapPinIcon} /> : null}
         {createdAt ? (
           <LabelWithIcon

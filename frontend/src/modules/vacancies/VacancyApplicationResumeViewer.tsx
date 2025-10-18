@@ -26,10 +26,10 @@ export const VacancyApplicationResumeViewer = observer<{
         Посмотреть резюме
       </Button>
       <Drawer size="5xl" isOpen={isOpen} onOpenChange={onOpenChange}>
-        <DrawerContent>
+        <DrawerContent className="[&>button]:hidden">
           {(onClose) => (
             <>
-              <DrawerBody>
+              <DrawerBody className="mt-6">
                 <ResumeViewer
                   tags={[]}
                   title={title}
@@ -37,7 +37,7 @@ export const VacancyApplicationResumeViewer = observer<{
                   experienceLevel={experienceLevel}
                 />
               </DrawerBody>
-              <DrawerFooter className="flex flex-row justify-start">
+              <DrawerFooter className="flex flex-row justify-end">
                 <Button onPress={onClose}>Закрыть</Button>
               </DrawerFooter>
             </>

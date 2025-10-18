@@ -16,6 +16,7 @@ import { routerStore } from "../../router/routerStore";
 import type { IApplicantVacancy } from "../../../types/vacancyTypes";
 import { EmploymentTypeLabel } from "../../../components/EmploymentTypeLabel";
 import { vacanciesNoauthStore } from "./vacanciesNoauthStore";
+import { ExperienceLevelLabel } from "../../../components/ExperienceLevelLabel";
 
 export const VacancyListItemNoauth = observer<{
   vacancy: IApplicantVacancy;
@@ -40,19 +41,11 @@ export const VacancyListItemNoauth = observer<{
       <CardHeader className="flex flex-row justify-between">
         <div className="font-medium text-xl">{title}</div>
 
-        <Chip color={"primary"} variant="flat" className="font-semibold">
-          {experienceLevel}
-        </Chip>
+        {ExperienceLevelLabel({ experienceLevel })}
       </CardHeader>
 
       <CardBody className="flex flex-column gap-4">
         <SalaryRange salaryFrom={salaryFrom} salaryTo={salaryTo} />
-
-        <div className="flex flex-row gap-2">
-          {tags?.map((tag) => {
-            return <Chip color={"default"}>{tag}</Chip>;
-          })}
-        </div>
 
         <div className="flex flex-row gap-2">
           <EmploymentTypeLabel employmentType={employmentType} />
@@ -62,27 +55,33 @@ export const VacancyListItemNoauth = observer<{
               Можно удаленно
             </Chip>
           )}
+          <div className="flex flex-row gap-2">
+            {tags?.map((tag) => {
+              return <Chip color={"default"}>{tag}</Chip>;
+            })}
+          </div>
         </div>
-
         <div className="flex flex-row gap-2 items-center">
-          <AvatarImage
-            name={company.name}
-            width={32}
-            height={32}
-            avatar={company.logoUrl ? getFileSrc(company.logoUrl) : undefined}
-          />
-          <div className="font-medium text-x2">{company.name}</div>
-        </div>
-
-        <div className="flex flex-row gap-2">
-          <div className="flex items-center font-semibold text-default-500">
-            <MapPinIcon className="size-6 mr-1" />
-            {location}
+          <div className="flex flex-row gap-2 items-center">
+            <AvatarImage
+              name={company.name}
+              width={32}
+              height={32}
+              avatar={company.logoUrl ? getFileSrc(company.logoUrl) : undefined}
+            />
+            <div className="font-medium text-x2">{company.name}</div>
           </div>
 
-          <div className="flex items-center font-semibold text-default-500">
-            <CalendarDaysIcon className="size-6 mr-1" />
-            от {dayjs(createdAt).format("DD.MM.YYYY")}
+          <div className="flex flex-row gap-2">
+            <div className="flex items-center font-semibold text-default-500">
+              <MapPinIcon className="size-6 mr-1" />
+              {location}
+            </div>
+
+            <div className="flex items-center font-semibold text-default-500">
+              <CalendarDaysIcon className="size-6 mr-1" />
+              от {dayjs(createdAt).format("DD.MM.YYYY")}
+            </div>
           </div>
         </div>
       </CardBody>
