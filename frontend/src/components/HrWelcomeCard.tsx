@@ -1,6 +1,5 @@
 import { Card, CardHeader, CardBody } from "@heroui/react";
 import {
-  ChartBarIcon,
   UserIcon,
   BuildingLibraryIcon,
   DocumentMagnifyingGlassIcon,
@@ -79,7 +78,7 @@ export const HrWelcomeCard = () => {
         </div>
 
         {/* Аналитика */}
-        <div>
+        {/* <div>
           <div className="flex items-center gap-3 mb-2">
             <ChartBarIcon className="w-7 h-7 text-orange-600 dark:text-orange-400" />
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
@@ -99,7 +98,7 @@ export const HrWelcomeCard = () => {
               компании
             </li>
           </ul>
-        </div>
+        </div> */}
       </CardBody>
     </Card>
   );
