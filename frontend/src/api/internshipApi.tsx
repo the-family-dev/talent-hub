@@ -27,10 +27,18 @@ export type TCreateEditInternship = Omit<
   files?: File[];
 };
 
+type TIntershipFilters = {
+  search?: string;
+  universityId?: string;
+  tags?: string[];
+  location?: string;
+};
+
 class InternshipApi {
-  public async getInternships() {
+  public async getInternships(filters: TIntershipFilters) {
     const response = await apiClient.post<IUniversityInternshipBase[]>(
-      "/internship"
+      "/internship",
+      filters
     );
 
     return response.data;

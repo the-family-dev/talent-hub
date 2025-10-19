@@ -241,8 +241,12 @@ class UniversityStore {
   }
 
   public async fetchInternships() {
+    if (this.university === undefined) return;
     try {
-      const internships = await internshipApi.getInternships();
+      const internships = await internshipApi.getInternships({
+        universityId: this.university.id,
+        search: this.filters.search,
+      });
       runInAction(() => {
         this.internships = internships;
       });

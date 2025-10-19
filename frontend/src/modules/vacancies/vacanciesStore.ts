@@ -268,7 +268,7 @@ class VacanciesStore {
 
   public async fetchInternships() {
     try {
-      const internships = await internshipApi.getInternships();
+      const internships = await internshipApi.getInternships({});
       runInAction(() => {
         this.internships = internships;
       });
