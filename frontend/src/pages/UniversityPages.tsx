@@ -19,12 +19,12 @@ const routes: TNavigationButton[] = [
   {
     path: "/university",
     title: "Профиль",
-    icon: AcademicCapIcon,
+    icon: HomeIcon,
   },
   {
     path: "/university/internship",
     title: "Мои стажировки",
-    icon: HomeIcon,
+    icon: AcademicCapIcon,
   },
 ];
 
