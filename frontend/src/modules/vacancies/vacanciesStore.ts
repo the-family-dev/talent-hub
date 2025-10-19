@@ -345,9 +345,9 @@ class VacanciesStore {
       });
     }
   }
-  public async getAllResumes(search: string) {
+  public async getAllResumes() {
     try {
-      const resumes = await companyVacanciesApi.getResumes(search);
+      const resumes = await companyVacanciesApi.getResumes(this.filters.search);
       this.resumes = resumes;
     } catch {
       addToast({

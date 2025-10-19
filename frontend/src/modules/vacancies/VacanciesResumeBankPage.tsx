@@ -3,17 +3,16 @@ import { useEffect } from "react";
 import { vacanciesStore } from "./vacanciesStore";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { VacanciesResumeBankListItem } from "./VacanciesResumeBankListItem";
+import { observer } from "mobx-react-lite";
 
-export const VacanciesResumeBankPage = () => {
+export const VacanciesResumeBankPage = observer(() => {
   const { resumes, resumeFilters } = vacanciesStore;
 
   const { search } = resumeFilters;
 
   useEffect(() => {
-    vacanciesStore.getAllResumes(search);
+    vacanciesStore.getAllResumes();
   }, []);
-
-  console.log(resumes);
 
   return (
     <div className="flex flex-col gap-4 flex-1 h-full">
@@ -39,4 +38,4 @@ export const VacanciesResumeBankPage = () => {
       </div>
     </div>
   );
-};
+});
