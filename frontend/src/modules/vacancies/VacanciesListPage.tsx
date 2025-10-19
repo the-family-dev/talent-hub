@@ -18,7 +18,7 @@ export const VacanciesListPage = observer(() => {
   return (
     <div className="flex flex-col gap-4 flex-1 h-full">
       <div className="flex flex-row justify-between items-center">
-        <div className="text-3xl font-medium">Вакансии</div>
+        <div className="text-3xl font-medium">Мои вакансии</div>
         <Button
           color="primary"
           onPress={() => routerStore.navigate?.("/company/vacancy/create")}

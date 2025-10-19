@@ -32,7 +32,7 @@ const routes: TNavigationButton[] = [
   },
   {
     path: "/company/vacancy",
-    title: "Вакансии",
+    title: "Мои вакансии",
     icon: DocumentMagnifyingGlassIcon,
   },
   {
