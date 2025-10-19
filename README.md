@@ -79,3 +79,16 @@ DATABASE_URL="file:./dev.db"
 ```bash
 npm run deploy
 ```
+
+## Контакты команды
+
+- **Роман Суринов — Fullstack-разработчик**
+
+  - Telegram: [@TheHarald](https://t.me/TheHarald)
+
+- **Вероника Калина — Frontend-разработчик, UI/UX**
+
+  - Telegram: [@ThTheTh](https://t.me/ThTheTh)
+
+- **Яна Максимова — Бизнес-аналитик**
+  - Telegram: [@maksimova_yana37](https://t.me/maksimova_yana37)
