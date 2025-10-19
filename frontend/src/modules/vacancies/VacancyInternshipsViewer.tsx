@@ -40,7 +40,7 @@ export const VacancyInternshipsViewer = observer<{
                     />
                     {index !== internships.length - 1 ? (
                       <Divider
-                        className="w-full h-1"
+                        className="w-full h-0.5"
                         orientation="horizontal"
                       />
                     ) : null}

@@ -5,7 +5,7 @@ import { ApplicationStatus } from "../types/rootTypes";
 const statusMap = {
   [ApplicationStatus.Pending]: {
     text: "Новый",
-    className: "text-default",
+    className: "text-secondary",
   },
   [ApplicationStatus.Interview]: {
     text: "Собеседование",

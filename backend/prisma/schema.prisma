@@ -31,7 +31,7 @@ model Internship {
   university   University @relation(fields: [universityId], references: [id], onDelete: Cascade)
 
   vacancy   Vacancy? @relation(fields: [vacancyId], references: [id])
-  vacancyId String?  @unique
+  vacancyId String?
 
   tags  InternshipTag[]
   files InternshipFile[] // связь с PDF файлами
