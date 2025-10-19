@@ -74,6 +74,7 @@ export class VacancyController extends BaseController {
             select: {
               id: true,
               title: true,
+              location: true,
               university: {
                 select: {
                   id: true,
@@ -178,6 +179,7 @@ export class VacancyController extends BaseController {
             select: {
               id: true,
               title: true,
+              location: true,
               university: {
                 select: {
                   id: true,
@@ -346,6 +348,7 @@ export class VacancyController extends BaseController {
             select: {
               id: true,
               title: true,
+              location: true,
               university: {
                 select: {
                   id: true,

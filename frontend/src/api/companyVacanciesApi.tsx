@@ -75,19 +75,22 @@ export interface ICompanyVacancyBase {
   tags: string[];
 }
 
+export type TVAcancyInternship = {
+  id: string;
+  title: string;
+  location?: string;
+  university: {
+    id: string;
+    name: string;
+    logoUrl?: string;
+  };
+};
+
 export interface ICompanyVacancy extends ICompanyVacancyBase {
   companyId?: string;
   updatedAt: string;
   applications: TVacancyApplication[];
-  internships: {
-    id: string;
-    title: string;
-    university: {
-      id: string;
-      name: string;
-      logoUrl?: string;
-    };
-  }[];
+  internships: TVAcancyInternship[];
 }
 
 export type TCreateEditVacancy = Omit<

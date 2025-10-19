@@ -46,7 +46,7 @@ export const VacancyInternshipAccespButton = observer(() => {
         className="w-min"
         onPress={() => setIsOpen(true)}
       >
-        Принять заявку
+        Принять на стажировку
       </Button>
 
       <Modal isOpen={isOpen} onClose={handleCancel}>

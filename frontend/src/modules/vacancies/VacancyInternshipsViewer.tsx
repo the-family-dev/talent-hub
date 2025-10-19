@@ -1,5 +1,6 @@
 import {
   Button,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -7,9 +8,9 @@ import {
   useDisclosure,
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
-import { BuildingOffice2Icon, ShareIcon } from "@heroicons/react/24/outline";
+import { BuildingOffice2Icon } from "@heroicons/react/24/outline";
 import type { ICompanyVacancy } from "../../api/companyVacanciesApi";
-import { routerStore } from "../router/routerStore";
+import { VacancyInternshipCard } from "./VacancyInternshipCard";
 
 export const VacancyInternshipsViewer = observer<{
   vacancy: ICompanyVacancy;
@@ -27,25 +28,23 @@ export const VacancyInternshipsViewer = observer<{
       </Button>
       <Drawer isOpen={isOpen} onOpenChange={onOpenChange}>
         <DrawerContent className="[&>button]:hidden">
-          <DrawerBody className="mt-6 flex flex-col">
-            <div className="font-bold text-xl">
-              Стажировки от университетов
-            </div>
+          <DrawerBody className="flex flex-col">
+            <div className="font-bold text-xl">Стажировки от университетов</div>
             <div className="flex flex-col gap-2">
-              {internships.map((internship) => {
+              {internships.map((internship, index) => {
                 return (
-                  <Button
-                    color="primary"
-                    variant="light"
-                    onPress={() =>
-                      routerStore.navigate?.(
-                        `/company/internship/${internship.id}`
-                      )
-                    }
-                  >
-                    {internship.title}
-                    <ShareIcon className="size-6" />
-                  </Button>
+                  <>
+                    <VacancyInternshipCard
+                      key={internship.id}
+                      internship={internship}
+                    />
+                    {index !== internships.length - 1 ? (
+                      <Divider
+                        className="w-full h-1"
+                        orientation="horizontal"
+                      />
+                    ) : null}
+                  </>
                 );
               })}
             </div>
