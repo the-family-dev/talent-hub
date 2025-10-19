@@ -96,11 +96,12 @@ export const VacancyViwer = observer<{
       </div>
       {pdfUrls ? (
         <div className="flex flex-col gap-2">
+          <div className="font-medium text-l">Список резюме</div>
           {pdfUrls.map((pdfUrl, index) => {
             return (
               <PdfFile
                 key={index}
-                name={pdfUrl.split("/").pop() ?? "Без названия"}
+                name={pdfUrl?.split("/").pop() ?? "Без названия"}
                 url={pdfUrl}
               />
             );

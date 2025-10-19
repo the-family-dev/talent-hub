@@ -1,3 +1,5 @@
+import { getFileSrc } from "../api";
+
 export const formatNumber = (value: number) =>
   `${value.toLocaleString("ru-RU")}`;
 
@@ -30,3 +32,10 @@ export const formatFileSize = (bytes: number): string => {
   const megabytes = bytes / MB;
   return `${megabytes.toFixed(1)} MB`;
 };
+
+export async function urlToFile(url: string): Promise<File> {
+  const response = await fetch(getFileSrc(url) ?? "");
+  const blob = await response.blob();
+  const filename = url.split("/").pop() || "file.pdf";
+  return new File([blob], filename, { type: blob.type || "application/pdf" });
+}

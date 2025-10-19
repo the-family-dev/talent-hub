@@ -13,6 +13,7 @@ import {
   type TCreateEditInternship,
 } from "../../api/internshipApi";
 import { routerStore } from "../router/routerStore";
+import { urlToFile } from "../../utils/utils";
 const universityLocalStorageKey = "university";
 const universityLocalStorage = new TypedStorage<TCompany | undefined>(
   universityLocalStorageKey,
@@ -52,6 +53,15 @@ class UniversityStore {
   public internships: IUniversityInternshipBase[] = [];
 
   public selectedIternship: IUniversityInternship | undefined = undefined;
+  public selectedInternShipFiles: File[] = [];
+
+  get selectedInternshipWithFiles(): TCreateEditInternship | undefined {
+    if (this.selectedIternship === undefined) return undefined;
+    return {
+      ...this.selectedIternship,
+      files: this.selectedInternShipFiles,
+    };
+  }
 
   constructor() {
     makeAutoObservable(this);
@@ -106,8 +116,15 @@ class UniversityStore {
     try {
       const internship = await internshipApi.getVacancyById(id);
 
+      const fileLinks = internship.files ?? [];
+
+      const fileObjects = await Promise.all(
+        fileLinks.map((url) => urlToFile(url))
+      );
+
       runInAction(() => {
         this.selectedIternship = internship;
+        this.selectedInternShipFiles = fileObjects;
       });
     } catch {
       addToast({
@@ -261,23 +278,21 @@ class UniversityStore {
     if (this.selectedIternship === undefined) return;
 
     try {
-      const updatedInternship = await internshipApi.updateInternship(
+      await internshipApi.updateInternship(
         this.selectedIternship.id,
         internship
       );
 
-      runInAction(() => {
-        this.selectedIternship = updatedInternship;
+      this.fetchInternshipById(this.selectedIternship.id);
 
-        addToast({
-          title: "Стажировка изменена",
-          color: "success",
-        });
-
-        routerStore.navigate?.(
-          `/university/internship/${updatedInternship.id}`
-        );
+      addToast({
+        title: "Стажировка изменена",
+        color: "success",
       });
+
+      routerStore.navigate?.(
+        `/university/internship/${this.selectedIternship.id}`
+      );
     } catch {
       addToast({
         title: "Ошибка",

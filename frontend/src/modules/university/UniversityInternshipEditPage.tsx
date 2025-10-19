@@ -4,16 +4,22 @@ import { universityStore } from "./universityStore";
 import { InternshipForm } from "../../components/InternshipForm";
 
 export const UniversityInternshipEditPage = observer(() => {
-  const { selectedIternship } = universityStore;
-  if (!selectedIternship) {
-    return <div>вакансия не найдена</div>;
-  }
+  const { selectedInternshipWithFiles, selectedIternship } = universityStore;
+
+  if (
+    selectedInternshipWithFiles === undefined ||
+    selectedIternship === undefined
+  )
+    return null;
+
   return (
     <InternshipForm
       modalTitle="Редактирование стажировки"
       confirmText="Сохранить"
-      internship={{ ...selectedIternship, files: [] }}
-      onClose={() => routerStore.navigate?.("/company/vacancy")}
+      internship={selectedInternshipWithFiles}
+      onClose={() =>
+        routerStore.navigate?.(`/university/internship/${selectedIternship.id}`)
+      }
       onConfirm={(internship) => universityStore.updateInternship(internship)}
     />
   );

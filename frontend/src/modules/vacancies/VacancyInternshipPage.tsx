@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { routerStore } from "../router/routerStore";
 import { VacancyViwer } from "../../components/VacancyViwer";
 import { VacancyInternshipAccespButton } from "./VacancyInternshipAccespButton";
+import { toJS } from "mobx";
 
 export const VacancyInternshipPage = observer(() => {
   const { id: pageId } = useParams<{ id: string }>();
@@ -21,6 +22,8 @@ export const VacancyInternshipPage = observer(() => {
 
   const { title, description, tags, files, location, createdAt } =
     selectedIternship;
+
+  console.log(toJS(files));
 
   return (
     <div className="flex flex-col gap-4 relative">
