@@ -4,6 +4,7 @@ import type { TCompany } from "../../api/companyApi";
 import { companyStore } from "./companyStore";
 import { AvatarImage } from "../../components/AvatarImage";
 import { FileInput } from "../../components/FileInput";
+import { HrWelcomeCard } from "../../components/HrWelcomeCard";
 
 export const CompanyProfileCard = observer<{
   company: TCompany;
@@ -68,6 +69,7 @@ export const CompanyProfileCard = observer<{
           </div>
         </div>
       </div>
+      <HrWelcomeCard />
     </div>
   );
 });

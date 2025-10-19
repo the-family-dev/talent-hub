@@ -4,6 +4,7 @@ import { AvatarImage } from "../../components/AvatarImage";
 import { FileInput } from "../../components/FileInput";
 import { universityStore } from "./universityStore";
 import { getFileSrc } from "../../api";
+import { UniversityWelcomeCard } from "../../components/UniversityWelcomeCard";
 
 export const UniversityProfilePage = observer(() => {
   const { university, hasChanges } = universityStore;
@@ -68,6 +69,7 @@ export const UniversityProfilePage = observer(() => {
           </div>
         </div>
       </div>
+      <UniversityWelcomeCard />
     </div>
   );
 });
