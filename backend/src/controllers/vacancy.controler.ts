@@ -356,6 +356,35 @@ export class VacancyController extends BaseController {
               },
             },
           },
+          applications: {
+            select: {
+              id: true,
+              status: true,
+              createdAt: true,
+              updatedAt: true,
+              note: true,
+              resume: {
+                select: {
+                  id: true,
+                  title: true,
+                  description: true,
+                  experienceLevel: true,
+                  tags: true,
+                  pdfUrl: true,
+                  user: {
+                    select: {
+                      id: true,
+                      name: true,
+                      phone: true,
+                      telegram: true,
+                      email: true,
+                      avatarUrl: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
           company: {
             select: {
               id: true,
@@ -411,7 +440,7 @@ export class VacancyController extends BaseController {
       }
 
       console.log({
-        validatedData
+        validatedData,
       });
 
       // Обновляем статус вакансии
