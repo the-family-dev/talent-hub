@@ -92,7 +92,7 @@ export const InternshipForm = observer<{
 
         <MultiFileSelect
           allowedFileExts={[".pdf"]}
-          text="Загрузитье резюме стажеров"
+          text="Загрузите резюме стажеров"
           files={files}
           onChange={(value) => store.setFiles(value)}
         />
